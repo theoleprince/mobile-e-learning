@@ -1,0 +1,52 @@
+{
+    "fields": [
+        {
+            "name": "commentaire",
+            "type": "text"
+        },
+        {
+            "name": "phase_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "user_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "user_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "phase_id",
+            "references": "id",
+            "on": "phases",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\Models\\User"
+        },
+        {
+            "name": "phase",
+            "type": "belongsTo",
+            "class": "App\\Models\\Phase"
+        }
+    ],
+    "validation": [
+        {
+            "field": "phase_id",
+            "rules": "required"
+        },
+        {
+            "field": "commentaire",
+            "rules": "required"
+        }
+    ]
+}

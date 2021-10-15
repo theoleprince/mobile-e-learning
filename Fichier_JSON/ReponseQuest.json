@@ -1,0 +1,73 @@
+{
+    "fields": [
+        {
+            "name": "Reponse",
+            "type": "text"
+        },
+        {
+            "name": "note",
+            "type": "double"
+        },
+        {
+            "name": "statut",
+            "type": "select",
+            "options": {
+                "Accepté": "Accepté",
+                "Rejeté": "Rejeté",
+                "En Attente": "En Attente"
+            }
+        },
+        {
+            "name": "finish",
+            "type": "boolean"
+        },
+        {
+            "name": "question_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": " created_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": " created_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "question_id",
+            "references": "id",
+            "on": "questions",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\Models\\User"
+        },
+        {
+            "name": "question",
+            "type": "belongsTo",
+            "class": "App\\Models\\Question"
+        }
+    ],
+    "validation": [
+        {
+            "field": "reponse",
+            "rules": "required"
+        },
+        {
+            "field": "note",
+            "rules": "required|min0"
+        },
+        {
+            "field": "statut",
+            "rules": "required"
+        }
+    ]
+}

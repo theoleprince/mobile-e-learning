@@ -1,0 +1,52 @@
+{
+    "fields": [
+        {
+            "name": "reponse",
+            "type": "text"
+        },
+        {
+            "name": "commentaire_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": " created_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": " created_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "commentaire_id",
+            "references": "id",
+            "on": "commentaires",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\Models\\User"
+        },
+        {
+            "name": "commentaire",
+            "type": "belongsTo",
+            "class": "App\\Models\\Commentaire"
+        }
+    ],
+    "validation": [
+        {
+            "field": "commentaire_id",
+            "rules": "required"
+        },
+        {
+            "field": "reponse",
+            "rules": "required"
+        }
+    ]
+}

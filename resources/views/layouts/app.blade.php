@@ -36,8 +36,13 @@
         <!-- bordure -->
         @include('layouts.partials.head_side_bar')
         <!-- Corps -->
-        @include('layouts.partials.main')
-
+        {{-- @include('layouts.partials.main') --}}
+         <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <main class="py-4">
+                    @yield('content')
+                </main>
+            </div>
 
 
 

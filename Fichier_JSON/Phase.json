@@ -1,0 +1,81 @@
+{
+    "fields": [
+        {
+            "name": "titre",
+            "type": "string"
+        },
+        {
+            "name": "video",
+            "type": "file"
+        },
+        {
+            "name": "numero",
+            "type": "integer"
+        },
+        {
+            "name": "temps",
+            "type": "number"
+        },
+        {
+            "name": "activated",
+            "type": "boolean"
+        },
+        {
+            "name": "finish",
+            "type": "boolean"
+        },
+
+        {
+            "name": "cours_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "created_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "created_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "cours_id",
+            "references": "id",
+            "on": "cours",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\Models\\User"
+        },
+        {
+            "name": "cours",
+            "type": "belongsTo",
+            "class": "App\\Models\\Cours"
+        }
+    ],
+    "validation": [
+        {
+            "field": "cours_id",
+            "rules": "required"
+        },
+        {
+            "field": "titre",
+            "rules": "required"
+        },
+        {
+            "field": "temps",
+            "rules": "required|min0|max10"
+        },
+        {
+            "field": "numero",
+            "rules": "required|min0"
+        }
+    ]
+}

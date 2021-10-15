@@ -1,0 +1,60 @@
+{
+    "fields": [
+        {
+            "name": "question",
+            "type": "text"
+        },
+        {
+            "name": "nbre_point",
+            "type": "integer"
+        },
+        {
+            "name": "cours_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": " created_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "cours_id",
+            "references": "id",
+            "on": "cours",
+            "onDelete": "cascade"
+        },
+        {
+            "column": " created_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\Models\\User"
+        },
+        {
+            "name": "cour",
+            "type": "belongsTo",
+            "class": "App\\Models\\Cours"
+        }
+    ],
+    "validation": [
+        {
+            "field": "question",
+            "rules": "required"
+        },
+        {
+            "field": "cours_id",
+            "rules": "required"
+        },
+        {
+            "field": "nbre_point",
+            "rules": "required|min0"
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+{
+    "fields": [
+        {
+            "name": "nom",
+            "type": "string"
+        },
+        {
+            "name": "temps",
+            "type": "number"
+        },
+        {
+            "name": "numero",
+            "type": "integer"
+        },
+        {
+            "name": "activated",
+            "type": "boolean"
+        },
+        {
+            "name": "finish",
+            "type": "boolean"
+        },
+
+        {
+            "name": "formation_id",
+            "type": "integer#unsigned"
+        },
+        {
+            "name": "created_id",
+            "type": "integer#unsigned"
+        }
+    ],
+    "foreign_keys": [
+        {
+            "column": "created_id",
+            "references": "id",
+            "on": "users",
+            "onDelete": "cascade"
+        },
+        {
+            "column": "formation_id",
+            "references": "id",
+            "on": "formations",
+            "onDelete": "cascade"
+        }
+    ],
+    "relationships": [
+        {
+            "name": "user",
+            "type": "belongsTo",
+            "class": "App\\Models\\User"
+        },
+        {
+            "name": "formation",
+            "type": "belongsTo",
+            "class": "App\\Models\\Formation"
+        }
+    ],
+    "validation": [
+        {
+            "field": "formation_id",
+            "rules": "required"
+        },
+        {
+            "field": "nom",
+            "rules": "required"
+        },
+        {
+            "field": "temps",
+            "rules": "required|min0"
+        },
+        {
+            "field": "numero",
+            "rules": "required|min0"
+        }
+    ]
+}
