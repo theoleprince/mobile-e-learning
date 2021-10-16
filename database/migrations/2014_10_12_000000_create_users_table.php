@@ -26,8 +26,8 @@ class CreateUsersTable extends Migration
             $table->string('probleme')->nullable();
             $table->string('lieu_naissance')->nullable();
             $table->date('date_naissance')->nullable();
-            $table->enum('sexe', ['Masculin','Feminin']);
-            $table->integer('formation_id')->unsigned();
+            $table->enum('sexe', ['Masculin','Feminin'])->nullable();
+            $table->integer('formation_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade')->onUpdate('cascade');

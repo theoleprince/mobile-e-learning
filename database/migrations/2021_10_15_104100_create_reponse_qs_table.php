@@ -21,8 +21,8 @@ class CreateReponseQsTable extends Migration
             $table->enum('statut', ['accepté','rejete','en attente']);
             $table->boolean('finish')->nullable();
             $table->integer('question_id')->unsigned();
-            $table->integer(' created_id')->unsigned();
-            $table->foreign(' created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('created_id')->unsigned();
+            $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
             });
     }

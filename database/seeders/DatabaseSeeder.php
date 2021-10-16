@@ -13,6 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(LaratrustSeeder::class);
+        $this->call(FormationSeeder::class);
+        $this->call(CoursSeeder::class);
+        $this->call(PhaseSeeder::class);
+        $this->call(QuestionSeeder::class);
+        $this->call(CommentaireSeeder::class);
+        $this->call(ReponseCommenttaireSeeder::class);
+        $this->call(ReponseQuestionSeeder::class);
+
     }
 }
