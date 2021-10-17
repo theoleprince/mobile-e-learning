@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class CreateReponseQsTable extends Migration
 {
@@ -18,11 +17,11 @@ class CreateReponseQsTable extends Migration
             $table->timestamps();
             $table->text('Reponse')->nullable();
             $table->double('note')->nullable();
-            $table->enum('statut', ['accepté','rejete','en attente']);
+            $table->string('statut');
             $table->boolean('finish')->nullable();
             $table->integer('question_id')->unsigned();
-            $table->integer(' created_id')->unsigned();
-            $table->foreign(' created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('created_id')->unsigned();
+            $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
             });
     }

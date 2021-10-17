@@ -18,10 +18,10 @@
 </div>
     {!! $errors->first('activated', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has(' created_id') ? 'has-error' : ''}}">
-    <label for=" created_id" class="control-label">{{ 'Ceated Id' }}</label>
-    <input class="form-control" name=" created_id" type="number" id=" created_id" value="{{ Auth::user->name}}" >
-    {!! $errors->first(' created_id', '<p class="help-block">:message</p>') !!}
+<div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}">
+    <label for="created_id" class="control-label">{{ 'Created Id' }}</label>
+    <input class="form-control" name="created_id" type="number" id="created_id" value="{{ isset($formation->created_id) ? $formation->created_id : ''}}" >
+    {!! $errors->first('created_id', '<p class="help-block">:message</p>') !!}
 </div>
 
 

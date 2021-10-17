@@ -23,7 +23,7 @@ class ReponseCController extends Controller
         if (!empty($keyword)) {
             $reponsec = ReponseC::where('reponse', 'LIKE', "%$keyword%")
                 ->orWhere('commentaire_id', 'LIKE', "%$keyword%")
-                ->orWhere(' created_id', 'LIKE', "%$keyword%")
+                ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $reponsec = ReponseC::latest()->paginate($perPage);
@@ -103,7 +103,7 @@ class ReponseCController extends Controller
         $reponsec = ReponseC::findOrFail($id);
         $reponsec->update($requestData);
 
-        return redirect('admin/reponseC')->with('flash_message', 'ReponseC updated!');
+        return redirect('admin/reponse-c')->with('flash_message', 'ReponseC updated!');
     }
 
     /**
@@ -117,6 +117,6 @@ class ReponseCController extends Controller
     {
         ReponseC::destroy($id);
 
-        return redirect('admin/reponseC')->with('flash_message', 'ReponseC deleted!');
+        return redirect('admin/reponse-c')->with('flash_message', 'ReponseC deleted!');
     }
 }
