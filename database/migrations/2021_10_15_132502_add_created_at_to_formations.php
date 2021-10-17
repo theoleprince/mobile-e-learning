@@ -16,7 +16,7 @@ class AddCreatedAtToFormations extends Migration
         Schema::table('formations', function (Blueprint $table) {
             //
             $table->integer(' created_id')->unsigned()->nullable();
-            $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+           // $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
         });
     }
