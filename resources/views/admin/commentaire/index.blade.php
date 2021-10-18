@@ -25,16 +25,16 @@
                                     @foreach($commentaire as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->commentaire }}</td><td>{{ $item->phase_id }}</td><td>{{ $item->user_id }}</td>
+                                            <td>{{ $item->commentaire }}</td><td>{{ $item->_titre }}</td><td><a href="mailto:{{$item->_email}}"><strong>{{$item->_email}}</strong></a></td>
                                             <td>
                                                 <div class="dropdown">
                                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                                         <i class="dw dw-more"></i>
                                                     </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a href="{{ url('/admin/commentaire/' . $item->id) }}" title="Detail Commentaire"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Détail</button></a>
-                                                        <a href="{{ url('/admin/commentaire/' . $item->id . '/edit') }}" title="Modifier Commentaire"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</button></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Commentaire" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer</button>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list px-4">
+                                                        <a href="{{ url('/admin/commentaire/' . $item->id) }}" title="Detail Commentaire"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                                        <a href="{{ url('/admin/commentaire/' . $item->id . '/edit') }}" title="Modifier Commentaire"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></button></a>
+                                                        <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Commentaire" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                             </td>

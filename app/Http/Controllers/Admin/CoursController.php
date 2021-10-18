@@ -72,7 +72,11 @@ class CoursController extends Controller
      */
     public function show($id)
     {
-        $cour = Cour::findOrFail($id);
+        $cour = Cour::select('cours.*','formations.nom as _nom','users.email as _email','users.name as _name','users.prenom as _prenom')
+                    ->join('formations','formations.id','=','cours.phase_id')
+                    ->join('users','users.id','=','cours.user_id')
+                    ->where('cours.id','=',$id)
+                    ->first();
 
         return view('admin.cours.show', compact('cour'));
     }

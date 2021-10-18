@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('home');
+});
+
+Route::get('/', function () {
+    return view('auth.login');
 });
 
 
@@ -26,7 +30,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => ['auth']], function () {
+
     Route::group(['prefix' => '/admin'], function () {
+        //chemin ge gestion du chemin du profil
+        Route::group(['prefix'=>'/profil'], function(){
+            Route::get('/', 'App\Http\Controllers\Admin\UserController@profile');
+        });
+
         Route::group(['prefix' => 'formation'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\FormationController@store');
             Route::get('/create', 'App\Http\Controllers\Admin\FormationController@create');

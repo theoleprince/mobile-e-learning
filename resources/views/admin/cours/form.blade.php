@@ -38,9 +38,9 @@
     <input class="form-control" name="formation_id" type="number" id="formation_id" value="{{ isset($cour->formation_id) ? $cour->formation_id : ''}}" >
     {!! $errors->first('formation_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}">
+<div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}" hidden>
     <label for="created_id" class="control-label">{{ 'Created Id' }}</label>
-    <input class="form-control" name="created_id" type="number" id="created_id" value="{{ isset($cour->created_id) ? $cour->created_id : ''}}" >
+    <input class="form-control" name="created_id" type="number" id="created_id" readonly value="{{ Auth::user()->id }}" >
     {!! $errors->first('created_id', '<p class="help-block">:message</p>') !!}
 </div>
 
