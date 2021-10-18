@@ -25,7 +25,11 @@
                                     <tr>
                                         <th>ID</th><td>{{ $cour->id }}</td>
                                     </tr>
-                                    <tr><th> Nom </th><td> {{ $cour->nom }} </td></tr><tr><th> Temps </th><td> {{ $cour->temps }} </td></tr><tr><th> Numero </th><td> {{ $cour->numero }} </td></tr>
+                                    <tr><th> Nom </th><td> {{ $cour->nom }} </td></tr>
+                                    <tr><th> Temps </th><td> {{ $cour->temps }} </td></tr>
+                                    <tr><th> Numero </th><td> {{ $cour->numero }} </td></tr>
+                                    <tr><th> Formation </th><td> {{ $cour->_nom }} </td></tr>
+                                    <tr><th> Personne Ayant Posté </th><td> {{ $cour->_name.' '.$cour->_prenom }} (<a href="mailto:{{$cour->_email}}"><strong>{{$cour->_email}}</strong></a>)</td></tr>
                                 </tbody>
                             </table>
                         </div>

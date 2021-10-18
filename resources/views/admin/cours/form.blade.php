@@ -35,7 +35,16 @@
 </div>
 <div class="form-group {{ $errors->has('formation_id') ? 'has-error' : ''}}">
     <label for="formation_id" class="control-label">{{ 'Formation Id' }}</label>
-    <input class="form-control" name="formation_id" type="number" id="formation_id" value="{{ isset($cour->formation_id) ? $cour->formation_id : ''}}" >
+    <select class="form-control" name="formation_id" id="formation_id" required>
+        <option value="" disabled selected>Selectionner une formation</option>
+        @foreach($formation as $item)
+        <option
+
+        @if(isset($cour->formation_id) && $cour->formation_id == $item->id)
+            selected
+        @endif value=" {{ $item->id }}">{{$item->nom}}</option>
+        @endforeach
+    </select>
     {!! $errors->first('formation_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}" hidden>

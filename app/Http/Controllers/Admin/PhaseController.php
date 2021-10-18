@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
+use App\Models\Cour;
 use App\Models\Phase;
 use Illuminate\Http\Request;
 
@@ -44,7 +44,8 @@ class PhaseController extends Controller
      */
     public function create()
     {
-        return view('admin.phase.create');
+        $cour = Cour::all();
+        return view('admin.phase.create',compact('cour'));
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use App\Models\Cour;
+use App\Models\Formation;
 use Illuminate\Http\Request;
 
 class CoursController extends Controller
@@ -21,7 +22,10 @@ class CoursController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $cours = Cour::where('nom', 'LIKE', "%$keyword%")
+            $cours = Cour::select('cours.*','formations.nom as _formation','users.email as _email','users.name as _name','users.prenom as _prenom')
+                ->join('formations','formations.id','=','cours.formation_id')
+                ->join('users','users.id','=','cours.created_id')
+                ->where('nom', 'LIKE', "%$keyword%")
                 ->orWhere('temps', 'LIKE', "%$keyword%")
                 ->orWhere('numero', 'LIKE', "%$keyword%")
                 ->orWhere('activated', 'LIKE', "%$keyword%")
@@ -32,7 +36,6 @@ class CoursController extends Controller
         } else {
             $cours = Cour::latest()->paginate($perPage);
         }
-
         return view('admin.cours.index', compact('cours'));
     }
 
@@ -43,7 +46,8 @@ class CoursController extends Controller
      */
     public function create()
     {
-        return view('admin.cours.create');
+        $formation = Formation::all();
+        return view('admin.cours.create',compact('formation'));
     }
 
     /**
@@ -73,8 +77,8 @@ class CoursController extends Controller
     public function show($id)
     {
         $cour = Cour::select('cours.*','formations.nom as _nom','users.email as _email','users.name as _name','users.prenom as _prenom')
-                    ->join('formations','formations.id','=','cours.phase_id')
-                    ->join('users','users.id','=','cours.user_id')
+                    ->join('formations','formations.id','=','cours.formation_id')
+                    ->join('users','users.id','=','cours.created_id')
                     ->where('cours.id','=',$id)
                     ->first();
 
