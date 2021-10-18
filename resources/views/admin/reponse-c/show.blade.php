@@ -8,8 +8,8 @@
                     <div class="card-header">ReponseC {{ $reponsec->id }}</div>
                     <div class="card-body">
 
-                        <a href="{{ url('/admin/reponseC') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/admin/reponseC/' . $reponsec->id . '/edit') }}" title="Edit ReponseC"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('/admin/reponse-c') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/reponse-c/' . $reponsec->id . '/edit') }}" title="Edit ReponseC"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
                         <form method="POST" action="{{ url('admin/reponsec' . '/' . $reponsec->id) }}" accept-charset="UTF-8" style="display:inline">
                             {{ method_field('DELETE') }}
@@ -25,7 +25,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $reponsec->id }}</td>
                                     </tr>
-                                    <tr><th> Reponse </th><td> {{ $reponsec->reponse }} </td></tr><tr><th> Commentaire Id </th><td> {{ $reponsec->commentaire_id }} </td></tr><tr><th> Ceated Id </th><td> {{ $reponsec-> created_id }} </td></tr>
+                                    <tr><th> Reponse </th><td> {{ $reponsec->reponse }} </td></tr><tr><th> Commentaire Id </th><td> {{ $reponsec->commentaire_id }} </td></tr><tr><th> Created Id </th><td> {{ $reponsec->created_id }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-class CreateReponseCsTable extends Migration
+class CreateCoursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +12,18 @@ class CreateReponseCsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reponse_cs', function (Blueprint $table) {
+        Schema::create('cours', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->text('reponse')->nullable();
-            $table->integer('commentaire_id')->unsigned();
+            $table->string('nom')->nullable();
+            $table->integer('temps')->nullable();
+            $table->integer('numero')->nullable();
+            $table->boolean('activated')->nullable();
+            $table->boolean('finish')->nullable();
+            $table->integer('formation_id')->unsigned();
             $table->integer('created_id')->unsigned();
             $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('commentaire_id')->references('id')->on('commentaires')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade')->onUpdate('cascade');
             });
     }
 
@@ -31,6 +34,6 @@ class CreateReponseCsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reponse_cs');
+        Schema::drop('cours');
     }
 }

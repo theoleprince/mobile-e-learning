@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-class CreateCoursTable extends Migration
+class CreateReponseQsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +12,17 @@ class CreateCoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('cours', function (Blueprint $table) {
+        Schema::create('reponse_qs', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('nom')->nullable();
-            $table->integer('temps')->nullable();
-            $table->integer('numero')->nullable();
-            $table->boolean('activated')->nullable();
+            $table->text('Reponse')->nullable();
+            $table->double('note')->nullable();
+            $table->string('statut');
             $table->boolean('finish')->nullable();
-            $table->integer('formation_id')->unsigned();
+            $table->integer('question_id')->unsigned();
             $table->integer('created_id')->unsigned();
-            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
             });
     }
 
@@ -35,6 +33,6 @@ class CreateCoursTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cours');
+        Schema::drop('reponse_qs');
     }
 }

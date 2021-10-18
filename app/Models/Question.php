@@ -25,7 +25,7 @@ class Question extends Model
      *
      * @var array
      */
-    protected $fillable = ['question', 'nbre_point', 'cours_id', ' created_id'];
+    protected $fillable = ['question', 'nbre_point', 'cours_id', 'created_id'];
 
     public function user()
     {
@@ -35,5 +35,5 @@ class Question extends Model
     {
         return $this->belongsTo('App\Models\Cours');
     }
-
+    
 }

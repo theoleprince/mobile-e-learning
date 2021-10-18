@@ -6,10 +6,10 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="{{url('/')}}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="{{url('/admin/users/profil')}}" class="nav-link">Contact</a>
       </li>
     </ul>
 
@@ -27,6 +27,24 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+
+		{{-- <div class="user-info-dropdown">
+			<div class="dropdown">
+				<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+					<span class="user-icon">
+						<img src="{{ url(isset(Auth::user()->avatar) ? 'storage/' . Auth::user()->avatar : 'photo.jfif') }}" alt="" style="width:50px; height:50px; float:left; border-radius:50%; margin-right:25px; border: 2px purple solid">
+					</span>
+					<span class="user-name">{{ Auth::user()->name }}</span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+					<a class="dropdown-item" href="{{url('/admin/users/profil')}}"><i class="dw dw-user1"></i> Profile</a>
+					<form method="POST" action="{{ route('logout') }}">
+									@csrf
+						<a class="dropdown-item" href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"><i class="dw dw-logout"></i> Log Out</a>
+					</form>
+				</div>
+			</div>
+		</div> --}}
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -37,7 +55,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="{{asset('dist/img/user1-128x128.jpg')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -53,7 +71,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="{{asset('dist/img/user8-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
@@ -69,7 +87,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="{{asset('dist/img/user3-128x128.jpg')}}" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
@@ -120,4 +138,3 @@
     </ul>
   </nav>
   <!-- /.navbar -->
-

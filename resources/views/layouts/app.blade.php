@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>E-Learning | Dashboard</title>
+  <title>AdminLTE 3 | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
   <!-- iCheck -->
@@ -27,34 +27,28 @@
   <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-
     <div class="wrapper">
-
-
-        <!-- entete -->
-        @include('layouts.partials.left_side_bar')
-        <!-- bordure -->
+        <!-- head Side Bar -->
         @include('layouts.partials.head_side_bar')
-        <!-- Corps -->
-        {{-- @include('layouts.partials.main') --}}
-         <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <main class="py-4">
-                    @yield('content')
-                </main>
-            </div>
+        <!-- left Side Bar -->
+        @include('layouts.partials.left_side_bar')
+        <div class="content-wrapper">
+            <main class="py-4">
+                <!-- Main -->
+                @yield('content')
+            </main>
+        </div>
 
-
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-          <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
-      </div>
-
-
+        <!-- foot Side Bar -->
+        @include('layouts.partials.foot_side_bar')
+    </div>
 <!-- jQuery -->
+
+<!-- DataTables -->
+<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
@@ -88,5 +82,25 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+
+
+    <!-- page script -->
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 </body>
 </html>

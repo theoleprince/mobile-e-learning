@@ -25,7 +25,7 @@ class ReponseQ extends Model
      *
      * @var array
      */
-    protected $fillable = ['Reponse', 'note', 'statut', 'finish', 'question_id', ' created_id'];
+    protected $fillable = ['Reponse', 'note', 'statut', 'finish', 'question_id', 'created_id'];
 
     public function user()
     {
@@ -35,5 +35,5 @@ class ReponseQ extends Model
     {
         return $this->belongsTo('App\Models\Question');
     }
-
+    
 }

@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">Edit ReponseC #{{ $reponsec->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/reponseC') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/admin/reponse-c') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -19,11 +19,11 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ url('/admin/reponseC/' . $reponsec->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('/admin/reponse-c/' . $reponsec->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             {{ csrf_field() }}
 
-                            @include ('admin.reponseC.form', ['formMode' => 'edit'])
+                            @include ('admin.reponse-c.form', ['formMode' => 'edit'])
 
                         </form>
 

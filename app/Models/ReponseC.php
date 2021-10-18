@@ -25,7 +25,7 @@ class ReponseC extends Model
      *
      * @var array
      */
-    protected $fillable = ['reponse', 'commentaire_id', ' created_id'];
+    protected $fillable = ['reponse', 'commentaire_id', 'created_id'];
 
     public function user()
     {
@@ -35,5 +35,5 @@ class ReponseC extends Model
     {
         return $this->belongsTo('App\Models\Commentaire');
     }
-
+    
 }

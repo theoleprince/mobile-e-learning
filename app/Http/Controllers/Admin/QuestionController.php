@@ -24,7 +24,7 @@ class QuestionController extends Controller
             $question = Question::where('question', 'LIKE', "%$keyword%")
                 ->orWhere('nbre_point', 'LIKE', "%$keyword%")
                 ->orWhere('cours_id', 'LIKE', "%$keyword%")
-                ->orWhere(' created_id', 'LIKE', "%$keyword%")
+                ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $question = Question::latest()->paginate($perPage);

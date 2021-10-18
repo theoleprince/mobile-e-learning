@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class CreatePhasesTable extends Migration
 {
@@ -20,8 +19,8 @@ class CreatePhasesTable extends Migration
             $table->string('video')->nullable();
             $table->integer('numero')->nullable();
             $table->integer('temps')->nullable();
-            $table->boolean('activated')->default(false);
-            $table->boolean('finish')->default(false);
+            $table->boolean('activated')->nullable();
+            $table->boolean('finish')->nullable();
             $table->integer('cours_id')->unsigned();
             $table->integer('created_id')->unsigned();
             $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

@@ -13,10 +13,10 @@
     <input class="form-control" name="cours_id" type="number" id="cours_id" value="{{ isset($question->cours_id) ? $question->cours_id : ''}}" >
     {!! $errors->first('cours_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has(' created_id') ? 'has-error' : ''}}">
-    <label for=" created_id" class="control-label">{{ 'Ceated Id' }}</label>
-    <input class="form-control" name=" created_id" type="number" id=" created_id" value="{{ isset($question-> created_id) ? $question-> created_id : ''}}" >
-    {!! $errors->first(' created_id', '<p class="help-block">:message</p>') !!}
+<div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}">
+    <label for="created_id" class="control-label">{{ 'Created Id' }}</label>
+    <input class="form-control" name="created_id" type="number" id="created_id" value="{{ isset($question->created_id) ? $question->created_id : ''}}" >
+    {!! $errors->first('created_id', '<p class="help-block">:message</p>') !!}
 </div>
 
 

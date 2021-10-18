@@ -25,11 +25,11 @@ class Formation extends Model
      *
      * @var array
      */
-    protected $fillable = ['nom', 'description', 'activated', ' created_id'];
+    protected $fillable = ['nom', 'description', 'activated', 'created_id'];
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-
+    
 }

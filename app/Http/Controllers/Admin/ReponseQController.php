@@ -26,7 +26,7 @@ class ReponseQController extends Controller
                 ->orWhere('statut', 'LIKE', "%$keyword%")
                 ->orWhere('finish', 'LIKE', "%$keyword%")
                 ->orWhere('question_id', 'LIKE', "%$keyword%")
-                ->orWhere(' created_id', 'LIKE', "%$keyword%")
+                ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $reponseq = ReponseQ::latest()->paginate($perPage);
