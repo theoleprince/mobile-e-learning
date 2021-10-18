@@ -28,7 +28,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-		{{-- <div class="user-info-dropdown">
+		<div class="user-info-dropdown">
 			<div class="dropdown">
 				<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 					<span class="user-icon">
@@ -44,7 +44,7 @@
 					</form>
 				</div>
 			</div>
-		</div> --}}
+		</div>
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">

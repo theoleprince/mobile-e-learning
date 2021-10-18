@@ -13,7 +13,7 @@
           <img src="{{asset('dist/img/user2-160x160.jpg')}}"src="{{ url(isset(Auth::user()->avatar) ? 'storage/' . Auth::user()->avatar : 'photo.jfif') }}"  class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="{{url('/admin/users/profil')}}" class="d-block">{{Auth::user()->name}}</a>
         </div>
       </div>
 
