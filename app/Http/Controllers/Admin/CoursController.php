@@ -34,7 +34,10 @@ class CoursController extends Controller
                 ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $cours = Cour::latest()->paginate($perPage);
+            $cours = Cour::select('cours.*','formations.nom as _formation','users.email as _email','users.name as _name','users.prenom as _prenom')
+            ->join('formations','formations.id','=','cours.formation_id')
+            ->join('users','users.id','=','cours.created_id')
+            ->latest()->paginate($perPage);
         }
         return view('admin.cours.index', compact('cours'));
     }

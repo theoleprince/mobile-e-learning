@@ -39,7 +39,7 @@
     {!! $errors->first('finish', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('cours_id') ? 'has-error' : ''}}">
-    <label for="cours_id" class="control-label">{{ 'Cours Id' }}</label>
+    <label for="cours_id" class="control-label">{{ 'Cours' }}</label>
     <select class="form-control" name="cours_id" id="cours_id" required>
         <option value="" disabled selected>Selectionner un cours</option>
         @foreach($cour as $item)

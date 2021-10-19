@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
+use App\Models\Cour;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
@@ -21,13 +21,19 @@ class QuestionController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $question = Question::where('question', 'LIKE', "%$keyword%")
+            $question = Question::select('questions.*','cours.nom as _cours','users.email as _email')
+            ->join('cours','cours.id','=','questions.cours_id')
+            ->join('users','users.id','=','questions.created_id')
+            ->where('question', 'LIKE', "%$keyword%")
                 ->orWhere('nbre_point', 'LIKE', "%$keyword%")
                 ->orWhere('cours_id', 'LIKE', "%$keyword%")
                 ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $question = Question::latest()->paginate($perPage);
+            $question = Question::select('questions.*','cours.nom as _cours','users.email as _email')
+            ->join('cours','cours.id','=','questions.cours_id')
+            ->join('users','users.id','=','questions.created_id')
+            ->latest()->paginate($perPage);
         }
 
         return view('admin.question.index', compact('question'));
@@ -40,7 +46,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('admin.question.create');
+        $cour = Cour::all();
+        return view('admin.question.create',compact('cour'));
     }
 
     /**
@@ -69,7 +76,11 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $question = Question::findOrFail($id);
+        $question = Question::select('questions.*','cours.nom as _nom','users.email as _email','users.name as _name','users.prenom as _prenom')
+                            ->join('cours','cours.id','=','questions.cours_id')
+                            ->join('users','users.id','=','questions.created_id')
+                            ->where('questions.id','=',$id)
+                            ->first();
 
         return view('admin.question.show', compact('question'));
     }

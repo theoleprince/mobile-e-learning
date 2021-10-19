@@ -18,23 +18,23 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>#</th><th>Question</th><th>Nbre Point</th><th>Cours Id</th><th>Actions</th>
+                                            <th>#</th><th>Cours</th><th>Question</th><th>Cours Id</th><th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($question as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->question }}</td><td>{{ $item->nbre_point }}</td><td>{{ $item->cours_id }}</td>
+                                            <td>{{ $item->_cours }}</td><td>{{ $item->question }}</td><td>{{ $item->_email }}</td>
                                             <td>
                                                 <div class="dropdown">
                                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                                         <i class="dw dw-more"></i>
                                                     </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a href="{{ url('/admin/question/' . $item->id) }}" title="Detail Question"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Détail</button></a>
-                                                        <a href="{{ url('/admin/question/' . $item->id . '/edit') }}" title="Modifier Question"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</button></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Question" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer</button>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list px-4">
+                                                        <a href="{{ url('/admin/question/' . $item->id) }}" title="Detail Question"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                                                        <a href="{{ url('/admin/question/' . $item->id . '/edit') }}" title="Modifier Question"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                                        <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Question" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                     </div>
                                                 </div>
                                             </td>

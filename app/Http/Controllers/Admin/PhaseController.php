@@ -21,17 +21,20 @@ class PhaseController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $phase = Phase::where('titre', 'LIKE', "%$keyword%")
+            $phase = Phase::select('phases.*','cours.nom as _cours')
+                ->join('cours','cours.id','=','phases.cours_id')
+                ->where('titre', 'LIKE', "%$keyword%")
                 ->orWhere('video', 'LIKE', "%$keyword%")
                 ->orWhere('numero', 'LIKE', "%$keyword%")
                 ->orWhere('temps', 'LIKE', "%$keyword%")
                 ->orWhere('activated', 'LIKE', "%$keyword%")
                 ->orWhere('finish', 'LIKE', "%$keyword%")
                 ->orWhere('cours_id', 'LIKE', "%$keyword%")
-                ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $phase = Phase::latest()->paginate($perPage);
+            $phase = Phase::select('phases.*','cours.nom as _cours')
+            ->join('cours','cours.id','=','phases.cours_id')
+            ->latest()->paginate($perPage);
         }
 
         return view('admin.phase.index', compact('phase'));
@@ -78,7 +81,11 @@ class PhaseController extends Controller
      */
     public function show($id)
     {
-        $phase = Phase::findOrFail($id);
+        $phase = Phase::select('phases.*','cours.nom as _cours','users.name as _name')
+                        ->join('cours','cours.id','=','phases.cours_id')
+                        ->join('users','users.id','=','phases.created_id')
+                        ->where('phases.id','=',$id)
+                        ->first();
 
         return view('admin.phase.show', compact('phase'));
     }
@@ -92,9 +99,11 @@ class PhaseController extends Controller
      */
     public function edit($id)
     {
+
+        $cour = Cour::all();
         $phase = Phase::findOrFail($id);
 
-        return view('admin.phase.edit', compact('phase'));
+        return view('admin.phase.edit', compact('phase','cour'));
     }
 
     /**
