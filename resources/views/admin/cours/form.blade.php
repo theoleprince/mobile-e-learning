@@ -16,7 +16,7 @@
 <div class="form-group {{ $errors->has('activated') ? 'has-error' : ''}}">
     <label for="activated" class="control-label">{{ 'Activated' }}</label>
     <div class="radio">
-    <label><input name="activated" type="radio" value="1" {{ (isset($cour) && 1 == $cour->activated) ? 'checked' : '' }}> Yes</label>
+    <label style='visibility:hidden;display:none'><input name="activated" type="radio" value="1" {{ (isset($cour) && 1 == $cour->activated) ? 'checked' : '' }}> Yes</label>
 </div>
 <div class="radio">
     <label><input name="activated" type="radio" value="0" @if (isset($cour)) {{ (0 == $cour->activated) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
@@ -26,7 +26,7 @@
 <div class="form-group {{ $errors->has('finish') ? 'has-error' : ''}}">
     <label for="finish" class="control-label">{{ 'Finish' }}</label>
     <div class="radio">
-    <label><input name="finish" type="radio" value="1" {{ (isset($cour) && 1 == $cour->finish) ? 'checked' : '' }}> Yes</label>
+    <label style='visibility:hidden;display:none'><input name="finish" type="radio" value="1" {{ (isset($cour) && 1 == $cour->finish) ? 'checked' : '' }}> Yes</label>
 </div>
 <div class="radio">
     <label><input name="finish" type="radio" value="0" @if (isset($cour)) {{ (0 == $cour->finish) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>

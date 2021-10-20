@@ -8,16 +8,20 @@
     <textarea class="form-control" rows="5" name="description" type="textarea" id="description" >{{ isset($formation->description) ? $formation->description : ''}}</textarea>
     {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('activated') ? 'has-error' : ''}}">
-    <label for="activated" class="control-label">{{ 'Activated' }}</label>
+@if(Auth::user()->hasRole(['administrator','superadministrator']))
+    <div class="form-group {{ $errors->has('activated') ? 'has-error' : ''}}">
+        <label for="activated" class="control-label">{{ 'Activated' }}</label>
+        <div class="radio">
+            <label style='visibility:hidden;display:none'><input name="activated" type="radio" value="1" {{ (isset($formation) && 1 == $formation->activated) ? 'checked' : '' }}> Yes</label>
+        </div>
+    </div>
     <div class="radio">
-    <label><input name="activated" type="radio" value="1" {{ (isset($formation) && 1 == $formation->activated) ? 'checked' : '' }}> Yes</label>
-</div>
-<div class="radio">
-    <label><input name="activated" type="radio" value="0" @if (isset($formation)) {{ (0 == $formation->activated) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
-</div>
-    {!! $errors->first('activated', '<p class="help-block">:message</p>') !!}
-</div>
+        <label><input name="activated" type="radio" value="0" @if (isset($formation)) {{ (0 == $formation->activated) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
+        <div>
+            {!! $errors->first('activated', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+@endif
 <div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}">
     <label for="created_id" class="control-label">{{ 'Created Id' }}</label>
     <input class="form-control" name="created_id" type="number" id="created_id" value="{{ isset($formation->created_id) ? $formation->created_id : ''}}" >

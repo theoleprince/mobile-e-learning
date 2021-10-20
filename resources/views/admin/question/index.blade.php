@@ -8,9 +8,11 @@
                     <div class="card">
                         <div class="card-header" style="display: flex; justify-content: space-between">
                             <h3 class="card-title">Question</h3>
-                            <a href="{{ url('/admin/question/create') }}" class="btn btn-success btn-sm" title="Add New Question">
-                                <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                            </a>
+                            @if(Auth::user()->hasPermission('questions-create'))
+                                <a href="{{ url('/admin/question/create') }}" class="btn btn-success btn-sm" title="Add New Question">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                                </a>
+                            @endif
 
                         </div>
                         <div class="card-body">
@@ -33,8 +35,12 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                         <a href="{{ url('/admin/question/' . $item->id) }}" title="Detail Question"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Détail</button></a>
-                                                        <a href="{{ url('/admin/question/' . $item->id . '/edit') }}" title="Modifier Question"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</button></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Question" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer</button>
+                                                        @if(Auth::user()->hasPermission('questions-update'))
+                                                            <a href="{{ url('/admin/question/' . $item->id . '/edit') }}" title="Modifier Question"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</button></a>
+                                                        @endif
+                                                        @if(Auth::user()->hasPermission('questions-delete'))
+                                                            <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Question" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer</button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </td>

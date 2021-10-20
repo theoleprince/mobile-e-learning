@@ -24,71 +24,77 @@
                with font-awesome or any other icon font library -->
             <li class="nav-item has-treeview menu-close">
                 <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                    Formation
-                    <i class="right fas fa-angle-left"></i>
-                </p>
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                      Formations
+                      <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{url('admin/formation/create')}}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Ajouter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/formation')}}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Consulter</p>
-                    </a>
-                </li>
+                  @if(Auth::user()->hasPermission('formations-create'))
+                    <li class="nav-item">
+                        <a href="{{url('admin/formation/create')}}" class="nav-link">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Ajouter</p>
+                        </a>
+                    </li>
+                  @endif
+                  <li class="nav-item">
+                      <a href="{{url('admin/formation')}}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Consulter</p>
+                      </a>
+                  </li>
                 </ul>
             </li>
             <li class="nav-item has-treeview menu-close">
                 <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-book"></i>
-                <p>
-                    Cours
-                    <i class="right fas fa-angle-left"></i>
-                </p>
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>
+                      Cours
+                      <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{url('admin/cours/create')}}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Ajouter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/cours')}}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Consulter</p>
-                    </a>
-                </li>
+                  @if(Auth::user()->hasPermission('cours-create'))
+                    <li class="nav-item">
+                        <a href="{{url('admin/cours/create')}}" class="nav-link">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Ajouter</p>
+                        </a>
+                    </li>
+                  @endif
+                  <li class="nav-item">
+                      <a href="{{url('admin/cours')}}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Consulter</p>
+                      </a>
+                  </li>
                 </ul>
             </li>
             <li class="nav-item has-treeview menu-close">
                 <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-copy"></i>
-                <p>
-                    Phase
-                    <i class="right fas fa-angle-left"></i>
-                </p>
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                      Phases
+                      <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{url('admin/phase/create')}}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Ajouter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/phase')}}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Consulter</p>
-                    </a>
-                </li>
+                  @if(Auth::user()->hasPermission('phases-create'))
+                    <li class="nav-item">
+                        <a href="{{url('admin/phase/create')}}" class="nav-link">
+                            <i class="fas fa-plus nav-icon"></i>
+                            <p>Ajouter</p>
+                        </a>
+                    </li>
+                  @endif
+                  <li class="nav-item">
+                      <a href="{{url('admin/phase')}}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Consulter</p>
+                      </a>
+                  </li>
                 </ul>
             </li>
           <li class="nav-item">

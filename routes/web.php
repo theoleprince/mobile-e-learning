@@ -28,73 +28,73 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/admin'], function () {
         Route::group(['prefix' => 'formation'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\FormationController@store');
+            Route::post('/', 'App\Http\Controllers\Admin\FormationController@store')->middleware('has-permission:formations-create');
             Route::get('/create', 'App\Http\Controllers\Admin\FormationController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\FormationController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\FormationController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\FormationController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\FormationController@update');
-            Route::get('/', 'App\Http\Controllers\Admin\FormationController@index');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\FormationController@destroy')->middleware('has-permission:formations-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\FormationController@show')->middleware('has-permission:formations-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\FormationController@update')->middleware('has-permission:formations-update');
+            Route::get('/', 'App\Http\Controllers\Admin\FormationController@index')->middleware('has-permission:formations-read');
         });
 
         Route::group(['prefix' => 'cours'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\CoursController@store');
+            Route::post('/', 'App\Http\Controllers\Admin\CoursController@store')->middleware('has-permission:cours-create');
             Route::get('/create', 'App\Http\Controllers\Admin\CoursController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\CoursController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\CoursController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\CoursController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\CoursController@update');
-            Route::get('/', 'App\Http\Controllers\Admin\CoursController@index');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\CoursController@destroy')->middleware('has-permission:cours-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\CoursController@show')->middleware('has-permission:cours-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\CoursController@update')->middleware('has-permission:cours-update');
+            Route::get('/', 'App\Http\Controllers\Admin\CoursController@index')->middleware('has-permission:cours-read');
         });
 
         Route::group(['prefix' => 'phase'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\PhaseController@store');
+            Route::post('/', 'App\Http\Controllers\Admin\PhaseController@store')->middleware('has-permission:phases-create');
             Route::get('/create', 'App\Http\Controllers\Admin\PhaseController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\PhaseController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\PhaseController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\PhaseController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\PhaseController@update');
-            Route::get('/', 'App\Http\Controllers\Admin\PhaseController@index');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\PhaseController@destroy')->middleware('has-permission:phases-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\PhaseController@show')->middleware('has-permission:phases-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\PhaseController@update')->middleware('has-permission:phases-update');
+            Route::get('/', 'App\Http\Controllers\Admin\PhaseController@index')->middleware('has-permission:phases-read');
         });
 
         Route::group(['prefix' => 'question'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\QuestionController@store');
+            Route::post('/', 'App\Http\Controllers\Admin\QuestionController@store')->middleware('has-permission:questions-create');
             Route::get('/create', 'App\Http\Controllers\Admin\QuestionController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\QuestionController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\QuestionController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\QuestionController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\QuestionController@update');
-            Route::get('/', 'App\Http\Controllers\Admin\QuestionController@index');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\QuestionController@destroy')->middleware('has-permission:questions-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\QuestionController@show')->middleware('has-permission:questions-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\QuestionController@update')->middleware('has-permission:questions-update');
+            Route::get('/', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
         });
 
         Route::group(['prefix' => 'reponse-c'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ReponseCController@store');
+            Route::post('/', 'App\Http\Controllers\Admin\ReponseCController@store')->middleware('has-permission:reponse_cs-create');
             Route::get('/create', 'App\Http\Controllers\Admin\ReponseCController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\ReponseCController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\ReponseCController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\ReponseCController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\ReponseCController@update');
-            Route::get('/', 'App\Http\Controllers\Admin\ReponseCController@index');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\ReponseCController@destroy')->middleware('has-permission:reponse_cs-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\ReponseCController@show')->middleware('has-permission:reponse_cs-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\ReponseCController@update')->middleware('has-permission:reponse_cs-update');
+            Route::get('/', 'App\Http\Controllers\Admin\ReponseCController@index')->middleware('has-permission:reponse_cs-read');
         });
 
         Route::group(['prefix' => 'commentaire'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\CommentaireController@store');
+            Route::post('/', 'App\Http\Controllers\Admin\CommentaireController@store')->middleware('has-permission:commentaires-create');
             Route::get('/create', 'App\Http\Controllers\Admin\CommentaireController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\CommentaireController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\CommentaireController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\CommentaireController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\CommentaireController@update');
-            Route::get('/', 'App\Http\Controllers\Admin\CommentaireController@index');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\CommentaireController@destroy')->middleware('has-permission:commentaires-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\CommentaireController@show')->middleware('has-permission:commentaires-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\CommentaireController@update')->middleware('has-permission:commentaires-update');
+            Route::get('/', 'App\Http\Controllers\Admin\CommentaireController@index')->middleware('has-permission:commentaires-read');
         });
 
         Route::group(['prefix' => 'reponse-q'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ReponseQController@store');
+            Route::post('/', 'App\Http\Controllers\Admin\ReponseQController@store')->middleware('has-permission:reponse_qs-create');
             Route::get('/create', 'App\Http\Controllers\Admin\ReponseQController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\ReponseQController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\ReponseQController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\ReponseQController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\ReponseQController@update');
-            Route::get('/', 'App\Http\Controllers\Admin\ReponseQController@index');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\ReponseQController@destroy')->middleware('has-permission:reponse_qs-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\ReponseQController@show')->middleware('has-permission:reponse_qs-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\ReponseQController@update')->middleware('has-permission:reponse_qs-update');
+            Route::get('/', 'App\Http\Controllers\Admin\ReponseQController@index')->middleware('has-permission:reponse_qs-read');
         });
     });
 });
