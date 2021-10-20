@@ -25,7 +25,10 @@
                                     <tr>
                                         <th>ID</th><td>{{ $phase->id }}</td>
                                     </tr>
-                                    <tr><th> Titre </th><td> {{ $phase->titre }} </td></tr><tr><th> Video </th><td> {{ $phase->video }} </td></tr><tr><th> Numero </th><td> {{ $phase->numero }} </td></tr>
+                                    <tr><th> Cours </th><td> {{ $phase->_cours }} </td></tr>
+                                    <tr><th> Titre </th><td> {{ $phase->titre }} </td></tr>
+                                    <tr><th> Video </th><td> {{ $phase->video }} </td></tr>
+                                    <tr><th> Numero </th><td> {{ $phase->numero }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

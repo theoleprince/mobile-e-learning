@@ -13,7 +13,7 @@
           <img src="{{asset('dist/img/user2-160x160.jpg')}}"src="{{ url(isset(Auth::user()->avatar) ? 'storage/' . Auth::user()->avatar : 'photo.jfif') }}"  class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="{{url('/admin/users/profil')}}" class="d-block">{{Auth::user()->name}}</a>
+          <a href="{{url('/admin/profil')}}" class="d-block">{{Auth::user()->name}}</a>
         </div>
       </div>
 
@@ -95,6 +95,98 @@
                           <p>Consulter</p>
                       </a>
                   </li>
+                </ul>
+            </li>
+            <li class="nav-item has-treeview menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                    Question
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{url('admin/question/create')}}" class="nav-link">
+                        <i class="fas fa-plus nav-icon"></i>
+                        <p>Ajouter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('admin/question')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Consulter</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            <li class="nav-item has-treeview menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                    Reponse Question
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{url('admin/reponse-q/create')}}" class="nav-link">
+                        <i class="fas fa-plus nav-icon"></i>
+                        <p>Ajouter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('admin/reponse-q')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Consulter</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            <li class="nav-item has-treeview menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                    Commentaire
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{url('admin/commentaire/create')}}" class="nav-link">
+                        <i class="fas fa-plus nav-icon"></i>
+                        <p>Ajouter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('admin/commentaire')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Consulter</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            <li class="nav-item has-treeview menu-close">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                    Reponse Commentaire
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{url('admin/reponse-c/create')}}" class="nav-link">
+                        <i class="fas fa-plus nav-icon"></i>
+                        <p>Ajouter</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('admin/reponse-c')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Consulter</p>
+                    </a>
+                </li>
                 </ul>
             </li>
           <li class="nav-item">

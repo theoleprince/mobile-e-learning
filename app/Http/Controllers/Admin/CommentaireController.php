@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use App\Models\Commentaire;
+use App\Models\Phase;
 use Illuminate\Http\Request;
 
 class CommentaireController extends Controller
@@ -21,12 +22,17 @@ class CommentaireController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $commentaire = Commentaire::where('commentaire', 'LIKE', "%$keyword%")
-                ->orWhere('phase_id', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+            $commentaire = Commentaire::select('commentaires.*','phases.titre as _titre','users.email as _email')
+                ->join('phases','phases.id','=','commentaires.phase_id')
+                ->join('users','users.id','=','commentaires.user_id')
+                ->latest()
+                ->paginate($perPage);
         } else {
-            $commentaire = Commentaire::latest()->paginate($perPage);
+            $commentaire = Commentaire::select('commentaires.*','phases.titre as _titre','users.email as _email')
+                        ->join('phases','phases.id','=','commentaires.phase_id')
+                        ->join('users','users.id','=','commentaires.user_id')
+                        ->latest()
+                        ->paginate($perPage);
         }
 
         return view('admin.commentaire.index', compact('commentaire'));
@@ -39,7 +45,8 @@ class CommentaireController extends Controller
      */
     public function create()
     {
-        return view('admin.commentaire.create');
+        $phase = Phase::all();
+        return view('admin.commentaire.create',compact('phase'));
     }
 
     /**
@@ -68,7 +75,11 @@ class CommentaireController extends Controller
      */
     public function show($id)
     {
-        $commentaire = Commentaire::findOrFail($id);
+        $commentaire = Commentaire::select('commentaires.*','phases.titre as _titre','users.email as _email','users.name as _name','users.prenom as _prenom')
+                    ->join('phases','phases.id','=','commentaires.phase_id')
+                    ->join('users','users.id','=','commentaires.user_id')
+                    ->where('commentaires.id','=',$id)
+                    ->first();
 
         return view('admin.commentaire.show', compact('commentaire'));
     }

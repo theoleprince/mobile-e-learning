@@ -17,13 +17,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th><th>Titre</th><th>Video</th><th>Numero</th><th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <div class="row">
                                     @foreach($phase as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
@@ -42,12 +36,11 @@
                                                             <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Phase" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer</button>
                                                         @endif
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </p>
+                                            </div>
+                                        </div>
                                     @endforeach
-                                    </tbody>
-                                </table>
+                                </div>
                             </div>
                         </div>
                     </div>

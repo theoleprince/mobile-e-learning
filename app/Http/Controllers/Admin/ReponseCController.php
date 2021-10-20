@@ -21,12 +21,18 @@ class ReponseCController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $reponsec = ReponseC::where('reponse', 'LIKE', "%$keyword%")
+            $reponsec = ReponseC::select('reponse_cs.*','commentaires.commentaire as _commentaire','users.email as _email')
+                ->join('commentaires','commentaires.id','=','reponse_cs.commentaire_id')
+                ->join('users','users.id','=','reponse_cs.created_id')
+                ->where('reponse', 'LIKE', "%$keyword%")
                 ->orWhere('commentaire_id', 'LIKE', "%$keyword%")
                 ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $reponsec = ReponseC::latest()->paginate($perPage);
+            $reponsec = ReponseC::select('reponse_cs.*','commentaires.commentaire as _commentaire','users.email as _email')
+            ->join('commentaires','commentaires.id','=','reponse_cs.commentaire_id')
+            ->join('users','users.id','=','reponse_cs.created_id')
+            ->latest()->paginate($perPage);
         }
 
         return view('admin.reponse-c.index', compact('reponsec'));
@@ -68,7 +74,9 @@ class ReponseCController extends Controller
      */
     public function show($id)
     {
-        $reponsec = ReponseC::findOrFail($id);
+        $reponsec = ReponseC::select('reponse_cs.*','commentaires.commentaire as _commentaire','users.email as _email')
+        ->join('commentaires','commentaires.id','=','reponse_cs.commentaire_id')
+        ->join('users','users.id','=','reponse_cs.created_id')->where('reponse_cs.id','=',$id)->first();
 
         return view('admin.reponse-c.show', compact('reponsec'));
     }

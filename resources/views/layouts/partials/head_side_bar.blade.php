@@ -37,7 +37,7 @@
 					<span class="user-name">{{ Auth::user()->name }}</span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-					<a class="dropdown-item" href="{{url('/admin/users/profil')}}"><i class="dw dw-user1"></i> Profile</a>
+					<a class="dropdown-item" href="{{url('/admin/profil')}}"><i class="dw dw-user1"></i> Profile</a>
 					<form method="POST" action="{{ route('logout') }}">
 									@csrf
 						<a class="dropdown-item" href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"><i class="dw dw-logout"></i> Log Out</a>

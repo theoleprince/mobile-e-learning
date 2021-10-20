@@ -5,7 +5,7 @@
 </div>
 <div class="form-group {{ $errors->has('video') ? 'has-error' : ''}}">
     <label for="video" class="control-label">{{ 'Video' }}</label>
-    <input class="form-control" name="video" type="file" id="video" value="{{ isset($phase->video) ? $phase->video : ''}}" >
+    <input class="form-control" name="video" type="file" accept="video/*" id="video" value="{{ isset($phase->video) ? $phase->video : ''}}" >
     {!! $errors->first('video', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('numero') ? 'has-error' : ''}}">
@@ -39,13 +39,22 @@
     {!! $errors->first('finish', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('cours_id') ? 'has-error' : ''}}">
-    <label for="cours_id" class="control-label">{{ 'Cours Id' }}</label>
-    <input class="form-control" name="cours_id" type="number" id="cours_id" value="{{ isset($phase->cours_id) ? $phase->cours_id : ''}}" >
+    <label for="cours_id" class="control-label">{{ 'Cours' }}</label>
+    <select class="form-control" name="cours_id" id="cours_id" required>
+        <option value="" disabled selected>Selectionner un cours</option>
+        @foreach($cour as $item)
+        <option
+
+        @if(isset($cour->cours_id) && $cour->cours_id == $item->id)
+            selected
+        @endif value=" {{ $item->id }}">{{$item->nom}}</option>
+        @endforeach
+    </select>
     {!! $errors->first('cours_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}">
+<div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}" hidden>
     <label for="created_id" class="control-label">{{ 'Created Id' }}</label>
-    <input class="form-control" name="created_id" type="number" id="created_id" value="{{ isset($phase->created_id) ? $phase->created_id : ''}}" >
+    <input class="form-control" readonly name="created_id" type="number" id="created_id" value="{{ Auth::user()->id }}" >
     {!! $errors->first('created_id', '<p class="help-block">:message</p>') !!}
 </div>
 

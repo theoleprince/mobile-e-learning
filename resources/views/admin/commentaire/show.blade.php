@@ -25,7 +25,9 @@
                                     <tr>
                                         <th>ID</th><td>{{ $commentaire->id }}</td>
                                     </tr>
-                                    <tr><th> Commentaire </th><td> {{ $commentaire->commentaire }} </td></tr><tr><th> Phase Id </th><td> {{ $commentaire->phase_id }} </td></tr><tr><th> User Id </th><td> {{ $commentaire->user_id }} </td></tr>
+                                    <tr><th> Commentaire </th><td> {{ $commentaire->commentaire }} </td></tr>
+                                    <tr><th> Phase </th><td> {{ $commentaire->_titre }} </td></tr>
+                                    <tr><th> Personne Ayant Posté </th><td> {{ $commentaire->_name.' '.$commentaire->_prenom }} (<a href="mailto:{{$commentaire->_email}}"><strong>{{$commentaire->_email}}</strong></a>)</td></tr>
                                 </tbody>
                             </table>
                         </div>

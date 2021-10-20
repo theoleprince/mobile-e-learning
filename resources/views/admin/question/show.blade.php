@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -25,7 +26,7 @@
                                     <tr>
                                         <th>ID</th><td>{{ $question->id }}</td>
                                     </tr>
-                                    <tr><th> Question </th><td> {{ $question->question }} </td></tr><tr><th> Nbre Point </th><td> {{ $question->nbre_point }} </td></tr><tr><th> Cours Id </th><td> {{ $question->cours_id }} </td></tr>
+                                    <tr><th> Question </th><td> {{ $question->question }} </td></tr><tr><th> Nbre Point </th><td> {{ $question->nbre_point }} </td></tr><tr><th> Cours Id </th><td> {{ $question->_nom }} </td></tr><tr><th> Enregistré Par </th><td> {{ $question->_name.' '.$question->_prenom }} (<a href="mailto:{{$question->_email}}"><strong>{{$question->_email}}</strong></a>) </td></tr>
                                 </tbody>
                             </table>
                         </div>

@@ -5,12 +5,22 @@
 </div>
 <div class="form-group {{ $errors->has('phase_id') ? 'has-error' : ''}}">
     <label for="phase_id" class="control-label">{{ 'Phase Id' }}</label>
-    <input class="form-control" name="phase_id" type="number" id="phase_id" value="{{ isset($commentaire->phase_id) ? $commentaire->phase_id : ''}}" >
+
+    <select class="form-control" name="phase_id" id="phase_id" required>
+        <option value="" disabled selected>Selectionner une phase</option>
+        @foreach($phase as $item)
+        <option
+
+        @if(isset($commentaire->phase_id) && $commentaire->phase_id == $item->id)
+            selected
+        @endif value=" {{ $item->id }}">{{$item->titre}}</option>
+        @endforeach
+    </select>
     {!! $errors->first('phase_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
+<div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}" hidden>
     <label for="user_id" class="control-label">{{ 'User Id' }}</label>
-    <input class="form-control" name="user_id" type="number" id="user_id" value="{{ isset($commentaire->user_id) ? $commentaire->user_id : ''}}" >
+    <input class="form-control" name="user_id" type="number" id="user_id" readonly value="{{ Auth::user()->id }}" >
     {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
 </div>
 
