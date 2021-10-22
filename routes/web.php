@@ -22,17 +22,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/formation', function () {
-    return view('admin.client.formation');
-});
-
-Route::get('/cours', function () {
-    return view('admin.client.cours');
-});
-
-Route::get('/phase', function () {
-    return view('admin.client.phase');
-});
 
 
 Auth::routes();
@@ -43,6 +32,25 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth']], function () {
 
+
+    /************Client***************/
+
+    Route::group(['prefix' => '/user'], function () {
+        Route::get('/formation', function () {
+            return view('admin.client.formation');
+        });
+
+        Route::get('/cours', function () {
+            return view('admin.client.cours');
+        });
+
+        Route::get('/phase', function () {
+            return view('admin.client.phase');
+        });
+    });
+
+
+/************Administratuer***************/
     Route::group(['prefix' => '/admin'], function () {
         //chemin ge gestion du chemin du profil
         Route::group(['prefix'=>'/profil'], function(){
