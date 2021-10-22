@@ -17,7 +17,7 @@ class CreateFormationsTable extends Migration
             $table->timestamps();
             $table->string('nom')->nullable();
             $table->text('description')->nullable();
-            $table->boolean('activated')->nullable();
+            $table->boolean('activated')->defaulf(0);
             $table->string('created_id')->nullable();
             });
     }
