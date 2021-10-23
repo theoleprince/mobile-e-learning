@@ -18,7 +18,7 @@ use App\Notifications\Notif;
 use App\Notifications\NotifMailChanged;
 use Illuminate\Support\Facades\Mail;
 
-class UserController extends Controller
+class FormateurController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,12 +27,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        /* $user = User::latest()->get();
-        foreach ($user as $value) {
-            $value->avatar = url($value->avatar);
-        }
-        return $user; */
-
         $keyword = $request->get('search');
         $perPage = 10;
 
@@ -44,12 +38,13 @@ class UserController extends Controller
                 ->orWhere('sexe', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $user = User::where('id','!=',$request->user)
+            $user = User::whereIsActive(1)
+                    ->where('id','!=',$request->user)
                     ->latest()->paginate($perPage);
         }
 
         $ariane = ['user'];
-        return view('admin.user.index', compact('user','ariane'));
+        return view('admin.formateur.index', compact('user','ariane'));
     }
 
     /**
@@ -62,7 +57,7 @@ class UserController extends Controller
         $ariane = ['user','Ajouter'];
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user.create',compact('ariane','roles','permissions'));
+        return view('admin.formateur.create',compact('ariane','roles','permissions'));
     }
 
     /**
@@ -81,17 +76,24 @@ class UserController extends Controller
 		]);
         $requestData = $request->all();
         $roles = $request->roles;
+        //$permissions = $request->permissions;
 
         if ($request->hasFile('avatar')) {
             $requestData['avatar'] = $request->file('avatar')
             ->store('uploads', 'public');
         }
-
         $random = str_shuffle('1234567890');
         $password = 'EBA@'.substr($random, 0, 4);
         $requestData['password'] = Hash::make($password);
+        $requestData['is_active'] = true;
         $user = User::create($requestData);
-        $user->attachRole('user');
+        $user->attachRole('formateur');
+
+        $data = [
+            'nom'=> $user->name,
+            'mot'=> $password,
+            'login'=>$user->email
+        ];
 
         $role = ['roles'];
         if(isset($role)){
@@ -106,7 +108,7 @@ class UserController extends Controller
             }
         }
 
-        return view('admin.user.create',compact('user','roles'));
+        return view('admin.formateur.create',compact('user','roles'));
         //return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }
 
@@ -119,9 +121,23 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::whereIsActiveAndId(1,$id)->first();
+        $roles = Role::select('roles.*')
+                    ->join('role_user','role_user.role_id','=','roles.id')
+                    ->join('users','users.id','=','role_user.user_id')
+                    ->where('users.id','=',$id)
+                    ->get();
 
-        return view('admin.user.show', compact('user'));
+        $permissions = Permission::select('permissions.*')
+                    ->join('permission_user','permission_user.permission_id','=','permissions.id')
+                    ->join('users','users.id','=','permission_user.user_id')
+                    ->where('users.id','=',$id)
+                    ->get();
+
+        $permissions2 = Permission::all();
+
+        $ariane = ['user','Details'];
+        return view('admin.formateur.show', compact('user','ariane','roles','permissions','permissions2'));
     }
 
 
@@ -136,8 +152,7 @@ class UserController extends Controller
     {
         User::destroy($id);
 
-        return redirect('admin/user')->with('flash_message', 'Utilisateur Supprimer avec Succes');
-
+        return response()->json(['status'=>'Utilisateur Supprimer avec Succes']);
     }
 
     /**
@@ -165,7 +180,7 @@ class UserController extends Controller
                     ->get();
 
         $ariane = ['Profile'];
-        return view('admin.user.profile', compact('user','ariane'));
+        return view('admin.formateur.profile', compact('user','ariane'));
     }
 
     public function edit($id)
@@ -174,25 +189,26 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user.edit',compact('ariane','roles','permissions','user'));
+        return view('admin.formateur.edit',compact('ariane','roles','permissions','user'));
     }
 
     public function update(Request $request)
     {
+        # code...
+        $user = Auth::user();
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'unique:users,email',
+            'email' => 'unique:users,email'
         ]);
 
-        $requestData = $request->all();
+        $requestData = $request->only('name','avatar');
         if ($request->hasFile('avatar')) {
             $requestData['avatar'] = $request->file('avatar')
             ->store('uploads', 'public');
         }
-        $user = User::findOrFail($id);
         $user->update($requestData);
 
-        return redirect('admin/user')->with('flash_message', 'Modifier avec succes');
+        return back()->with('flash_message','Mise a jour effectué avec succes');
     }
 
     public function password(Request $request)
