@@ -1,25 +1,25 @@
 <div class="required form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     <label for="name" class="control-label obligatoire">{{ 'Nom' }}</label>
     <input type="text" class="form-control" name="name" id="name" 
-        value="{{ isset($user->name) ? $user->name : old('name')}}" required placeholder="Enter le nom">
+        value="{{ isset($user->name) ? $user->name : ''}}" required placeholder="Enter le nom">
     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
-</div>prenom
+</div>
 <div class="form-group {{ $errors->has('prenom') ? 'has-error' : ''}}">
     <label for="prenom" class="control-label">{{ 'Prenom' }}</label>
     <input type="text" class="form-control" name="prenom" id="prenom" 
-        value="{{ isset($user->prenom) ? $user->prenom : old('prenom')}}" placeholder="Enter le prenom">
+        value="{{ isset($user->prenom) ? $user->prenom : ''}}" placeholder="Enter le prenom">
     {!! $errors->first('prenom', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="required form-group {{ $errors->has('email') ? 'has-error' : ''}}">
     <label for="email" class="control-label obligatoire">{{ 'Email' }}</label>
     <input type="email" class="form-control" name="email" id="email" 
-        value="{{ isset($user->email) ? $user->email : old('email')}}" required placeholder="Enter l'email">
+        value="{{ isset($user->email) ? $user->email : ''}}" required placeholder="Enter l'email">
     {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('avatar') ? 'has-error' : ''}}">
     <label for="avatar" class="control-label">{{ 'Avatar' }}</label>
     <input type="file" class="form-control" name="avatar" id="avatar" 
-        value="{{ isset($user->avatar) ? $user->avatar : old('avatar')}}" accept="image/*">
+        value="{{ isset($user->avatar) ? $user->avatar : ''}}" accept="image/*">
     {!! $errors->first('avatar', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('od') ? 'has-error' : ''}}">

@@ -37,15 +37,13 @@ class UserController extends Controller
         $perPage = 10;
 
         if (!empty($keyword)) {
-            $user = User::where('id','!=',$request->user)
-                ->Where('name', 'LIKE', "%$keyword%")
+            $user = User::Where('name', 'LIKE', "%$keyword%")
                 ->orWhere('email', 'LIKE', "%$keyword%")
                 ->orWhere('prenom', 'LIKE', "%$keyword%")
                 ->orWhere('sexe', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $user = User::where('id','!=',$request->user)
-                    ->latest()->paginate($perPage);
+            $user = User::latest()->paginate($perPage);
         }
 
         $ariane = ['user'];
@@ -107,6 +105,7 @@ class UserController extends Controller
         }
 
         return view('admin.user.create',compact('user','roles'));
+        //return $requestData;
         //return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }
 
