@@ -176,7 +176,7 @@
                 <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
-                    Reponse Commentaire
+                    Reponse Comments
                     <i class="right fas fa-angle-left"></i>
                 </p>
                 </a>
@@ -260,6 +260,26 @@
                   </li>
                 </ul>
             </li>
+            <hr>
+            <li class="nav-item">
+                <a href="{{url('user/formation')}}" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>
+                    Formation
+                    <span class="right badge badge-danger">New</span>
+                  </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{url('user/cours')}}" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                  <p>
+                    Cours
+                    <span class="right badge badge-danger">New</span>
+                  </p>
+                </a>
+            </li>
+            <hr>
           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
