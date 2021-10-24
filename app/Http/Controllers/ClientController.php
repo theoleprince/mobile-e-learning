@@ -17,7 +17,8 @@ class ClientController extends Controller
     public function index()
     {
         $perPage = 25;
-        $formation = Formation::whereActivated(0)
+
+        $formation = Formation::whereActivated(1)
                                 ->latest()
                                 ->paginate($perPage);
         return view('admin.client.formation', compact('formation'));
@@ -39,9 +40,13 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function finish($id)
     {
-        //
+        $cours = Cour::whereId($id)->first();
+        $cours->finish = 1;
+        $cours->update();
+
+        return redirect('user/formation')->with('message', 'Bravo très belle eprogression');
     }
 
     /**
@@ -53,6 +58,11 @@ class ClientController extends Controller
     public function cours($id)
     {
         $perPage = 25;
+
+        $formation = Formation::whereId($id)->first();
+        $formation->activated = 1;
+        $formation->update();
+
         $tous = Cour::select('cours.*','formations.nom as _formation')
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('formation_id','=', $id)
@@ -63,7 +73,7 @@ class ClientController extends Controller
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('formation_id','=', $id)
                         ->where('cours.activated','=', 0)
-                        ->where('finish','=', 0)
+                        ->where('cours.finish','=', 0)
                         ->latest()
                         ->paginate($perPage);
 
@@ -71,7 +81,7 @@ class ClientController extends Controller
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('formation_id','=', $id)
                         ->where('cours.activated','=', 1)
-                        ->where('finish','=', 0)
+                        ->where('cours.finish','=', 0)
                         ->latest()
                         ->paginate($perPage);
 
@@ -79,7 +89,7 @@ class ClientController extends Controller
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('formation_id','=', $id)
                         ->where('cours.activated','=', 1)
-                        ->where('finish','=', 1)
+                        ->where('cours.finish','=', 1)
                         ->latest()
                         ->paginate($perPage);
         return view('admin.client.cours', compact('tous','nonlus','encours','lus'));
@@ -94,11 +104,16 @@ class ClientController extends Controller
     public function phase($id)
     {
         $perPage = 25;
+
+        $cours = Cour::whereId($id)->first();
+        $cours->activated = 1;
+        $cours->update();
+
         $phase = Phase::select('phases.*','formations.nom as _formation','cours.nom as _cours   ')
                         ->join('cours','cours.id','=','phases.cours_id')
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('cours_id','=', $id)
-                        ->first()
+                        ->latest()
                         ->paginate($perPage);
 
         return view('admin.client.phase', compact('phase'));

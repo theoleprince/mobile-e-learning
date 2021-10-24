@@ -207,7 +207,11 @@
                                             </div>
                                         </a>
                                     @endforeach
-                                </div>
+                                    <form method="POST" action="{{ url('/user/cours/' . $item->cours_id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <button  style="margin-left: auto; margin-right: auto; margin-bottom: 5px;" class="btn btn-success"><b> J'ai terminé cette partie</b> <i class="fa fa-arrow-right"></i></button>
+                                    </form>
+                                    </div>
                             </div>
                         </div>
                     </div>
