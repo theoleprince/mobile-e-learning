@@ -171,83 +171,25 @@
                             <div class="tab-content" id="custom-tabs-three-tabContent">
                                 <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
 
-                                    <div class="text-center">
+                                    <div class="">
                                         <div class="row">
-                                            <div class="col-sm-4">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                    <h5 class="card-title"><b> Nom de formation </b></h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="{{url('/user/cours')}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
+                                            @foreach ($formation as $item)
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                        <h5 class="card-title"><b> {{$item->nom}} </b></h5>
+                                                        <p class="card-text text-justify"> {{$item->nom}} </p>
+                                                        <span style="font-size: 10ppx; text-align:right; text-decoration:underline">updated at <b>{{$item->created_at}}</b></span>
+                                                        <div class="text-center">
+                                                            <a href="{{ url('/user/cours/' . $item->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
+                                                        </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                    <h5 class="card-title"><b> Nom de formation </b></h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="{{url('/user/cours')}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><b> Nom de formation </b></h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="{{url('/user/cours')}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                    <h5 class="card-title"><b> Nom de formation </b></h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="{{url('/user/cours')}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><b> Nom de formation </b></h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="{{url('/user/cours')}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                    <h5 class="card-title"><b> Nom de formation </b></h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="{{url('/user/cours')}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><b> Nom de formation </b></h5>
-                                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                    <a href="{{url('/user/cours')}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
-                                                </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
-                            <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                                Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam.
-                            </div>
-                            <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
-                                Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
-                            </div>
-                            <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
-                                Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
-                            </div>
                             </div>
                         </div>
                     <!-- /.card -->
