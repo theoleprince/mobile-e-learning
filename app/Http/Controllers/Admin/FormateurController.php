@@ -31,20 +31,24 @@ class FormateurController extends Controller
         $perPage = 10;
 
         if (!empty($keyword)) {
-            $user = User::where('id','!=',$request->user)
+            $user = User::select('users.*')
+                ->join('role_user','users.id','=','role_user.user_id')
+                ->join('roles','role_user.role_id','=','roles.id')
+                ->Where('roles.name', '!=', 'user')
                 ->Where('name', 'LIKE', "%$keyword%")
                 ->orWhere('email', 'LIKE', "%$keyword%")
                 ->orWhere('prenom', 'LIKE', "%$keyword%")
                 ->orWhere('sexe', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $user = User::whereIsActive(1)
-                    ->where('id','!=',$request->user)
-                    ->latest()->paginate($perPage);
+            $user = User::select('users.*','roles.name as _role')
+                ->join('role_user','users.id','=','role_user.user_id')
+                ->join('roles','role_user.role_id','=','roles.id')
+                ->Where('roles.name', '!=', 'user')
+                ->latest()->paginate($perPage);
         }
 
-        $ariane = ['user'];
-        return view('admin.formateur.index', compact('user','ariane'));
+        return view('admin.formateur.index', compact('user'));
     }
 
     /**
@@ -121,23 +125,11 @@ class FormateurController extends Controller
      */
     public function show($id)
     {
-        $user = User::whereIsActiveAndId(1,$id)->first();
-        $roles = Role::select('roles.*')
-                    ->join('role_user','role_user.role_id','=','roles.id')
-                    ->join('users','users.id','=','role_user.user_id')
-                    ->where('users.id','=',$id)
-                    ->get();
+        $user = User::select('users.*')
+                ->where('users.id','=',$id)
+                ->first();
 
-        $permissions = Permission::select('permissions.*')
-                    ->join('permission_user','permission_user.permission_id','=','permissions.id')
-                    ->join('users','users.id','=','permission_user.user_id')
-                    ->where('users.id','=',$id)
-                    ->get();
-
-        $permissions2 = Permission::all();
-
-        $ariane = ['user','Details'];
-        return view('admin.formateur.show', compact('user','ariane','roles','permissions','permissions2'));
+        return view('admin.formateur.show', compact('user'));
     }
 
 
@@ -152,7 +144,7 @@ class FormateurController extends Controller
     {
         User::destroy($id);
 
-        return response()->json(['status'=>'Utilisateur Supprimer avec Succes']);
+        return redirect('admin/formateur')->with('flash_message', 'Formation deleted!');
     }
 
     /**
