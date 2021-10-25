@@ -28,12 +28,6 @@
         value="{{ isset($user->od) ? $user->od : ''}}" placeholder="Enter l'od">
     {!! $errors->first('od', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('idP') ? 'has-error' : ''}}">
-    <label for="idP" class="control-label">{{ 'IDP' }}</label>
-    <input type="text" class="form-control" name="idP" id="idP" 
-        value="{{ isset($user->idP) ? $user->idP : ''}}" placeholder="Enter l'idP">
-    {!! $errors->first('idP', '<p class="help-block">:message</p>') !!}
-</div>
 <div class="form-group {{ $errors->has('probleme') ? 'has-error' : ''}}">
     <label for="probleme" class="control-label">{{ 'Probleme' }}</label>
     <input type="text" class="form-control" name="probleme" id="probleme" 
@@ -62,9 +56,17 @@
     {!! $errors->first('sexe', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('formation_id') ? 'has-error' : ''}}">
-    <label for="formation_id" class="control-label">{{ 'Formation' }}</label>
-    <input type="number" class="form-control" name="formation_id" id="formation_id" 
-        value="{{ isset($user->formation_id) ? $user->formation_id : ''}}">
+    <label for="formation_id" class="control-label">{{ 'Idp' }}</label>
+    <select class="form-control" name="formation_id" id="formation_id" required>
+        <option value="" disabled selected>Selectionner une formation</option>
+        @foreach($formation as $item)
+        <option
+
+        @if(isset($user->formation_id) && $user->formation_id == $item->id)
+            selected
+        @endif value=" {{ $item->id }}">{{$item->nom}}</option>
+        @endforeach
+    </select>
     {!! $errors->first('formation_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('roles') ? 'has-error' : ''}}">

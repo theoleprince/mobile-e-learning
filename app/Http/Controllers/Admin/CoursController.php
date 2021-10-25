@@ -98,8 +98,9 @@ class CoursController extends Controller
     public function edit($id)
     {
         $cour = Cour::findOrFail($id);
+        $formation = Formation::all();
 
-        return view('admin.cours.edit', compact('cour'));
+        return view('admin.cours.edit', compact('cour','formation'));
     }
 
     /**

@@ -22,12 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->string('od')->nullable();
-            $table->string('idP')->nullable();
             $table->string('probleme')->nullable();
             $table->string('lieu_naissance')->nullable();
             $table->date('date_naissance')->nullable();
             $table->enum('sexe', ['Masculin','Feminin'])->nullable();
             $table->integer('formation_id')->unsigned()->nullable();
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

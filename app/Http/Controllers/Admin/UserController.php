@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\User;
+use App\Models\Formation;
 use App\Role;
 use App\Permission;
 use App\Mail\PasswordMail;
@@ -27,27 +28,34 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        /* $user = User::latest()->get();
-        foreach ($user as $value) {
-            $value->avatar = url($value->avatar);
-        }
-        return $user; */
-
         $keyword = $request->get('search');
         $perPage = 10;
 
         if (!empty($keyword)) {
-            $user = User::Where('name', 'LIKE', "%$keyword%")
+            $user = User::select('users.*','formations.nom as _formation')
+                ->join('formations','formations.id','=','users.formation_id')
+                ->join('role_user','users.id','=','role_user.user_id')
+                ->join('roles','role_user.role_id','=','roles.id')
+                ->Where('roles.name', '=', 'user')
+                ->Where('name', 'LIKE', "%$keyword%")
                 ->orWhere('email', 'LIKE', "%$keyword%")
                 ->orWhere('prenom', 'LIKE', "%$keyword%")
                 ->orWhere('sexe', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $user = User::latest()->paginate($perPage);
+            $user = User::select('users.*','formations.nom as _formation')
+            ->join('formations','formations.id','=','users.formation_id')
+            ->join('role_user','users.id','=','role_user.user_id')
+            ->join('roles','role_user.role_id','=','roles.id')
+            ->Where('roles.name', '=', 'user')
+            ->latest()->paginate($perPage);
         }
+        foreach ($user as $value) {
+            $value->avatar = url($value->avatar);
+        }
+        //return $user;
 
-        $ariane = ['user'];
-        return view('admin.user.index', compact('user','ariane'));
+        return view('admin.user.index', compact('user'));
     }
 
     /**
@@ -57,10 +65,11 @@ class UserController extends Controller
      */
     public function create()
     {
+        $formation = Formation::all();
         $ariane = ['user','Ajouter'];
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user.create',compact('ariane','roles','permissions'));
+        return view('admin.user.create',compact('formation','ariane','roles','permissions'));
     }
 
     /**
@@ -77,12 +86,13 @@ class UserController extends Controller
 			'email' => 'required|email|unique:users',
             'roles' => 'required'
 		]);
+        $formation = Formation::all();
         $requestData = $request->all();
         $roles = $request->roles;
 
         if ($request->hasFile('avatar')) {
             $requestData['avatar'] = $request->file('avatar')
-            ->store('uploads', 'public');
+            ->store(url('uploads', 'public'));
         }
 
         $random = str_shuffle('1234567890');
@@ -104,7 +114,7 @@ class UserController extends Controller
             }
         }
 
-        return view('admin.user.create',compact('user','roles'));
+        return view('admin.user.create',compact('user','roles','formation'));
         //return $requestData;
         //return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }
@@ -118,7 +128,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::select('users.*','formations.nom as _nom')
+                    ->join('formations','formations.id','=','users.formation_id')
+                    ->where('users.id','=',$id)
+                    ->first();
 
         return view('admin.user.show', compact('user'));
     }
@@ -169,6 +182,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $formation = Formation::all();
         $ariane = ['user','Modifier'];
         $user = User::findOrFail($id);
         $roles = Role::all();
@@ -181,17 +195,36 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'unique:users,email',
+            'roles' => 'required'
         ]);
 
         $requestData = $request->all();
+        $roles = $request->roles;
+
         if ($request->hasFile('avatar')) {
             $requestData['avatar'] = $request->file('avatar')
-            ->store('uploads', 'public');
+            ->store(url('uploads', 'public'));
         }
+        $formation = Formation::all();
         $user = User::findOrFail($id);
         $user->update($requestData);
+        $user->attachRole('user');
 
-        return redirect('admin/user')->with('flash_message', 'Modifier avec succes');
+        $role = ['roles'];
+        if(isset($role)){
+            if(array_values($role) == ('user')){
+                $user->attachRole('user');
+            }
+            elseif(array_values($role) == ('formateur')){
+                $user->attachRole(['user','formateur']);
+            }
+            else{
+                $user->attachRole('administrator');
+            }
+        }
+
+        return view('admin.user.update',compact('user','roles','formation'))->with('flash_message', 'Modifier avec succes');
+        //return redirect('admin/user')->with('flash_message', 'Modifier avec succes');
     }
 
     public function password(Request $request)
