@@ -48,6 +48,10 @@ class FormateurController extends Controller
                 ->latest()->paginate($perPage);
         }
 
+         foreach ($user as $value) {
+            $value->avatar = url('storage/'.$value->avatar);
+        }
+
         return view('admin.formateur.index', compact('user'));
     }
 
@@ -86,18 +90,19 @@ class FormateurController extends Controller
             $requestData['avatar'] = $request->file('avatar')
             ->store('uploads', 'public');
         }
-        $random = str_shuffle('1234567890');
-        $password = 'EBA@'.substr($random, 0, 4);
-        $requestData['password'] = Hash::make($password);
-        $requestData['is_active'] = true;
+       /*  $random = str_shuffle('1234567890');
+        $password = 'EBA@'.substr($random, 0, 4); */
+        //$requestData['password'] = Hash::make($password);
+        //$requestData['is_active'] = true;
+        $requestData['password'] = Hash::make($request->password);
         $user = User::create($requestData);
-        $user->attachRole('formateur');
+       // $user->attachRole('formateur');
 
-        $data = [
+       /*  $data = [
             'nom'=> $user->name,
             'mot'=> $password,
             'login'=>$user->email
-        ];
+        ]; */
 
         $role = ['roles'];
         if(isset($role)){
@@ -105,15 +110,15 @@ class FormateurController extends Controller
                 $user->attachRole('user');
             }
             elseif(array_values($role) == ('formateur')){
-                $user->attachRole(['user','formateur']);
+                $user->attachRole('formateur');
             }
             else{
                 $user->attachRole('administrator');
             }
         }
 
-        return view('admin.formateur.create',compact('user','roles'));
-        //return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
+        //return view('admin.formateur.create',compact('user','roles'));
+        return redirect('admin/formateur')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }
 
     /**
@@ -128,6 +133,8 @@ class FormateurController extends Controller
         $user = User::select('users.*')
                 ->where('users.id','=',$id)
                 ->first();
+        $user->avatar = url('storage/'.$user->avatar);
+
 
         return view('admin.formateur.show', compact('user'));
     }
@@ -184,23 +191,33 @@ class FormateurController extends Controller
         return view('admin.formateur.edit',compact('ariane','roles','permissions','user'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
         # code...
-        $user = Auth::user();
+       /*  $user = Auth::user();
         $this->validate($request, [
             'name' => 'required',
             'email' => 'unique:users,email'
-        ]);
+        ]); */
+        $user = User::findOrFail($id);
 
-        $requestData = $request->only('name','avatar');
+        $requestData = $request->all();
         if ($request->hasFile('avatar')) {
             $requestData['avatar'] = $request->file('avatar')
             ->store('uploads', 'public');
         }
+         if($requestData['name']) $user->name = $requestData['name'];
+        if($requestData['email']){
+            if($requestData['email']!=$user->email) $user->email = $requestData['email'];
+        } 
+        if($requestData['prenom']) $user->prenom = $requestData['prenom'];
+       
+        if($requestData['lieu_naissance']) $user->lieu_naissance = $requestData['lieu_naissance'];
+        if($requestData['date_naissance']) $user->date_naissance = $requestData['date_naissance'];
+        if($requestData['sexe']) $user->sexe = $requestData['sexe'];
         $user->update($requestData);
 
-        return back()->with('flash_message','Mise a jour effectué avec succes');
+        return redirect('admin/formateur')->with('flash_message', 'Utilisateur  Modifie Avec Succes!');
     }
 
     public function password(Request $request)

@@ -19,8 +19,6 @@ class CreateFormationsTable extends Migration
             $table->text('description')->nullable();
             $table->boolean('activated')->default(0);
             $table->boolean('finish')->default(0);
-            $table->integer('created_id')->unsigned()->nullable();
-            $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             });
     }
 

@@ -15,3 +15,5 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 Route::post('users', 'App\Http\Controllers\Admin\UserController@store');
+Route::get('users', 'App\Http\Controllers\Admin\UserController@index');
+Route::post('users/{id}', 'App\Http\Controllers\Admin\UserController@update');

@@ -43,8 +43,8 @@ class User extends Authenticatable
         'lieu_naissance',
         'date_naissance',
         'sexe',
-        'formation_id',
         'password',
+        'slug'
     ];
 
     /**

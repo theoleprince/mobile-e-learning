@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserformationTable extends Migration
+class CreateUserFormatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateUserformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('userformation', function (Blueprint $table) {
+        Schema::create('user_formats', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('od')->nullable();
             $table->integer('formation_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 
@@ -32,6 +30,6 @@ class CreateUserformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('userformation');
+        Schema::dropIfExists('user_formats');
     }
 }
