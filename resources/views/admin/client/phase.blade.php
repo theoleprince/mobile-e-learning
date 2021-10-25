@@ -170,125 +170,48 @@
                         <div class="row ">
                             <div class="col-7 col-sm-9 pt-2">
                                 <div class="tab-content" id="vert-tabs-right-tabContent">
-                                <div class="tab-pane fade show active" id="vert-tabs-right-home" role="tabpanel" aria-labelledby="vert-tabs-right-home-tab">
-                                    <div class="row">
-                                        <div class="col-2"></div>
-                                        <div class="card m-2 col-8">
-                                            <video controls width="250" height="350" class="mt-2 card-img-top">
-                                                <source src=""/>
-                                            </video>
-                                            <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    @foreach ($phase as $item)
+                                        <div class="tab-pane fade" id="vert-tabs-right-{{$item->id}}" role="tabpanel" aria-labelledby="vert-tabs-right-{{$item->id}}-tab">
+                                            <div class="row">
+                                                <div class="col-2"></div>
+                                                <div class="card m-2 col-8">
+                                                    <video controls width="250" height="350" class="mt-2 card-img-top">
+                                                        <source src="{{ url('storage/' . $item->video) }}"/>
+                                                        </video>
+                                                    <div class="card-body">
+                                                    <h5 class="card-title">{{$item->titre}}</h5>
+                                                    <p class="card-text">{{$item->_cours}}</p>
+                                                    <p class="card-text"><small class="text-muted">Last updated {{$item->created_at}}</small></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2"></div>
                                             </div>
                                         </div>
-                                        <div class="col-2"></div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="vert-tabs-right-profile" role="tabpanel" aria-labelledby="vert-tabs-right-profile-tab">
-                                    <div class="row">
-                                        <div class="col-2"></div>
-                                        <div class="card m-2 col-8">
-                                            <video controls width="250" height="350" class="mt-2 card-img-top">
-                                                <source src=""/>
-                                            </video>
-                                            <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-2"></div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="vert-tabs-right-messages" role="tabpanel" aria-labelledby="vert-tabs-right-messages-tab">
-                                    <div class="row">
-                                        <div class="col-2"></div>
-                                        <div class="card m-2 col-8">
-                                            <video controls width="250" height="350" class="mt-2 card-img-top">
-                                                <source src=""/>
-                                            </video>
-                                            <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-2"></div>
-                                    </div>                                </div>
-                                <div class="tab-pane fade" id="vert-tabs-right-settings" role="tabpanel" aria-labelledby="vert-tabs-right-settings-tab">
-                                    <div class="row">
-                                        <div class="col-2"></div>
-                                        <div class="card m-2 col-8">
-                                            <video controls width="250" height="350" class="mt-2 card-img-top">
-                                                <source src=""/>
-                                            </video>
-                                            <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-2"></div>
-                                    </div>                                </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="col-5 col-sm-3">
                                 <div class="col nav nav-tabs nav-tabs-right" id="vert-tabs-right-tab" role="tablist" aria-orientation="vertical"  style="overflow-y: auto ; max-height: 550px;">
-                                    <a class="nav-link active" id="vert-tabs-right-home-tab" data-toggle="pill" href="#vert-tabs-right-home" role="tab" aria-controls="vert-tabs-right-home" aria-selected="true">
-                                        <div class="card m-1">
-                                            <div class="row g-0 m-1">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><b>(N°:0)</b> titre</h5>
-                                                    <p class="card-text">Cours</p>
-                                                    <p class="card-text">
-                                                        <small class="text-muted">Last updated 3 mins ago</small>
-                                                    </p>
+                                    @foreach ($phase as $item)
+                                        <a class="nav-link" id="vert-tabs-right-{{$item->id}}-tab" data-toggle="pill" href="#vert-tabs-right-{{$item->id}}" role="tab" aria-controls="vert-tabs-right-{{$item->id}}" aria-selected="true">
+                                            <div class="card m-1">
+                                                <div class="row g-0 m-1">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><b>({{$item->numero}})</b> {{$item->titre}}</h5>
+                                                        <p class="card-text"> {{$item->_cours}}</p>
+                                                        <p class="card-text">
+                                                            <small class="text-muted">Last updated: {{$item->created_at}}</small>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                    <a class="nav-link" id="vert-tabs-right-profile-tab" data-toggle="pill" href="#vert-tabs-right-profile" role="tab" aria-controls="vert-tabs-right-profile" aria-selected="false">
-                                        <div class="card m-1">
-                                            <div class="row g-0 m-1">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><b>(N°:0)</b> titre</h5>
-                                                    <p class="card-text">Cours</p>
-                                                    <p class="card-text">
-                                                        <small class="text-muted">Last updated 3 mins ago</small>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="nav-link" id="vert-tabs-right-messages-tab" data-toggle="pill" href="#vert-tabs-right-messages" role="tab" aria-controls="vert-tabs-right-messages" aria-selected="false">
-                                        <div class="card m-1">
-                                            <div class="row g-0 m-1">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><b>(N°:0)</b> titre</h5>
-                                                    <p class="card-text">Cours</p>
-                                                    <p class="card-text">
-                                                        <small class="text-muted">Last updated 3 mins ago</small>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="nav-link" id="vert-tabs-right-settings-tab" data-toggle="pill" href="#vert-tabs-right-settings" role="tab" aria-controls="vert-tabs-right-settings" aria-selected="false">
-                                        <div class="card m-1">
-                                            <div class="row g-0 m-1">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><b>(N°:0)</b> titre</h5>
-                                                    <p class="card-text">Cours</p>
-                                                    <p class="card-text">
-                                                        <small class="text-muted">Last updated 3 mins ago</small>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
+                                        </a>
+                                    @endforeach
+                                    <form method="POST" action="{{ url('/user/cours/' . $item->cours_id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <button  style="margin-left: auto; margin-right: auto; margin-bottom: 5px;" class="btn btn-success"><b> J'ai terminé cette partie</b> <i class="fa fa-arrow-right"></i></button>
+                                    </form>
+                                    </div>
                             </div>
                         </div>
                     </div>

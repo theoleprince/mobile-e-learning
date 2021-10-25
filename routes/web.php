@@ -18,6 +18,8 @@ Route::get('/login', function () {
     return view('home');
 });
 
+Route::get('/login', 'App\Http\Controllers\ClientController@index');
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -39,6 +41,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/formation', function () {
             return view('admin.client.formation');
         });
+
+        Route::get('/phase/{id}', 'App\Http\Controllers\ClientController@phase');
+        Route::get('/cours/{id}', 'App\Http\Controllers\ClientController@cours');
+        Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
+        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
 
         Route::get('/cours', function () {
             return view('admin.client.cours');
