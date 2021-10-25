@@ -18,6 +18,8 @@ Route::get('/login', function () {
     return view('home');
 });
 
+Route::get('/login', 'App\Http\Controllers\ClientController@index');
+
 Route::get('/', function () {
     return view('auth.login');
 });

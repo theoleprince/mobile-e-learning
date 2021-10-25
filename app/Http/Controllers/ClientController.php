@@ -21,7 +21,7 @@ class ClientController extends Controller
         $formation = Formation::whereActivated(1)
                                 ->latest()
                                 ->paginate($perPage);
-        return view('admin.client.formation', compact('formation'));
+        return view('home', compact('formation'));
     }
 
     /**

@@ -17,8 +17,10 @@ class CreateFormationsTable extends Migration
             $table->timestamps();
             $table->string('nom')->nullable();
             $table->text('description')->nullable();
-            $table->boolean('activated')->defaulf(0);
-            $table->string('created_id')->nullable();
+            $table->boolean('activated')->default(0);
+            $table->boolean('finish')->default(0);
+            $table->integer('created_id')->unsigned()->nullable();
+            $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             });
     }
 
