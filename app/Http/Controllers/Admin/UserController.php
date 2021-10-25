@@ -75,10 +75,10 @@ class UserController extends Controller
         $this->validate($request, [
 			'name' => 'required',
 			'email' => 'required|email|unique:users',
-            'roles' => 'required'
+            //'roles' => 'required'
 		]);
         $requestData = $request->all();
-        $roles = $request->roles;
+        //$roles = $request->roles;
 
         if ($request->hasFile('avatar')) {
             $requestData['avatar'] = $request->file('avatar')
@@ -91,7 +91,7 @@ class UserController extends Controller
         $user = User::create($requestData);
         $user->attachRole('user');
 
-        $role = ['roles'];
+       /*  $role = ['roles'];
         if(isset($role)){
             if(array_values($role) == ('user')){
                 $user->attachRole('user');
@@ -102,10 +102,10 @@ class UserController extends Controller
             else{
                 $user->attachRole('administrator');
             }
-        }
+        } */
 
-        return view('admin.user.create',compact('user','roles'));
-        //return $requestData;
+        //return view('admin.user.create',compact('user','roles'));
+        return $user;
         //return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }
 

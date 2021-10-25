@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'App\Http\Controllers\Admin\UserController@profile');
         });
 
-        Route::group(['prefix' => 'user'], function () {
+       /*  Route::group(['prefix' => 'user'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\UserController@store')->middleware('has-permission:users-create');
             Route::get('/create', 'App\Http\Controllers\Admin\UserController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\UserController@edit');
@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/{id}', 'App\Http\Controllers\Admin\UserController@show')->middleware('has-permission:users-read');
             Route::patch('/{id}', 'App\Http\Controllers\Admin\UserController@update')->middleware('has-permission:users-update');
             Route::get('/', 'App\Http\Controllers\Admin\UserController@index')->middleware('has-permission:users-read');
-        });
+        }); */
 
         Route::group(['prefix' => 'formateur'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\FormateurController@store')->middleware('has-permission:users-create');

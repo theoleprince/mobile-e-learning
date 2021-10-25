@@ -13,3 +13,5 @@ Route::group(['prefix' => 'user'], function () {
     Route::patch('/{id}', 'App\Http\Controllers\Admin\UserController@update');
     Route::get('/', 'App\Http\Controllers\Admin\UserController@index');
 });
+
+Route::post('users', 'App\Http\Controllers\Admin\UserController@store');
