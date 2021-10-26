@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Models\Commentaire;
 use App\Models\Phase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentaireController extends Controller
 {
@@ -56,14 +57,21 @@ class CommentaireController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
 
         $requestData = $request->all();
 
         Commentaire::create($requestData);
+        $commentaire = Commentaire::where('phase_id',$requestData['phase_id']);
 
-        return redirect('admin/commentaire')->with('flash_message', 'Commentaire added!');
+        if ((Auth::user()->hasRole('superadministrator')) || (Auth::user()->hasRole('administrator')) || (Auth::user()->hasRole('formateur'))){
+            return view('home');
+        }elseif(Auth::user()->hasRole('user')){
+
+        return view('admin.client.phase', compact('phase','commentaire'));
+        }
+
     }
 
     /**

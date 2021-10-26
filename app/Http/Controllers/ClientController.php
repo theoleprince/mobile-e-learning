@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commentaire;
 use App\Models\Cour;
 use App\Models\Formation;
 use App\Models\Phase;
@@ -110,6 +111,8 @@ class ClientController extends Controller
         $cours->activated = 1;
         $cours->update();
 
+        $commentaire = Commentaire::where('phase_id',$id);
+
         $phase = Phase::select('phases.*','formations.nom as _formation','cours.nom as _cours   ')
                         ->join('cours','cours.id','=','phases.cours_id')
                         ->join('formations','formations.id','=','cours.formation_id')
@@ -117,7 +120,7 @@ class ClientController extends Controller
                         ->latest()
                         ->paginate($perPage);
 
-        return view('admin.client.phase', compact('phase'));
+        return view('admin.client.phase', compact('phase','commentaire'));
     }
 
     /**
@@ -127,9 +130,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function commentaire($id)
     {
-        //
+
     }
 
     /**
