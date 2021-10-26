@@ -218,7 +218,7 @@
                             <div class="col-5 col-sm-3">
                                 <div class="col nav nav-tabs nav-tabs-right" id="vert-tabs-right-tab" role="tablist" aria-orientation="vertical"  style="overflow-y: auto ; max-height: 550px;">
                                     @foreach ($phase as $item)
-                                        <a class="nav-link" id="vert-tabs-right-{{$item->id}}-tab" data-toggle="pill" href="#vert-tabs-right-{{$item->id}}" role="tab" aria-controls="vert-tabs-right-{{$item->id}}" aria-selected="true">
+                                        <a class="nav-link" onclick="getComments()" id="vert-tabs-right-{{$item->id}}-tab" data-toggle="pill" href="#vert-tabs-right-{{$item->id}}" role="tab" aria-controls="vert-tabs-right-{{$item->id}}" aria-selected="true">
                                             <div class="card m-1">
                                                 <div class="row g-0 m-1">
                                                     <div class="card-body">
@@ -283,6 +283,7 @@
         <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="{{asset('dist/js/demo.js')}}"></script>
+        <script src="{{asset('dist/js/script.js')}}"></script>
     </body>
 </html>
 

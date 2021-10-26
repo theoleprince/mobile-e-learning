@@ -1,3 +1,5 @@
+const { Alert } = require("bootstrap");
+
 function alertDeleteElement(id, path) {
     // body...
     // alert(path);
@@ -62,4 +64,40 @@ function alertDeleteElement(id, path) {
         }
     });
 
+}
+
+
+function getComments() {
+    var phase = document.getElementById('phase_id');
+    alert(phase.value)
+    console.log(phase);
+
+  var cours = {
+    "phase_id": id_client
+  };
+    var data = {
+        "_token": $('input[name=_token]').val(),
+        "produit": produit,
+        "vente": vente
+      }
+    $.ajax({
+        type: "POST",
+        url: "/user/commentaire",
+        data: data,
+        success: function (response) {
+
+        Swal.fire({
+            icon: 'success',
+            title: response['status'],
+            showConfirmButton: true,
+            timer: 4000
+        }).then((result) => {
+            console.log(response.id)
+            alert("sqdqsd")
+            window.location.href = '/admin/vente/' + response.id;
+        });
+        }
+    });
+    console.log(data);
+    return false;
 }

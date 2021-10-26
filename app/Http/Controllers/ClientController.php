@@ -111,8 +111,6 @@ class ClientController extends Controller
         $cours->activated = 1;
         $cours->update();
 
-        $commentaire = Commentaire::where('phase_id',$id);
-
         $phase = Phase::select('phases.*','formations.nom as _formation','cours.nom as _cours   ')
                         ->join('cours','cours.id','=','phases.cours_id')
                         ->join('formations','formations.id','=','cours.formation_id')
@@ -120,7 +118,7 @@ class ClientController extends Controller
                         ->latest()
                         ->paginate($perPage);
 
-        return view('admin.client.phase', compact('phase','commentaire'));
+        return view('admin.client.phase', compact('phase'));
     }
 
     /**
