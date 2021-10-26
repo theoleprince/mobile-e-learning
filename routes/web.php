@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/login', function () {
-//     return view('home');
-// });
-
-Route::get('/login', 'App\Http\Controllers\SwitchController@index');
 
 Route::get('/', function () {
     return view('auth.login');
@@ -43,7 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
         Route::get('/phase/{id}', 'App\Http\Controllers\ClientController@phase');
-        Route::get('/cours/{id}', 'App\Http\Controllers\ClientController@cours');
+        Route::get('/cours', 'App\Http\Controllers\HomeController@index');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::get('/formation', 'App\Http\Controllers\ClientController@index');
 

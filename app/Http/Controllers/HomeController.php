@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cour;
 use App\Models\Formation;
+use App\Models\Userformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,11 +32,15 @@ class HomeController extends Controller
         }elseif(Auth::user()->hasRole('user')){
             $perPage = 25;
 
-            $id = Formation::whereActivated(0)
-                                    ->latest()
+            $cours = Userformation::select('cours.*','cours.nom as _cours')
+                                    ->join('userformation','userformation.formation_id','=','formations.id')
+                                    ->join('userformation','userformation.user_id','=',Auth::user()->id)
+                                    ->join('formations','formations.id','=','cours.formation_id')
+                                    // ->orderBy('userformation.updated_at', 'DESC')
+                                    ->get()
                                     ->paginate($perPage);
-            $id = 1;
-            return redirect('cours/1');
+            dd($cours);
+            return redirect()->route('user/cours',compact('cours'));
         }
     }
 }
