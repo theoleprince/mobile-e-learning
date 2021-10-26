@@ -33,9 +33,9 @@ Route::group(['middleware' => ['auth']], function () {
     /************Client***************/
 
     Route::group(['prefix' => '/user'], function () {
-        Route::get('/formation', function () {
+       /*  Route::get('/formation', function () {
             return view('admin.client.formation');
-        });
+        }); */
 
         Route::get('/phase/{id}', 'App\Http\Controllers\ClientController@phase');
         Route::get('/cours', 'App\Http\Controllers\HomeController@index');
@@ -57,6 +57,26 @@ Route::group(['middleware' => ['auth']], function () {
         //chemin ge gestion du chemin du profil
         Route::group(['prefix'=>'/profil'], function(){
             Route::get('/', 'App\Http\Controllers\Admin\UserController@profile');
+        });
+
+        Route::group(['prefix' => 'user'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\UserController@store')->middleware('has-permission:users-create');
+            Route::get('/create', 'App\Http\Controllers\Admin\UserController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\UserController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\UserController@destroy')->middleware('has-permission:users-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\UserController@show')->middleware('has-permission:users-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\UserController@update')->middleware('has-permission:users-update');
+            Route::get('/', 'App\Http\Controllers\Admin\UserController@index')->middleware('has-permission:users-read');
+        });
+
+        Route::group(['prefix' => 'formateur'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\FormateurController@store')->middleware('has-permission:users-create');
+            Route::get('/create', 'App\Http\Controllers\Admin\FormateurController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\FormateurController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\FormateurController@destroy')->middleware('has-permission:users-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\FormateurController@show')->middleware('has-permission:users-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\FormateurController@update')->middleware('has-permission:users-update');
+            Route::get('/', 'App\Http\Controllers\Admin\FormateurController@index')->middleware('has-permission:users-read');
         });
 
         Route::group(['prefix' => 'formation'], function () {

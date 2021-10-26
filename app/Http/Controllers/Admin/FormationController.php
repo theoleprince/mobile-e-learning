@@ -24,7 +24,6 @@ class FormationController extends Controller
             $formation = Formation::where('nom', 'LIKE', "%$keyword%")
                 ->orWhere('description', 'LIKE', "%$keyword%")
                 ->orWhere('activated', 'LIKE', "%$keyword%")
-                ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
             $formation = Formation::latest()->paginate($perPage);

@@ -106,18 +106,20 @@
                 </p>
                 </a>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{url('admin/question/create')}}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Ajouter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/question')}}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Consulter</p>
-                    </a>
-                </li>
+                @if(Auth::user()->hasPermission('questions-create'))
+                  <li class="nav-item">
+                      <a href="{{url('admin/question/create')}}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Ajouter</p>
+                      </a>
+                  </li>
+                @endif
+                  <li class="nav-item">
+                      <a href="{{url('admin/question')}}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Consulter</p>
+                      </a>
+                  </li>
                 </ul>
             </li>
             <li class="nav-item has-treeview menu-close">
@@ -129,18 +131,20 @@
                 </p>
                 </a>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{url('admin/reponse-q/create')}}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Ajouter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/reponse-q')}}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Consulter</p>
-                    </a>
-                </li>
+                @if(Auth::user()->hasPermission('repsonse-qs-create'))
+                  <li class="nav-item">
+                      <a href="{{url('admin/reponse-q/create')}}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Ajouter</p>
+                      </a>
+                  </li>
+                @endif
+                  <li class="nav-item">
+                      <a href="{{url('admin/reponse-q')}}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Consulter</p>
+                      </a>
+                  </li>
                 </ul>
             </li>
             <li class="nav-item has-treeview menu-close">
@@ -152,18 +156,20 @@
                 </p>
                 </a>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{url('admin/commentaire/create')}}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Ajouter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/commentaire')}}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Consulter</p>
-                    </a>
-                </li>
+                @if(Auth::user()->hasPermission('commentaires-create'))
+                  <li class="nav-item">
+                      <a href="{{url('admin/commentaire/create')}}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Ajouter</p>
+                      </a>
+                  </li>
+                @endif
+                  <li class="nav-item">
+                      <a href="{{url('admin/commentaire')}}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Consulter</p>
+                      </a>
+                  </li>
                 </ul>
             </li>
             <li class="nav-item has-treeview menu-close">
@@ -175,18 +181,83 @@
                 </p>
                 </a>
                 <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{url('admin/reponse-c/create')}}" class="nav-link">
-                        <i class="fas fa-plus nav-icon"></i>
-                        <p>Ajouter</p>
+                @if(Auth::user()->hasPermission('reponse-cs-create'))
+                  <li class="nav-item">
+                      <a href="{{url('admin/reponse-c/create')}}" class="nav-link">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Ajouter</p>
+                      </a>
+                  </li>
+                @endif
+                  <li class="nav-item">
+                      <a href="{{url('admin/reponse-c')}}" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Consulter</p>
+                      </a>
+                  </li>
+                </ul>
+            </li>
+            <li class="nav-item has-treeview menu-close">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-user"></i>
+                  <p>
+                      Utilisateurs
+                      <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item has-treeview menu-close">
+                    <a href="#" class="nav-link">
+                      &nbsp;&nbsp;<i class="nav-icon fas fa-user"></i>
+                      <p>
+                          Apprenants
+                          <i class="right fas fa-angle-left"></i>
+                      </p>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url('admin/reponse-c')}}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Consulter</p>
+                    <ul class="nav nav-treeview">
+                      @if(Auth::user()->hasPermission('users-create'))
+                        <li class="nav-item">
+                          <a href="{{url('admin/user/create')}}" class="nav-link">
+                          &nbsp;&nbsp;<i class="fas fa-plus nav-icon"></i>
+                              <p>Ajouter</p>
+                          </a>
+                        </li>
+                      @endif
+                      <li class="nav-item">
+                        <a href="{{url('admin/user')}}" class="nav-link">
+                        &nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                            <p>Consulter</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item has-treeview menu-close">
+                    <a href="#" class="nav-link">
+                    &nbsp;&nbsp;<i class="nav-icon fas fa-user"></i>
+                      <p>
+                          Formateurs
+                          <i class="right fas fa-angle-left"></i>
+                      </p>
                     </a>
-                </li>
+                    <ul class="nav nav-treeview">
+                      @if(Auth::user()->hasPermission('users-create'))
+                        <li class="nav-item">
+                          <a href="{{url('admin/formateur/create')}}" class="nav-link">
+                          &nbsp;&nbsp;<i class="fas fa-plus nav-icon"></i>
+                              <p>Ajouter</p>
+                          </a>
+                        </li>
+                      @endif
+                      <li class="nav-item">
+                        <a href="{{url('admin/formateur')}}" class="nav-link">
+                        &nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                            <p>Consulter</p>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
             </li>
             <hr>

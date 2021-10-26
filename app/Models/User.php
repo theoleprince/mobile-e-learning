@@ -16,6 +16,19 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+    * The database primary key value.
+    *
+    * @var string
+    */
+    protected $primaryKey = 'id';
+    /**
      * The attributes that are mass assignable.
      *
      * @var string[]
@@ -23,7 +36,15 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'prenom',
+        'avatar',
+        'od',
+        'probleme',
+        'lieu_naissance',
+        'date_naissance',
+        'sexe',
         'password',
+        'slug'
     ];
 
     /**
@@ -73,5 +94,10 @@ class User extends Authenticatable
 
     public function roles() {
         return $this->belongsToMany('App\Role');
+    }
+
+    public function formation()
+    {
+        return $this->belongsTo('App\Models\Formation');
     }
 }

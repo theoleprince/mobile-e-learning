@@ -6,8 +6,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\User;
-use App\Models\Formation;
-use App\Models\UserFormat;
 use App\Role;
 use App\Permission;
 use App\Mail\PasswordMail;
@@ -20,7 +18,7 @@ use App\Notifications\Notif;
 use App\Notifications\NotifMailChanged;
 use Illuminate\Support\Facades\Mail;
 
-class UserController extends Controller
+class FormateurController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,32 +31,28 @@ class UserController extends Controller
         $perPage = 10;
 
         if (!empty($keyword)) {
-            $user = User::select('users.*','formations.nom as _formation')
-                ->join('formations','formations.id','=','users.formation_id')
+            $user = User::select('users.*')
                 ->join('role_user','users.id','=','role_user.user_id')
                 ->join('roles','role_user.role_id','=','roles.id')
-                ->Where('roles.name', '=', 'user')
+                ->Where('roles.name', '!=', 'user')
                 ->Where('name', 'LIKE', "%$keyword%")
                 ->orWhere('email', 'LIKE', "%$keyword%")
                 ->orWhere('prenom', 'LIKE', "%$keyword%")
                 ->orWhere('sexe', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $user = User::select('users.*','formations.nom as _formation','roles.name as role')
-            ->join('user_formats','users.id','=','user_formats.user_id')
-            ->join('formations','user_formats.formation_id','=','formations.id')
-
-            ->join('role_user','users.id','=','role_user.user_id')
-            ->join('roles','role_user.role_id','=','roles.id')
-            ->Where('roles.name', '=', 'user')
-            ->latest()->paginate($perPage);
+            $user = User::select('users.*','roles.name as _role')
+                ->join('role_user','users.id','=','role_user.user_id')
+                ->join('roles','role_user.role_id','=','roles.id')
+                ->Where('roles.name', '!=', 'user')
+                ->latest()->paginate($perPage);
         }
-        foreach ($user as $value) {
+
+         foreach ($user as $value) {
             $value->avatar = url('storage/'.$value->avatar);
         }
-        //return $user;
 
-        return view('admin.user.index', compact('user'));
+        return view('admin.formateur.index', compact('user'));
     }
 
     /**
@@ -68,11 +62,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $formation = Formation::all();
         $ariane = ['user','Ajouter'];
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user.create',compact('formation','ariane','roles','permissions'));
+        return view('admin.formateur.create',compact('ariane','roles','permissions'));
     }
 
     /**
@@ -84,41 +77,48 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $formation = Formation::all();
-
         $this->validate($request, [
 			'name' => 'required',
 			'email' => 'required|email|unique:users',
-        ]);
+            'roles' => 'required'
+		]);
         $requestData = $request->all();
-        $formation_id = $request->formation_id;
+        $roles = $request->roles;
+        //$permissions = $request->permissions;
 
         if ($request->hasFile('avatar')) {
             $requestData['avatar'] = $request->file('avatar')
             ->store('uploads', 'public');
         }
-
-        //if($requestData['password']) $password = $requestData['password'];
-            
-
-        //$random = str_shuffle('1234567890');
-        ///$password = 'EBA@'.substr($random, 0, 4);
-        $requestData['slug'] = $formation_id;
+       /*  $random = str_shuffle('1234567890');
+        $password = 'EBA@'.substr($random, 0, 4); */
+        //$requestData['password'] = Hash::make($password);
+        //$requestData['is_active'] = true;
         $requestData['password'] = Hash::make($request->password);
         $user = User::create($requestData);
-        $user->attachRole('user');
+       // $user->attachRole('formateur');
 
-        $data = [
-            'formation_id' => $formation_id,
-            'user_id' => $user->id
-        ]; 
- 
-        $userFormation=UserFormat::create($data);
+       /*  $data = [
+            'nom'=> $user->name,
+            'mot'=> $password,
+            'login'=>$user->email
+        ]; */
 
-        //return view('admin.user.create',compact('formation'));
-        //return $requestData;
-        return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
+        $role = ['roles'];
+        if(isset($role)){
+            if(array_values($role) == ('user')){
+                $user->attachRole('user');
+            }
+            elseif(array_values($role) == ('formateur')){
+                $user->attachRole('formateur');
+            }
+            else{
+                $user->attachRole('administrator');
+            }
+        }
+
+        //return view('admin.formateur.create',compact('user','roles'));
+        return redirect('admin/formateur')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }
 
     /**
@@ -130,15 +130,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::select('users.*','formations.nom as _nom')
-                    ->join('user_formats','users.id','=','user_formats.user_id')
-                    ->join('formations','user_formats.formation_id','=','formations.id')                    
-                    ->where('users.id','=',$id)
-                    ->first();
+        $user = User::select('users.*')
+                ->where('users.id','=',$id)
+                ->first();
         $user->avatar = url('storage/'.$user->avatar);
 
 
-        return view('admin.user.show', compact('user'));
+        return view('admin.formateur.show', compact('user'));
     }
 
 
@@ -153,8 +151,7 @@ class UserController extends Controller
     {
         User::destroy($id);
 
-        return redirect('admin/user')->with('flash_message', 'Utilisateur Supprimer avec Succes');
-
+        return redirect('admin/formateur')->with('flash_message', 'Formation deleted!');
     }
 
     /**
@@ -182,71 +179,45 @@ class UserController extends Controller
                     ->get();
 
         $ariane = ['Profile'];
-        return view('admin.user.profile', compact('user','ariane'));
+        return view('admin.formateur.profile', compact('user','ariane'));
     }
 
     public function edit($id)
     {
-        $formation = Formation::all();
         $ariane = ['user','Modifier'];
         $user = User::findOrFail($id);
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user.edit',compact('ariane','roles','permissions','user','formation'));
+        return view('admin.formateur.edit',compact('ariane','roles','permissions','user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        $formation = Formation::all();
+        # code...
+       /*  $user = Auth::user();
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'unique:users,email'
+        ]); */
         $user = User::findOrFail($id);
-        /* $users->user = $user;
-        $users->formation = $formation; */
 
-        $slug = $user->slug;
         $requestData = $request->all();
-        $formation_id = $request->formation_id;
-        $requestData['slug'] = $formation_id;
-
-
-
         if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')
+            $requestData['avatar'] = $request->file('avatar')
             ->store('uploads', 'public');
         }
-
-        if($requestData['name']) $user->name = $requestData['name'];
+         if($requestData['name']) $user->name = $requestData['name'];
         if($requestData['email']){
             if($requestData['email']!=$user->email) $user->email = $requestData['email'];
         } 
         if($requestData['prenom']) $user->prenom = $requestData['prenom'];
        
-        if($requestData['od']) $user->od = $requestData['od'];
-        if($requestData['probleme']) $user->probleme = $requestData['probleme'];
         if($requestData['lieu_naissance']) $user->lieu_naissance = $requestData['lieu_naissance'];
         if($requestData['date_naissance']) $user->date_naissance = $requestData['date_naissance'];
         if($requestData['sexe']) $user->sexe = $requestData['sexe'];
-        if($requestData['slug']) $user->slug = $requestData['slug'];
+        $user->update($requestData);
 
-        $user->update();
-        
-         $data = [
-            'formation_id' => $formation_id,
-            'user_id' => $user->id
-        ]; 
-
-        $idUserFormation = UserFormat::select(
-            'user_formats.*'
-            )
-            ->whereUserId($id)
-            ->whereFormationId($slug)
-            ->first();
-
-        if($data['formation_id']) $idUserFormation->formation_id = $data['formation_id'];
-        if($data['user_id']) $idUserFormation->user_id = $data['user_id'];
- 
-        $idUserFormation->update();
-        //return view('admin.user.index', compact('user'));
-        return redirect('admin/user')->with('flash_message', 'Modifier avec succes');
+        return redirect('admin/formateur')->with('flash_message', 'Utilisateur  Modifie Avec Succes!');
     }
 
     public function password(Request $request)

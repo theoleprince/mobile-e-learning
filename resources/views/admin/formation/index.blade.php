@@ -41,7 +41,11 @@
                                                                 <a href="{{ url('/admin/formation/' . $item->id . '/edit') }}" title="Modifier Formation"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</button></a>
                                                             @endif
                                                             @if(Auth::user()->hasPermission('formations-delete'))
-                                                                <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Supprimer Formation" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Supprimer</button>
+                                                            <form method="POST" action="{{ url('admin/formation/$formation->id') }}" accept-charset="UTF-8" style="display:inline">
+                                                                {{ method_field('DELETE') }}
+                                                                {{ csrf_field() }}
+                                                                <button type="submit" class="btn btn-danger btn-sm deleted_element" title="Delete Formation" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                            </form>
                                                             @endif
                                                         </div>
                                                     </div>
