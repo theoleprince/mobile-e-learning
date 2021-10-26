@@ -47,7 +47,7 @@ class ClientController extends Controller
         $cours->finish = 1;
         $cours->update();
 
-        return redirect('user/formation')->with('message', 'Bravo très belle eprogression');
+        return redirect('user/cours')->with('message', 'Bravo très belle eprogression');
     }
 
     /**

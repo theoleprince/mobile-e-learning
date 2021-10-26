@@ -42,10 +42,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::get('/formation', 'App\Http\Controllers\ClientController@index');
 
-        Route::get('/cours', function () {
-            return view('admin.client.cours');
-        });
-
         Route::get('/phase', function () {
             return view('admin.client.phase');
         });

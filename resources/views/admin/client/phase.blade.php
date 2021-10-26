@@ -32,7 +32,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{url('/user/formation')}}" class="nav-link">Home</a>
+                <a href="{{url('/user/cours')}}" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{url('/admin/users/profil')}}" class="nav-link">Contact</a>
@@ -173,8 +173,7 @@
                                     @foreach ($phase as $item)
                                         <div class="tab-pane fade" id="vert-tabs-right-{{$item->id}}" role="tabpanel" aria-labelledby="vert-tabs-right-{{$item->id}}-tab">
                                             <div class="row">
-                                                <div class="col-2"></div>
-                                                <div class="card m-2 col-8">
+                                                <div class="card m-2 col-7">
                                                     <video controls width="250" height="350" class="mt-2 card-img-top">
                                                         <source src="{{ url('storage/' . $item->video) }}"/>
                                                         </video>
@@ -184,7 +183,7 @@
                                                     <p class="card-text"><small class="text-muted">Last updated {{$item->created_at}}</small></p>
                                                     </div>
                                                 </div>
-                                                <div class="col-2"></div>
+                                                <div class="col-4" style="border: solid black 1px;">Commentaire</div>
                                             </div>
                                         </div>
                                     @endforeach
