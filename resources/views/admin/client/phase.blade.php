@@ -32,7 +32,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{url('/user/formation')}}" class="nav-link">Home</a>
+                <a href="{{url('/user/cours')}}" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{url('/admin/users/profil')}}" class="nav-link">Contact</a>
@@ -172,9 +172,8 @@
                                 <div class="tab-content" id="vert-tabs-right-tabContent">
                                     @foreach ($phase as $item)
                                         <div class="tab-pane fade" id="vert-tabs-right-{{$item->id}}" role="tabpanel" aria-labelledby="vert-tabs-right-{{$item->id}}-tab">
-                                            <div class="row">
-                                                <div class="col-2"></div>
-                                                <div class="card m-2 col-8">
+                                            <div class="row col-12">
+                                                <div class="card col-6">
                                                     <video controls width="250" height="350" class="mt-2 card-img-top">
                                                         <source src="{{ url('storage/' . $item->video) }}"/>
                                                         </video>
@@ -184,7 +183,33 @@
                                                     <p class="card-text"><small class="text-muted">Last updated {{$item->created_at}}</small></p>
                                                     </div>
                                                 </div>
-                                                <div class="col-2"></div>
+                                                <div class="col-6" style="background-color: rgb(212, 212, 212);">
+                                                    <div style="">
+                                                        <h5 class="text-center"><b>Liste des commentaires</b></h5>
+                                                        <div style="height: 250px;overflow-y: auto ; border:solid black 1px">Voici tous les commentaires y afférents à la phase {{$item->id}}</div>
+                                                    </div>
+                                                    <form method="POST" action="{{ url('/user/commentaire') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        <div class="form-group {{ $errors->has('commentaire') ? 'has-error' : ''}}">
+                                                            <label for="commentaire" class="control-label">{{ 'Commentaire' }}</label>
+                                                            <textarea class="form-control" rows="3" placeholder="Poster un commentaire" name="commentaire" type="textarea" id="commentaire" >{{ isset($commentaire->commentaire) ? $commentaire->commentaire : ''}}</textarea>
+                                                            {!! $errors->first('commentaire', '<p class="help-block">:message</p>') !!}
+                                                        </div>
+                                                        <div class="form-group {{ $errors->has('phase_id') ? 'has-error' : ''}}" hidden>
+                                                            <label for="phase_id" class="control-label">{{ 'Phase' }}</label>
+                                                            <input class="form-control" name="phase_id" type="number" id="phase_id" readonly value="{{$item->id}}" >
+                                                            {!! $errors->first('phase_id', '<p class="help-block">:message</p>') !!}
+                                                        </div>
+                                                        <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}" hidden>
+                                                            <label for="user_id" class="control-label">{{ 'User Id' }}</label>
+                                                            <input class="form-control" name="user_id" type="number" id="user_id" readonly value="{{ Auth::user()->id }}" >
+                                                            {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input class="btn btn-primary" type="submit" value="Commenter">
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -193,7 +218,7 @@
                             <div class="col-5 col-sm-3">
                                 <div class="col nav nav-tabs nav-tabs-right" id="vert-tabs-right-tab" role="tablist" aria-orientation="vertical"  style="overflow-y: auto ; max-height: 550px;">
                                     @foreach ($phase as $item)
-                                        <a class="nav-link" id="vert-tabs-right-{{$item->id}}-tab" data-toggle="pill" href="#vert-tabs-right-{{$item->id}}" role="tab" aria-controls="vert-tabs-right-{{$item->id}}" aria-selected="true">
+                                        <a class="nav-link" onclick="getComments()" id="vert-tabs-right-{{$item->id}}-tab" data-toggle="pill" href="#vert-tabs-right-{{$item->id}}" role="tab" aria-controls="vert-tabs-right-{{$item->id}}" aria-selected="true">
                                             <div class="card m-1">
                                                 <div class="row g-0 m-1">
                                                     <div class="card-body">
@@ -258,6 +283,7 @@
         <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="{{asset('dist/js/demo.js')}}"></script>
+        <script src="{{asset('dist/js/script.js')}}"></script>
     </body>
 </html>
 

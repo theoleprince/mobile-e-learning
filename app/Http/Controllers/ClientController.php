@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commentaire;
 use App\Models\Cour;
 use App\Models\Formation;
 use App\Models\Phase;
@@ -47,7 +48,7 @@ class ClientController extends Controller
         $cours->finish = 1;
         $cours->update();
 
-        return redirect('user/formation')->with('message', 'Bravo très belle eprogression');
+        return redirect('user/cours')->with('message', 'Bravo très belle eprogression');
     }
 
     /**
@@ -127,9 +128,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function commentaire($id)
     {
-        //
+
     }
 
     /**
