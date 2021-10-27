@@ -64,17 +64,23 @@
                             </div>
                         </div>
                         <hr style="width: 70%">
-                        <div class="social-auth-links text-center mb-3">
+                        <div class="social-auth-links mb-3">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-person-booth mr-2"></i>
                                 {{ __('Se Connecter') }}
-                            </button>
+                            </button>  
                         </div>
+                        
                         @if (Route::has('password.request'))
                             <a class="btn btn-link" href="{{ route('password.request') }}">
                                 {{ __('Forgot Your Password?') }}
                             </a>
                         @endif
                     </form>
+                    <div>
+                        <a href="{{ url('/formulaire') }}"><button class="btn btn-primary btn-sm">
+                            Creer un compte
+                        </button></a>
+                    </div>
                 </div>
             </div>
         </div>

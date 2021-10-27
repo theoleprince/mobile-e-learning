@@ -36,6 +36,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     /************Client***************/
+    Route::post('/inscription', 'App\Http\Controllers\Admin\UserController@store');
+
+    Route::get('/formulaire', function () {
+        return view('admin.client.inscriptionUser');
+    });
 
     Route::group(['prefix' => '/user'], function () {
        /*  Route::get('/formation', function () {
@@ -46,6 +51,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/cours/{id}', 'App\Http\Controllers\ClientController@cours');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+        
 
         Route::get('/cours', function () {
             return view('admin.client.cours');
