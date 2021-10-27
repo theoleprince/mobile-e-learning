@@ -35,5 +35,9 @@ class Phase extends Model
     {
         return $this->belongsTo('App\Models\Cours');
     }
-    
+    public function comments()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
+
 }

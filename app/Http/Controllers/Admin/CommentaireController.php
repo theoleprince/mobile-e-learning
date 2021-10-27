@@ -57,19 +57,26 @@ class CommentaireController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
 
         $requestData = $request->all();
 
         Commentaire::create($requestData);
         $commentaire = Commentaire::where('phase_id',$requestData['phase_id']);
+        $perPage = 25;
+        $phase = Phase::select('phases.*','formations.nom as _formation','cours.nom as _cours   ')
+                        ->join('cours','cours.id','=','phases.cours_id')
+                        ->join('formations','formations.id','=','cours.formation_id')
+                        ->where('cours_id','=', $requestData['phase_id'])
+                        ->latest()
+                        ->paginate($perPage);
 
         if ((Auth::user()->hasRole('superadministrator')) || (Auth::user()->hasRole('administrator')) || (Auth::user()->hasRole('formateur'))){
             return view('home');
         }elseif(Auth::user()->hasRole('user')){
 
-        return view('admin.client.phase', compact('phase','commentaire'));
+        return view('admin.client.phase', compact('phase'));
         }
 
     }

@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/phase/{id}', 'App\Http\Controllers\ClientController@phase');
         Route::get('/cours', 'App\Http\Controllers\HomeController@index');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
-        Route::post('/commentaire/{id}', 'App\Http\Controllers\CommentaireController@store');
+        Route::post('/commentaire', 'App\Http\Controllers\Admin\CommentaireController@store');
         Route::get('/formation', 'App\Http\Controllers\ClientController@index');
 
         Route::get('/phase', function () {

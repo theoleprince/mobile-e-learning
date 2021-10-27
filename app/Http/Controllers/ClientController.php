@@ -128,9 +128,11 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function commentaire($id)
+    public function commentaire(Request $request)
     {
-
+        $commentaire = Commentaire::where('phase_id',$request->phase_id)
+                                    ->get();
+        return response()->json(['commentaire' => $commentaire]);
     }
 
     /**
