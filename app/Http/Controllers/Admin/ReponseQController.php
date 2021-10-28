@@ -63,8 +63,7 @@ class ReponseQController extends Controller
         $requestData = $request->all();
 
         ReponseQ::create($requestData);
-
-        return redirect('admin/reponse-q')->with('flash_message', 'ReponseQ added!');
+        return redirect('user/question')->with('flash_message', 'ReponseQ added!');
     }
 
     /**
@@ -92,9 +91,9 @@ class ReponseQController extends Controller
      */
     public function edit($id)
     {
-        $reponseq = ReponseQ::findOrFail($id);
+        $reponseq = ReponseQ::where('question_id',$id);
 
-        return view('admin.reponse-q.edit', compact('reponseq'));
+        return view('user/question', compact('reponseq'));
     }
 
     /**

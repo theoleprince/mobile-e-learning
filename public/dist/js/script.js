@@ -69,10 +69,14 @@ function alertDeleteElement(id, path) {
 
 function sendComment() {
     var phase = document.getElementById('phase_id');
+    var user = document.getElementById('user_id');
+    var commentaire = document.getElementById('commentaire');
     alert(phase.value)
     console.log(phase);
     var data = {
-        "phase_id": id
+        "phase_id": id,
+        "user_id": user,
+        "commentaire": commentaire
       }
     $.ajax({
         type: "GET",
@@ -87,8 +91,7 @@ function sendComment() {
             timer: 4000
         }).then((result) => {
             console.log(response.id)
-            alert("sqdqsd")
-            window.location.href = '/admin/vente/' + response.id;
+            alert("Commentaire ok")
         });
         }
     });

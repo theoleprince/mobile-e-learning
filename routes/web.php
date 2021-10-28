@@ -37,12 +37,23 @@ Route::group(['middleware' => ['auth']], function () {
             return view('admin.client.formation');
         }); */
 
+        Route::group(['prefix' => 'reponse-q'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\ReponseQController@store')->middleware('has-permission:reponse_qs-create');
+            Route::get('/create', 'App\Http\Controllers\Admin\ReponseQController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\ReponseQController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\ReponseQController@destroy')->middleware('has-permission:reponse_qs-delete');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\ReponseQController@show')->middleware('has-permission:reponse_qs-read');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\ReponseQController@update')->middleware('has-permission:reponse_qs-update');
+            Route::get('/', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:reponse_qs-read');
+        });
+
         Route::get('/phase/{id}', 'App\Http\Controllers\ClientController@phase');
         Route::get('/cours', 'App\Http\Controllers\HomeController@index');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::post('/commentaire', 'App\Http\Controllers\Admin\CommentaireController@store');
         Route::get('/formation', 'App\Http\Controllers\ClientController@index');
 
+        Route::get('/question', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
         Route::get('/phase', function () {
             return view('admin.client.phase');
         });
@@ -136,14 +147,5 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'App\Http\Controllers\Admin\CommentaireController@index')->middleware('has-permission:commentaires-read');
         });
 
-        Route::group(['prefix' => 'reponse-q'], function () {
-            Route::post('/', 'App\Http\Controllers\Admin\ReponseQController@store')->middleware('has-permission:reponse_qs-create');
-            Route::get('/create', 'App\Http\Controllers\Admin\ReponseQController@create');
-            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\ReponseQController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\Admin\ReponseQController@destroy')->middleware('has-permission:reponse_qs-delete');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\ReponseQController@show')->middleware('has-permission:reponse_qs-read');
-            Route::patch('/{id}', 'App\Http\Controllers\Admin\ReponseQController@update')->middleware('has-permission:reponse_qs-update');
-            Route::get('/', 'App\Http\Controllers\Admin\ReponseQController@index')->middleware('has-permission:reponse_qs-read');
-        });
     });
 });
