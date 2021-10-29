@@ -71,7 +71,7 @@ class ReponseQController extends Controller
             ]);
             $id_question++;
         }
-        return redirect('user/question')->with('flash_message', 'ReponseQ added!');
+        return redirect('user/cours')->with('flash_message', 'ReponseQ added!');
     }
 
     /**

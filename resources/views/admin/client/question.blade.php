@@ -158,7 +158,7 @@
             $('.swalDefaultSuccess').click(function() {
             Toast.fire({
                 icon: 'success',
-                title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                title: ' Vos reponses ont été envoyé avec success.'
             })
             });
 
