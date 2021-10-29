@@ -76,10 +76,11 @@
                             </a>
                         @endif
                     </form>
+                
                     <div>
-                        <a href="{{ url('/formulaire') }}"><button class="btn btn-primary btn-sm">
-                            Creer un compte
-                        </button></a>
+                        <a class="btn btn-link" href="{{ url('/inscriptionUser/create') }}">
+                            Creer votre compte
+                        </a>
                     </div>
                 </div>
             </div>

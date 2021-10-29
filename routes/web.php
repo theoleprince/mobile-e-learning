@@ -19,23 +19,23 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::group(['prefix' => 'inscriptionUser'], function () {
+    Route::post('/', 'App\Http\Controllers\ClientController@store');
+    Route::get('/create', 'App\Http\Controllers\ClientController@create');
+});
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// require __DIR__ . '/auth.php';
+//require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => ['auth']], function () {
 
 
     /************Client***************/
-    Route::post('/inscription', 'App\Http\Controllers\Admin\UserController@store');
-
-    Route::get('/formulaire', function () {
-        return view('admin.client.inscriptionUser');
-    });
+  
 
     Route::group(['prefix' => '/user'], function () {
        /*  Route::get('/formation', function () {

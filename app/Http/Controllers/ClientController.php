@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Role;
+use App\Models\UserFormat;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Commentaire;
 use App\Models\Cour;
 use App\Models\Formation;
@@ -33,7 +37,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        $formation = Formation::all();
+        $ariane = ['user','Ajouter'];
+        $roles = Role::all();
+        return view('admin.client.inscriptionUser',compact('formation','ariane','roles'));
     }
 
     /**
@@ -42,6 +49,36 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function store(Request $request){
+        $formation = Formation::all();
+
+        $this->validate($request, [
+			'name' => 'required',
+			'email' => 'required|email|unique:users',
+        ]);
+        $requestData = $request->all();
+        $formation_id = $request->formation_id;
+
+        if ($request->hasFile('avatar')) {
+            $requestData['avatar'] = $request->file('avatar')
+            ->store('uploads', 'public');
+        }
+
+        $requestData['slug'] = $formation_id;
+        $requestData['password'] = Hash::make($request->password);
+        $user = User::create($requestData);
+        $user->attachRole('user');
+
+        $data = [
+            'formation_id' => $formation_id,
+            'user_id' => $user->id
+        ]; 
+ 
+        $userFormation=UserFormat::create($data);
+
+        return view('admin.client.inscriptionUser',compact('formation'));
+    }
+
     public function finish($id)
     {
         $cours = Cour::whereId($id)->first();
