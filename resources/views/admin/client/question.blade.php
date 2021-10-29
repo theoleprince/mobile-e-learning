@@ -83,13 +83,10 @@
                             </div>
                             <input class="form-control" name="valeurId" type="hidden" id="question_id" value={{$id_question}} >
                     <div class="row">
+                        <div class="text-muted mt-3 col-3">
+                        </div>
                         <div class="text-muted mt-3 col-5">
                             Répondez aux questions posé
-                        </div>
-                        <div class="col-2">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
-                                voir mes réponses
-                            </button>
                         </div>
                     </div>
                     </form>

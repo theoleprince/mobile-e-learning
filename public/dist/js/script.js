@@ -71,7 +71,7 @@ function sendComment() {
     var phase = document.getElementById('phase_id');
     var user = document.getElementById('user_id');
     var commentaire = document.getElementById('commentaire');
-    alert(phase.value)
+    // alert(phase.value)
     console.log(phase);
     var data = {
         "phase_id": id,
