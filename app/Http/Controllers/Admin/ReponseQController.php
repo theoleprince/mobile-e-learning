@@ -61,8 +61,16 @@ class ReponseQController extends Controller
     {
 
         $requestData = $request->all();
-
-        ReponseQ::create($requestData);
+        $id_question = 1;
+        while($request->valeurId > $id_question){
+            $save = ReponseQ::create([
+                'question_id' => $requestData["question_id" . $id_question] ,
+                'created_id' => $requestData["created_id" . $id_question] ,
+                'Reponse' => $requestData["Reponse" . $id_question] ,
+                'statut' => "En cours"
+            ]);
+            $id_question++;
+        }
         return redirect('user/question')->with('flash_message', 'ReponseQ added!');
     }
 
