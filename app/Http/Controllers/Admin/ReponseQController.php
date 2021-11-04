@@ -61,10 +61,17 @@ class ReponseQController extends Controller
     {
 
         $requestData = $request->all();
-
-        ReponseQ::create($requestData);
-
-        return redirect('admin/reponse-q')->with('flash_message', 'ReponseQ added!');
+        $id_question = 1;
+        while($request->valeurId > $id_question){
+            $save = ReponseQ::create([
+                'question_id' => $requestData["question_id" . $id_question] ,
+                'created_id' => $requestData["created_id" . $id_question] ,
+                'Reponse' => $requestData["Reponse" . $id_question] ,
+                'statut' => "En cours"
+            ]);
+            $id_question++;
+        }
+        return redirect('user/cours')->with('flash_message', 'ReponseQ added!');
     }
 
     /**
@@ -92,9 +99,9 @@ class ReponseQController extends Controller
      */
     public function edit($id)
     {
-        $reponseq = ReponseQ::findOrFail($id);
+        $reponseq = ReponseQ::where('question_id',$id);
 
-        return view('admin.reponse-q.edit', compact('reponseq'));
+        return view('user/question', compact('reponseq'));
     }
 
     /**

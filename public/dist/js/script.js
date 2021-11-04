@@ -67,21 +67,19 @@ function alertDeleteElement(id, path) {
 }
 
 
-function getComments() {
+function sendComment() {
     var phase = document.getElementById('phase_id');
-    alert(phase.value)
+    var user = document.getElementById('user_id');
+    var commentaire = document.getElementById('commentaire');
+    // alert(phase.value)
     console.log(phase);
-
-  var cours = {
-    "phase_id": id_client
-  };
     var data = {
-        "_token": $('input[name=_token]').val(),
-        "produit": produit,
-        "vente": vente
+        "phase_id": id,
+        "user_id": user,
+        "commentaire": commentaire
       }
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/user/commentaire",
         data: data,
         success: function (response) {
@@ -93,8 +91,7 @@ function getComments() {
             timer: 4000
         }).then((result) => {
             console.log(response.id)
-            alert("sqdqsd")
-            window.location.href = '/admin/vente/' + response.id;
+            alert("Commentaire ok")
         });
         }
     });

@@ -35,8 +35,8 @@ class QuestionController extends Controller
             ->join('users','users.id','=','questions.created_id')
             ->latest()->paginate($perPage);
         }
-
-        return view('admin.question.index', compact('question'));
+// admin.question.index
+        return view('admin.client.question', compact('question'));
     }
 
     /**
