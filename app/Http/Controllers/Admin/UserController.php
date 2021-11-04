@@ -72,7 +72,7 @@ class UserController extends Controller
         $ariane = ['user','Ajouter'];
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user',compact('formation','ariane','roles','permissions'));
+        return view('admin.user.create',compact('formation','ariane','roles','permissions'));
     }
 
     /**
