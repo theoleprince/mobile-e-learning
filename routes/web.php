@@ -19,18 +19,23 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::group(['prefix' => 'inscriptionUser'], function () {
+    Route::post('/', 'App\Http\Controllers\ClientController@store');
+    Route::get('/create', 'App\Http\Controllers\ClientController@create');
+});
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// require __DIR__ . '/auth.php';
+//require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => ['auth']], function () {
 
 
     /************Client***************/
+  
 
     Route::group(['prefix' => '/user'], function () {
        /*  Route::get('/formation', function () {
@@ -52,6 +57,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::post('/commentaire', 'App\Http\Controllers\Admin\CommentaireController@store');
         Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+        
 
         Route::get('/question', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
         Route::get('/phase', function () {

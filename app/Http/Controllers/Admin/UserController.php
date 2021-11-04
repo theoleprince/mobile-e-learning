@@ -72,7 +72,7 @@ class UserController extends Controller
         $ariane = ['user','Ajouter'];
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user.create',compact('formation','ariane','roles','permissions'));
+        return view('admin.user',compact('formation','ariane','roles','permissions'));
     }
 
     /**
@@ -116,7 +116,7 @@ class UserController extends Controller
  
         $userFormation=UserFormat::create($data);
 
-        //return view('admin.user.create',compact('formation'));
+        //return view('admin.client.inscriptionUser',compact('formation'));
         //return $requestData;
         return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }
