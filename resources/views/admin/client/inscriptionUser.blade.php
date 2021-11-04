@@ -87,6 +87,7 @@
                                     <div class="form-group {{ $errors->has('sexe') ? 'has-error' : ''}}">
                                         <label for="sexe" class="control-label">{{ 'Sexe' }}</label>
                                         <select class="form-control" name="sexe" id="sexe">
+                                        <option value="" disabled selected>Sexe</option>
                                             <option value="Masculin">Masculin</option>
                                             <option value="Feminin">Feminin</option>
                                         </select>
@@ -95,6 +96,7 @@
                                     <div class="form-group {{ $errors->has('formation_id') ? 'has-error' : ''}}">
                                         <label for="formation_id" class="control-label">{{ 'Idp' }}</label>
                                         <select class="form-control" name="formation_id" id="formation_id" required>
+                                            <option value="" disabled selected>Selectionner une formation</option>
                                             @foreach($formation as $item)
                                             <option @if(isset($user->formation_id) && $user->formation_id == $item->id)
                                                 selected
