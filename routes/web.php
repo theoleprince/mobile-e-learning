@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -154,5 +156,44 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'App\Http\Controllers\Admin\CommentaireController@index')->middleware('has-permission:commentaires-read');
         });
 
+        Route::group(['prefix' => 'type-category'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\TypeCategoryController@store');
+            Route::get('/create', 'App\Http\Controllers\Admin\TypeCategoryController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\TypeCategoryController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\TypeCategoryController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\TypeCategoryController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\TypeCategoryController@update');
+            Route::get('/', 'App\Http\Controllers\Admin\TypeCategoryController@index');
+        });
+
+        Route::group(['prefix' => 'category'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\CategoryController@store');
+            Route::get('/create', 'App\Http\Controllers\Admin\CategoryController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\CategoryController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\CategoryController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\CategoryController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\CategoryController@update');
+            Route::get('/', 'App\Http\Controllers\Admin\CategoryController@index');
+        });
+
+         Route::group(['prefix' => 'video'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\VideoController@store');
+            Route::get('/create', 'App\Http\Controllers\Admin\VideoController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\VideoController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\VideoController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\VideoController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\VideoController@update');
+            Route::get('/', 'App\Http\Controllers\Admin\VideoController@index');
+        });
+        
+        
+
     });
 });
+
+//Route::view('contact', 'client/contact');
+Route::get('contact', 'App\Http\Controllers\ContactController@create');
+Route::post('contact', 'App\Http\Controllers\ContactController@store');
+//prof create
+Route::get('prof-create', 'App\Http\Controllers\ProfCreateController@create');
+Route::post('prof-create', 'App\Http\Controllers\ProfCreateController@store');

@@ -182,4 +182,16 @@ class ClientController extends Controller
     {
         //
     }
+
+    public function getAllPhaseIdp($id){
+        $videos = Phase::select(
+            'phases.*'
+        )
+        ->join('formations','formations.id','=','cours.formation_id')
+        ->join('cours','cours.id','=','phases.cour_id')
+        ->where('formations.id','=',$id)
+        ->get();
+
+        return response()->json($videos);
+    }
 }
