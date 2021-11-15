@@ -19,7 +19,10 @@ class CreateCategoriesTable extends Migration
             $table->string('description');
             $table->string('image');
             $table->timestamps();
-            $table->foreignId('type_categorie_id')->constraint()->onDelete('cascade');
+            $table->integer('type_category_id')->unsigned();
+
+            $table->foreign('type_category_id')->references('id')->on('type_categories')->onDelete('cascade')->onUpdate('cascade');
+
 
         });
     }

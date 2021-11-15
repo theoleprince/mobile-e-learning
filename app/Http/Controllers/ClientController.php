@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Role;
-use App\Models\UserFormat;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Commentaire;
 use App\Models\Cour;
-use App\Models\Formation;
+use App\Models\User;
 use App\Models\Phase;
+use App\Models\Video;
+use App\Models\Formation;
+use App\Models\UserFormat;
+use App\Models\Commentaire;
+use App\Models\TypeCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -21,13 +23,15 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $perPage = 25;
+        $perPage = 4;
 
         $formation = Formation::whereActivated(1)
                                 ->latest()
                                 ->paginate($perPage);
-        //return $formation;
-        return view('admin.client.formation', compact('formation'));
+
+        $types = TypeCategory::paginate(3);
+        
+        return view('index', compact('formation','types', ));
     }
 
     /**
@@ -56,6 +60,10 @@ class ClientController extends Controller
 			'name' => 'required',
 			'email' => 'required|email|unique:users',
         ]);
+          $random = str_shuffle('1234567890');
+        $ref = substr($random, 0, 4);
+        $request->ref = $ref;
+        //dd($request->all());
         $requestData = $request->all();
         $formation_id = $request->formation_id;
 
@@ -64,8 +72,10 @@ class ClientController extends Controller
             ->store('uploads', 'public');
         }
 
+        $requestData['ref'] = $ref;
         $requestData['slug'] = $formation_id;
         $requestData['password'] = Hash::make($request->password);
+        //dd($requestData);
         $user = User::create($requestData);
         $user->attachRole('user');
 
@@ -184,14 +194,49 @@ class ClientController extends Controller
     }
 
     public function getAllPhaseIdp($id){
-        $videos = Phase::select(
+        /* $videos = Phase::select(
             'phases.*'
+            
         )
-        ->join('formations','formations.id','=','cours.formation_id')
-        ->join('cours','cours.id','=','phases.cour_id')
-        ->where('formations.id','=',$id)
-        ->get();
+        ->join('cours','phases.cour_id','=','cours.id')
 
-        return response()->json($videos);
+        ->join('formations','cours.formation_id','=','formations.id')
+
+       // ->where('formations.id','=',$id)
+        ->get(); */
+
+        $cours = Cour::where('cours.formation_id','=',$id)->get();
+        //dd($cours);
+        $videos = [];
+        $nb=0;
+
+        foreach($cours as $item)
+        {
+            $videos[$nb] = Phase::where('phases.cours_id','=',$item->id)->get();
+            $nb++;
+           // dd($videos);
+        }
+
+        //return response()->json($videos);
+
+        //dd($videos);
+
+        
+
+        return view('client.video-phase', compact('videos'));
+    }
+
+/*     public function getTypeCategories()
+    {
+        $types = TypeCategory::paginate(3);
+        return view('home', compact('types'));
+    } */
+
+    public function getVideos($id)
+    {
+       // dd($id);
+        $videos = Video::where('categorie_id','=', $id)->get();
+        //dd($videos);
+        return view('client.video', compact('videos'));
     }
 }

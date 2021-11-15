@@ -72,6 +72,7 @@ class LaratrustSeeder extends Seeder
                     'password' => bcrypt('pwd'), // password
                     'date_naissance' => Carbon::now(),
                     'remember_token' => Str::random(10),
+                    'ref'=>1234
                 ]);
                 $user->attachRole($role);
             }

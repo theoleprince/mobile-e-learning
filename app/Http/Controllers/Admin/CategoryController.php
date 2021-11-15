@@ -16,12 +16,12 @@ class CategoryController extends Controller
 
         if (!empty($keyword)) {
             $categories = Category::select('categories.*','type_categories.nom as _nom')
-                ->join('type_categories','type_categories.id','=','categories.type_categorie_id')
+                ->join('type_categories','type_categories.id','=','categories.type_category_id')
                 ->latest()
                 ->paginate($perPage);
         } else {
             $categories = Category::select('categories.*','type_categories.nom as _nom')
-                        ->join('type_categories','type_categories.id','=','categories.type_categorie_id')
+                        ->join('type_categories','type_categories.id','=','categories.type_category_id')
                         ->latest()
                         ->paginate($perPage);
         }
@@ -51,7 +51,7 @@ class CategoryController extends Controller
         public function show($id)
     {
         $categorie = Category::select('categories.*','type_categories.nom as _nom')
-                        ->join('type_categories','type_categories.id','=','categories.type_categorie_id')
+                        ->join('type_categories','type_categories.id','=','categories.type_category_id')
                         ->where('categories.id','=',$id)
                         ->first();
 

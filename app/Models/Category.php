@@ -27,7 +27,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = ['nom', 'description', 'image','type_categorie_id'];
+    protected $fillable = ['nom', 'description', 'image','type_category_id'];
 
     public function videos()
     {

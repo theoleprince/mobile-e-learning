@@ -45,6 +45,8 @@ class User extends Authenticatable
         'sexe',
         'password',
         'slug',
+        'ref',
+        'actived',
         'email_verified_at'
     ];
 
