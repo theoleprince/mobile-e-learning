@@ -61,7 +61,8 @@
                 </div>
                 <div class="col-3 px-3 py-3"><a class="button btn btn-primary" href="{{route('login')}}">Mon IDP</a>
                 </div>
-                <div class="col-3 px-3 py-3"><a class="button btn btn-primary" href="#">Créateur</a>
+                <div class="col-3 px-3 py-3"><a class="button btn btn-primary"
+                        href="{{route('devenir-creator')}}">Créateur</a>
                 </div>
             </div>
             <div class="col-sm-2">Bnojour</div>

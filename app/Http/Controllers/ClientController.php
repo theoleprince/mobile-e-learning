@@ -7,6 +7,7 @@ use App\Models\Cour;
 use App\Models\User;
 use App\Models\Phase;
 use App\Models\Video;
+use App\Models\Createur;
 use App\Models\Formation;
 use App\Models\UserFormat;
 use App\Models\Commentaire;
@@ -226,17 +227,35 @@ class ClientController extends Controller
         return view('client.video-phase', compact('videos'));
     }
 
-/*     public function getTypeCategories()
-    {
-        $types = TypeCategory::paginate(3);
-        return view('home', compact('types'));
-    } */
-
     public function getVideos($id)
     {
-       // dd($id);
         $videos = Video::where('categorie_id','=', $id)->get();
-        //dd($videos);
         return view('client.video', compact('videos'));
+    }
+
+    public function getTestCreator(){
+        $videos = Createur::get();
+        //dd($videos);
+        //shuffle($videos);
+        return view('client.creator',compact('videos'));
+    }
+
+    public function edit($id){
+        $video = Createur::findOrFail($id);
+        return view('client.video-reponse', compact('video'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $requestData = $request->all();
+        
+     if ($request->hasFile('video')) {
+            $requestData['video'] = $request->file('video')
+                ->store('uploads', 'public');
+        }
+        $createur = Createur::findOrFail($id);
+        $createur->update($requestData);              
+
+        return view('client.creator',compact('videos','createur'));
     }
 }

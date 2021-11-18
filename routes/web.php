@@ -23,7 +23,7 @@ use App\Http\Controllers\StudentController;
 Route::get('/', 'App\Http\Controllers\ClientController@index');
 
 Route::group(['prefix' => 'inscriptionUser'], function () {
-    Route::post('/', 'App\Http\Controllers\ClientController@store');
+    Route::post('/', 'App\Http\Controllers\ClientController@store')->name('register');
     Route::get('/create', 'App\Http\Controllers\ClientController@create')->name('login');
 });
 
@@ -185,6 +185,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::patch('/{id}', 'App\Http\Controllers\Admin\VideoController@update');
             Route::get('/', 'App\Http\Controllers\Admin\VideoController@index');
         });
+
+          Route::group(['prefix' => 'createur'], function () {
+            Route::post('/', 'App\Http\Controllers\VideoCreateurController@store');
+            Route::get('/create', 'App\Http\Controllers\VideoCreateurController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\VideoCreateurController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\VideoCreateurController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\VideoCreateurController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\VideoCreateurController@update');
+            Route::get('/', 'App\Http\Controllers\VideoCreateurController@index');
+        });
         
         
 
@@ -199,7 +209,10 @@ Route::group(['middleware' => ['auth']], function () {
         //prof create
         Route::get('prof-create', 'App\Http\Controllers\ProfCreateController@create')->name('prof');
         Route::post('prof-create', 'App\Http\Controllers\ProfCreateController@store');
-
+        //prof create
+        Route::get('creator', 'App\Http\Controllers\ClientController@getTestCreator')->name('devenir-creator');
+        Route::get('creator/{id}', 'App\Http\Controllers\ClientController@edit');
+        Route::post('creator/{id}', 'App\Http\Controllers\ClientController@update')->name('creator.update');
         //get type and category
         Route::get('type-category', 'App\Http\Controllers\ClientController@getTypeCategories');
         Route::get('video/{id}', 'App\Http\Controllers\ClientController@getVideos');

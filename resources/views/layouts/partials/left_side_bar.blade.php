@@ -332,6 +332,30 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item has-treeview menu-close">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            createur
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('admin/createur/create')}}" class="nav-link">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>Ajouter</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('admin/createur')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Consulter</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <hr>
                 <li class="nav-item">
                     <a href="{{url('user/formation')}}" class="nav-link">
