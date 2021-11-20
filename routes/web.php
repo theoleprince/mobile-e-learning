@@ -195,9 +195,19 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-//Route::view('contact', 'client/contact');
-Route::get('contact', 'App\Http\Controllers\ContactController@create');
-Route::post('contact', 'App\Http\Controllers\ContactController@store');
-//prof create
-Route::get('prof-create', 'App\Http\Controllers\ProfCreateController@create');
-Route::post('prof-create', 'App\Http\Controllers\ProfCreateController@store');
+        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+
+        //Route::view('contact', 'client/contact');
+        Route::get('contact', 'App\Http\Controllers\ContactController@create')->name('contact');
+        Route::post('contact', 'App\Http\Controllers\ContactController@store');
+        //prof create
+        Route::get('prof-create', 'App\Http\Controllers\ProfCreateController@create')->name('prof');
+        Route::post('prof-create', 'App\Http\Controllers\ProfCreateController@store');
+        //prof create
+        Route::get('creator', 'App\Http\Controllers\ClientController@getTestCreator')->name('devenir-creator');
+        Route::get('creator/{id}', 'App\Http\Controllers\ClientController@edit');
+        Route::post('creator/{id}', 'App\Http\Controllers\ClientController@update')->name('creator.update');
+        //get type and category
+        Route::get('type-category', 'App\Http\Controllers\ClientController@getTypeCategories');
+        Route::get('video/{id}', 'App\Http\Controllers\ClientController@getVideos');
+        Route::get('video/Idp/{id}', 'App\Http\Controllers\ClientController@getAllPhaseIdp'); 
