@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
+use App\Models\Cour;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 
@@ -24,11 +24,17 @@ class FormationController extends Controller
             $formation = Formation::where('nom', 'LIKE', "%$keyword%")
                 ->orWhere('description', 'LIKE', "%$keyword%")
                 ->orWhere('activated', 'LIKE', "%$keyword%")
+                ->orderBy('activated','desc')
                 ->latest()->paginate($perPage);
         } else {
-            $formation = Formation::latest()->paginate($perPage);
+            $formation = Formation::latest()
+                                    ->orderBy('activated','desc')
+                                    ->paginate($perPage);
         }
-
+        foreach ($formation as $item) {
+            $item->cours = Cour::where('formation_id','=', $item->id)
+                                ->count();
+        }
         return view('admin.formation.index', compact('formation'));
     }
 
@@ -69,8 +75,9 @@ class FormationController extends Controller
     public function show($id)
     {
         $formation = Formation::findOrFail($id);
+        $cours = Cour::where('formation_id','=', $id)->get();
 
-        return view('admin.formation.show', compact('formation'));
+        return view('admin.formation.show', compact('formation', 'cours'));
     }
 
     /**
@@ -117,6 +124,6 @@ class FormationController extends Controller
     {
         Formation::destroy($id);
 
-        return redirect('admin/formation')->with('flash_message', 'Formation deleted!');
+        return back();
     }
 }
