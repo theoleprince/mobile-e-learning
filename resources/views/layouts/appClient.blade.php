@@ -75,7 +75,7 @@
                                 alt=""
                                 style="width:50px; height:50px; float:left; border-radius:50%; margin-right:25px; border: 2px purple solid">
                         </span>
-                     </a>
+                        --> </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="{{url('/admin/profil')}}"><i class="dw dw-user1"></i> Profile</a>
                         <form method="POST" action="{{ route('logout') }}">

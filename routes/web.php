@@ -17,14 +17,17 @@ use App\Http\Controllers\StudentController;
 */
 
 
-/* Route::get('/', function () {
+Route::get('/', function () {
+    return view('index');
+});
+
+Route::get('/login', function () {
     return view('auth.login');
-}); */
-Route::get('/', 'App\Http\Controllers\ClientController@index');
+});
 
 Route::group(['prefix' => 'inscriptionUser'], function () {
-    Route::post('/', 'App\Http\Controllers\ClientController@store')->name('register');
-    Route::get('/create', 'App\Http\Controllers\ClientController@create')->name('login');
+    Route::post('/', 'App\Http\Controllers\ClientController@store');
+    Route::get('/create', 'App\Http\Controllers\ClientController@create');
 });
 
 
@@ -38,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     /************Client***************/
-  
+
 
     Route::group(['prefix' => '/user'], function () {
        /*  Route::get('/formation', function () {
@@ -59,10 +62,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/cours', 'App\Http\Controllers\HomeController@index');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::post('/commentaire', 'App\Http\Controllers\Admin\CommentaireController@store');
-        
-        
+        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
 
-        Route::get('/question', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
+
+        Route::get('/question/{id}', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
         Route::get('/phase', function () {
             return view('admin.client.phase');
         });
@@ -185,35 +189,15 @@ Route::group(['middleware' => ['auth']], function () {
             Route::patch('/{id}', 'App\Http\Controllers\Admin\VideoController@update');
             Route::get('/', 'App\Http\Controllers\Admin\VideoController@index');
         });
-
-          Route::group(['prefix' => 'createur'], function () {
-            Route::post('/', 'App\Http\Controllers\VideoCreateurController@store');
-            Route::get('/create', 'App\Http\Controllers\VideoCreateurController@create');
-            Route::get('/{id}/edit', 'App\Http\Controllers\VideoCreateurController@edit');
-            Route::delete('/{id}', 'App\Http\Controllers\VideoCreateurController@destroy');
-            Route::get('/{id}', 'App\Http\Controllers\VideoCreateurController@show');
-            Route::patch('/{id}', 'App\Http\Controllers\VideoCreateurController@update');
-            Route::get('/', 'App\Http\Controllers\VideoCreateurController@index');
-        });
         
         
 
     });
 });
 
-        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
-
-        //Route::view('contact', 'client/contact');
-        Route::get('contact', 'App\Http\Controllers\ContactController@create')->name('contact');
-        Route::post('contact', 'App\Http\Controllers\ContactController@store');
-        //prof create
-        Route::get('prof-create', 'App\Http\Controllers\ProfCreateController@create')->name('prof');
-        Route::post('prof-create', 'App\Http\Controllers\ProfCreateController@store');
-        //prof create
-        Route::get('creator', 'App\Http\Controllers\ClientController@getTestCreator')->name('devenir-creator');
-        Route::get('creator/{id}', 'App\Http\Controllers\ClientController@edit');
-        Route::post('creator/{id}', 'App\Http\Controllers\ClientController@update')->name('creator.update');
-        //get type and category
-        Route::get('type-category', 'App\Http\Controllers\ClientController@getTypeCategories');
-        Route::get('video/{id}', 'App\Http\Controllers\ClientController@getVideos');
-        Route::get('video/Idp/{id}', 'App\Http\Controllers\ClientController@getAllPhaseIdp'); 
+//Route::view('contact', 'client/contact');
+Route::get('contact', 'App\Http\Controllers\ContactController@create');
+Route::post('contact', 'App\Http\Controllers\ContactController@store');
+//prof create
+Route::get('prof-create', 'App\Http\Controllers\ProfCreateController@create');
+Route::post('prof-create', 'App\Http\Controllers\ProfCreateController@store');

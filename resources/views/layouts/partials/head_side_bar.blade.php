@@ -9,7 +9,7 @@
         <a href="{{url('/home')}}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{url('/admin/users/profil')}}" class="nav-link">Contact</a>
+        <a href="{{url('/admin/formateur')}}" class="nav-link">Contact</a>
       </li>
     </ul>
 

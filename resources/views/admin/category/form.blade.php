@@ -17,18 +17,18 @@
     {!! $errors->first('image', '<p class="help-block">:message</p>') !!}
 </div>
 
-<div class="form-group {{ $errors->has('type_category_id') ? 'has-error' : ''}}">
-    <label for="type_category_id" class="control-label">{{ 'Type Id' }}</label>
+<div class="form-group {{ $errors->has('type_categorie_id') ? 'has-error' : ''}}">
+    <label for="type_categorie_id" class="control-label">{{ 'Phase Id' }}</label>
 
-    <select class="form-control" name="type_category_id" id="type_category_id" required>
+    <select class="form-control" name="type_categorie_id" id="type_categorie_id" required>
         <option value="" disabled selected>Selectionner un type categorie</option>
         @foreach($type_categories as $item)
-        <option @if(isset($categorie->type_category_id) && $categorie->type_category_id == $item->id)
+        <option @if(isset($categorie->type_categorie_id) && $categorie->type_categorie_id == $item->id)
             selected
             @endif value=" {{ $item->id }}">{{$item->nom}}</option>
         @endforeach
     </select>
-    {!! $errors->first('type_category_id', '<p class="help-block">:message</p>') !!}
+    {!! $errors->first('type_categorie_id', '<p class="help-block">:message</p>') !!}
 </div>
 
 

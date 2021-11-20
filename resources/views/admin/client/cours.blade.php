@@ -35,7 +35,7 @@
                                                 <p clasxs="card-text"><b><u>Titre:</u></b> {{$item->nom}} <br>
                                                                     <b><u>Temps: </u></b> {{$item->temps}} Minutes </p>
                                                 <a href="{{ url('/user/phase/' . $item->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Lire</b></a>
-                                                <a href="{{ url('/user/question/') }}" class="btn btn-success"><i class="fa fa-edit"></i><b> S'evaluer</b></a>
+                                                <a href="{{ url('/user/question/' . $item->id) }}" class="btn btn-success"><i class="fa fa-edit"></i><b> S'evaluer</b></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,8 +52,8 @@
                                                 <div class="card-body">
                                                 <h5 class="card-title"><b><u>(N°: {{$item->numero}})</u> {{$item->_formation}} </b></h5>
                                                 <p class="card-text"><b><u>Titre:</u></b> {{$item->nom}} <br>
-                                                                    <b><u>Temps: </u></b> {{$item->temps}} Minutes </p>
-                                                                    <a href="{{ url('/user/phase/' . $item->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Lire</b></a>
+                                                <b><u>Temps: </u></b> {{$item->temps}} Minutes </p>
+                                                <a href="{{ url('/user/phase/' . $item->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Démarer</b></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                                 <h5 class="card-title"><b><u>(N°: {{$item->numero}})</u> {{$item->_formation}} </b></h5>
                                                 <p class="card-text"><b><u>Titre:</u></b> {{$item->nom}} <br>
                                                 <b><u>Temps: </u></b> {{$item->temps}} Minutes </p>
-                                                <a href="{{ url('/user/phase/' . $item->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Lire</b></a>
+                                                <a href="{{ url('/user/phase/' . $item->id) }}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Continuer</b></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -89,7 +89,7 @@
                                                 <h5 class="card-title"><b><u>(N°: {{$item->numero}})</u> {{$item->_formation}} </b></h5>
                                                 <p class="card-text"><b><u>Titre:</u></b> {{$item->nom}} <br>
                                                                     <b><u>Temps: </u></b> {{$item->temps}} Minutes </p>
-                                                <a href="{{url('/user/phase/' . $item->id)}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Suivre</b></a>
+                                                <a href="{{url('/user/phase/' . $item->id)}}" class="btn btn-primary"><i class="fa fa-plus"></i><b> Relire</b></a>
                                                 </div>
                                             </div>
                                         </div>

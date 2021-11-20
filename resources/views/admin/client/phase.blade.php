@@ -17,7 +17,7 @@
                                         <div class="card col-6">
                                             <video controls width="250" height="350" class="mt-2 card-img-top">
                                                 <source src="{{ url('storage/' . $item->video) }}"/>
-                                                </video>
+                                            </video>
                                             <div class="card-body">
                                             <h5 class="card-title">{{$item->titre}}</h5>
                                             <p class="card-text">{{$item->_cours}}</p>
@@ -39,7 +39,7 @@
                                                                 <div class="direct-chat-msg right">
                                                                     <div class="direct-chat-infos clearfix">
                                                                         <span class="direct-chat-name float-right">{{$comment->user->name}}</span>
-                                                                        <span class="direct-chat-timestamp float-left">{{$comment->updated_at}}</span>
+                                                                        <span class="direct-chat-timestamp float-left">{{ $comment->updated_at }}</span>
                                                                     </div>
                                                                     <!-- /.direct-chat-infos -->
                                                                     <img class="direct-chat-img" src="{{ url(isset(Auth::user()->avatar) ? 'storage/' . Auth::user()->avatar : 'photo.jfif') }}" alt="message user image">
