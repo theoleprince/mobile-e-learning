@@ -97,7 +97,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('/{id}', 'App\Http\Controllers\Admin\FormateurController@destroy')->middleware('has-permission:users-delete');
             Route::get('/{id}', 'App\Http\Controllers\Admin\FormateurController@show')->middleware('has-permission:users-read');
             Route::patch('/{id}', 'App\Http\Controllers\Admin\FormateurController@update')->middleware('has-permission:users-update');
-            Route::get('/', 'App\Http\Controllers\Admin\FormateurController@index')->middleware('has-permission:users-read');
+            Route::get('/', 'App\Http\Controllers\Admin\FormateurController@index');
         });
 
         Route::group(['prefix' => 'formation'], function () {
@@ -189,8 +189,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::patch('/{id}', 'App\Http\Controllers\Admin\VideoController@update');
             Route::get('/', 'App\Http\Controllers\Admin\VideoController@index');
         });
-        
-        
+
+
 
     });
 });

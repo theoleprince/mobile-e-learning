@@ -31,7 +31,7 @@
                                             </ul>
                                         </div>
                                         <div class="col-5 text-center">
-                                            <img src="{{ url(isset(Auth::user()->avatar) ? 'storage/' . Auth::user()->avatar : 'photo.jfif') }}"class="img-circle img-fluid">
+                                            <img src="{{ url(isset($item->avatar) ? 'storage/' . $item->avatar : 'photo.jfif') }}"class="img-circle img-fluid" style="width:150px;margin-top: -40px; height:150px; border: 2px purple solid">
                                         </div>
                                     </div>
                                 </div>
@@ -60,6 +60,7 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="pagination-wrapper"> {!! $user->appends(['search' => Request::get('search')])->render() !!} </div>
             </div>
         </div>
     </div>

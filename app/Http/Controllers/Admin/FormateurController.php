@@ -28,7 +28,7 @@ class FormateurController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 10;
+        $perPage = 12;
 
         if (!empty($keyword)) {
             $user = User::select('users.*')
@@ -48,11 +48,14 @@ class FormateurController extends Controller
                 ->latest()->paginate($perPage);
         }
 
-         foreach ($user as $value) {
-            $value->avatar = url('storage/'.$value->avatar);
+        //  foreach ($user as $value) {
+        //     $value->avatar = url('uploads'.$value->avatar);
+        // }
+        if ((Auth::user()->hasRole('superadministrator')) || (Auth::user()->hasRole('administrator')) || (Auth::user()->hasRole('formateur'))){
+            return view('admin.formateur.index', compact('user'));
+        }elseif(Auth::user()->hasRole('user')){
+            return view('admin.client.formateur', compact('user'));
         }
-
-        return view('admin.formateur.index', compact('user'));
     }
 
     /**
@@ -133,7 +136,7 @@ class FormateurController extends Controller
         $user = User::select('users.*')
                 ->where('users.id','=',$id)
                 ->first();
-        $user->avatar = url('storage/'.$user->avatar);
+        $user->avatar = url('uploads/user'.$user->avatar);
 
 
         return view('admin.formateur.show', compact('user'));
@@ -209,9 +212,9 @@ class FormateurController extends Controller
          if($requestData['name']) $user->name = $requestData['name'];
         if($requestData['email']){
             if($requestData['email']!=$user->email) $user->email = $requestData['email'];
-        } 
+        }
         if($requestData['prenom']) $user->prenom = $requestData['prenom'];
-       
+
         if($requestData['lieu_naissance']) $user->lieu_naissance = $requestData['lieu_naissance'];
         if($requestData['date_naissance']) $user->date_naissance = $requestData['date_naissance'];
         if($requestData['sexe']) $user->sexe = $requestData['sexe'];

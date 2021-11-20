@@ -48,7 +48,7 @@
                 <a href="{{url('/user/cours')}}" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{url('/admin/users/profil')}}" class="nav-link">Contact</a>
+                <a href="{{url('/admin/formateur')}}" class="nav-link">Contact</a>
             </li>
         </ul>
 
@@ -67,7 +67,7 @@
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
 
-            <div class="user-info-dropdown">
+            <div class="user-info-dropdown mr-4">
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
@@ -75,7 +75,8 @@
                                 alt=""
                                 style="width:50px; height:50px; float:left; border-radius:50%; margin-right:25px; border: 2px purple solid">
                         </span>
-                        --> </a>
+                        <span class="user-name">{{ Auth::user()->name }} {{ Auth::user()->prenom }}</span>
+                    </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="{{url('/admin/profil')}}"><i class="dw dw-user1"></i> Profile</a>
                         <form method="POST" action="{{ route('logout') }}">
@@ -88,7 +89,7 @@
                 </div>
             </div>
             <!-- Messages Dropdown Menu -->
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-comments"></i>
                     <span class="badge badge-danger navbar-badge">3</span>
@@ -171,7 +172,7 @@
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
-            </li>
+            </li> --}}
         </ul>
     </nav>
     <!-- /.navbar -->
