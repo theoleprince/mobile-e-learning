@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commentaire;
+use App\Role;
 use App\Models\Cour;
-use App\Models\Formation;
+use App\Models\User;
 use App\Models\Phase;
+use App\Models\Video;
+use App\Models\Createur;
+use App\Models\Formation;
+use App\Models\UserFormat;
+use App\Models\Commentaire;
+use App\Models\TypeCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -17,13 +24,15 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $perPage = 25;
+        $perPage = 4;
 
         $formation = Formation::whereActivated(1)
                                 ->latest()
                                 ->paginate($perPage);
-        //return $formation;
-        return view('admin.client.formation', compact('formation'));
+
+        $types = TypeCategory::paginate(3);
+        
+        return view('index', compact('formation','types', ));
     }
 
     /**
@@ -33,7 +42,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        $formation = Formation::all();
+        $ariane = ['user','Ajouter'];
+        $roles = Role::all();
+        return view('admin.client.inscriptionUser',compact('formation','ariane','roles'));
     }
 
     /**
@@ -42,6 +54,42 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function store(Request $request){
+        $formation = Formation::all();
+
+        $this->validate($request, [
+			'name' => 'required',
+			'email' => 'required|email|unique:users',
+        ]);
+          $random = str_shuffle('1234567890');
+        $ref = substr($random, 0, 4);
+        $request->ref = $ref;
+        //dd($request->all());
+        $requestData = $request->all();
+        $formation_id = $request->formation_id;
+
+        if ($request->hasFile('avatar')) {
+            $requestData['avatar'] = $request->file('avatar')
+            ->store('uploads', 'public');
+        }
+
+        $requestData['ref'] = $ref;
+        $requestData['slug'] = $formation_id;
+        $requestData['password'] = Hash::make($request->password);
+        //dd($requestData);
+        $user = User::create($requestData);
+        $user->attachRole('user');
+
+        $data = [
+            'formation_id' => $formation_id,
+            'user_id' => $user->id
+        ]; 
+ 
+        $userFormation=UserFormat::create($data);
+
+        return view('admin.client.inscriptionUser',compact('formation'));
+    }
+
     public function finish($id)
     {
         $cours = Cour::whereId($id)->first();
@@ -144,5 +192,70 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getAllPhaseIdp($id){
+        /* $videos = Phase::select(
+            'phases.*'
+            
+        )
+        ->join('cours','phases.cour_id','=','cours.id')
+
+        ->join('formations','cours.formation_id','=','formations.id')
+
+       // ->where('formations.id','=',$id)
+        ->get(); */
+
+        $cours = Cour::where('cours.formation_id','=',$id)->get();
+        //dd($cours);
+        $videos = [];
+        $nb=0;
+
+        foreach($cours as $item)
+        {
+            $videos[$nb] = Phase::where('phases.cours_id','=',$item->id)->get();
+            $nb++;
+           // dd($videos);
+        }
+
+        //return response()->json($videos);
+
+        //dd($videos);
+
+        
+
+        return view('client.video-phase', compact('videos'));
+    }
+
+    public function getVideos($id)
+    {
+        $videos = Video::where('categorie_id','=', $id)->get();
+        return view('client.video', compact('videos'));
+    }
+
+    public function getTestCreator(){
+        $videos = Createur::get();
+        //dd($videos);
+        //shuffle($videos);
+        return view('client.creator',compact('videos'));
+    }
+
+    public function edit($id){
+        $video = Createur::findOrFail($id);
+        return view('client.video-reponse', compact('video'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $requestData = $request->all();
+        
+     if ($request->hasFile('video')) {
+            $requestData['video'] = $request->file('video')
+                ->store('uploads', 'public');
+        }
+        $createur = Createur::findOrFail($id);
+        $createur->update($requestData);              
+
+        return view('client.creator',compact('videos','createur'));
     }
 }

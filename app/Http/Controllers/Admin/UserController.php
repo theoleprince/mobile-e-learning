@@ -84,6 +84,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         
         $formation = Formation::all();
 
@@ -91,6 +92,9 @@ class UserController extends Controller
 			'name' => 'required',
 			'email' => 'required|email|unique:users',
         ]);
+        $random = str_shuffle('1234567890');
+        $ref = substr($random, 0, 4);
+
         $requestData = $request->all();
         $formation_id = $request->formation_id;
 
@@ -102,8 +106,8 @@ class UserController extends Controller
         //if($requestData['password']) $password = $requestData['password'];
             
 
-        //$random = str_shuffle('1234567890');
-        ///$password = 'EBA@'.substr($random, 0, 4);
+        
+        $requestData['ref'] = $ref;
         $requestData['slug'] = $formation_id;
         $requestData['password'] = Hash::make($request->password);
         $user = User::create($requestData);
@@ -116,7 +120,7 @@ class UserController extends Controller
  
         $userFormation=UserFormat::create($data);
 
-        //return view('admin.user.create',compact('formation'));
+        //return view('admin.client.inscriptionUser',compact('formation'));
         //return $requestData;
         return redirect('admin/user')->with('flash_message', 'Utilisateur  Ajouté Avec Succes!');
     }

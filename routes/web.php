@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,22 +17,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('auth.login');
-});
+}); */
+Route::get('/', 'App\Http\Controllers\ClientController@index');
 
+Route::group(['prefix' => 'inscriptionUser'], function () {
+    Route::post('/', 'App\Http\Controllers\ClientController@store')->name('register');
+    Route::get('/create', 'App\Http\Controllers\ClientController@create')->name('login');
+});
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// require __DIR__ . '/auth.php';
+//require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => ['auth']], function () {
 
 
     /************Client***************/
+  
 
     Route::group(['prefix' => '/user'], function () {
        /*  Route::get('/formation', function () {
@@ -51,7 +59,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/cours', 'App\Http\Controllers\HomeController@index');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::post('/commentaire', 'App\Http\Controllers\Admin\CommentaireController@store');
-        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+        
+        
 
         Route::get('/question', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
         Route::get('/phase', function () {
@@ -147,5 +156,64 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'App\Http\Controllers\Admin\CommentaireController@index')->middleware('has-permission:commentaires-read');
         });
 
+        Route::group(['prefix' => 'type-category'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\TypeCategoryController@store');
+            Route::get('/create', 'App\Http\Controllers\Admin\TypeCategoryController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\TypeCategoryController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\TypeCategoryController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\TypeCategoryController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\TypeCategoryController@update');
+            Route::get('/', 'App\Http\Controllers\Admin\TypeCategoryController@index');
+        });
+
+        Route::group(['prefix' => 'category'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\CategoryController@store');
+            Route::get('/create', 'App\Http\Controllers\Admin\CategoryController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\CategoryController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\CategoryController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\CategoryController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\CategoryController@update');
+            Route::get('/', 'App\Http\Controllers\Admin\CategoryController@index');
+        });
+
+         Route::group(['prefix' => 'video'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\VideoController@store');
+            Route::get('/create', 'App\Http\Controllers\Admin\VideoController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\VideoController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\VideoController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\VideoController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\Admin\VideoController@update');
+            Route::get('/', 'App\Http\Controllers\Admin\VideoController@index');
+        });
+
+          Route::group(['prefix' => 'createur'], function () {
+            Route::post('/', 'App\Http\Controllers\VideoCreateurController@store');
+            Route::get('/create', 'App\Http\Controllers\VideoCreateurController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\VideoCreateurController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\VideoCreateurController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\VideoCreateurController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\VideoCreateurController@update');
+            Route::get('/', 'App\Http\Controllers\VideoCreateurController@index');
+        });
+        
+        
+
     });
 });
+
+        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
+
+        //Route::view('contact', 'client/contact');
+        Route::get('contact', 'App\Http\Controllers\ContactController@create')->name('contact');
+        Route::post('contact', 'App\Http\Controllers\ContactController@store');
+        //prof create
+        Route::get('prof-create', 'App\Http\Controllers\ProfCreateController@create')->name('prof');
+        Route::post('prof-create', 'App\Http\Controllers\ProfCreateController@store');
+        //prof create
+        Route::get('creator', 'App\Http\Controllers\ClientController@getTestCreator')->name('devenir-creator');
+        Route::get('creator/{id}', 'App\Http\Controllers\ClientController@edit');
+        Route::post('creator/{id}', 'App\Http\Controllers\ClientController@update')->name('creator.update');
+        //get type and category
+        Route::get('type-category', 'App\Http\Controllers\ClientController@getTypeCategories');
+        Route::get('video/{id}', 'App\Http\Controllers\ClientController@getVideos');
+        Route::get('video/Idp/{id}', 'App\Http\Controllers\ClientController@getAllPhaseIdp'); 
