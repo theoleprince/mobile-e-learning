@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Cour;
 use App\Models\Formation;
+use App\Models\Phase;
 use App\Models\Userformation;
 use Illuminate\Http\Request;
 
@@ -76,10 +77,13 @@ class FormationController extends Controller
     public function show($id)
     {
         $formation = Formation::findOrFail($id);
-        $formation->user = Userformation::where('formation_id','=',$id)
+        $formation->users = Userformation::where('formation_id','=',$id)
                                         ->count();
         $cours = Cour::where('formation_id','=', $id)->get();
-
+        foreach ($cours as $item) {
+            $item->phase = Phase::where('cours_id','=', $item->id)
+                                ->count();
+        }
         return view('admin.formation.show', compact('formation', 'cours'));
     }
 

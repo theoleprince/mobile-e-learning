@@ -12,7 +12,7 @@ class Userformation extends Model
      *
      * @var string
      */
-    protected $table = 'userformation';
+    protected $table = 'user_formats';
 
     /**
     * The database primary key value.
@@ -26,7 +26,7 @@ class Userformation extends Model
      *
      * @var array
      */
-    protected $fillable = ['od', 'formation_id', 'user_id'];
+    protected $fillable = ['formation_id', 'user_id'];
 
     public function user()
     {

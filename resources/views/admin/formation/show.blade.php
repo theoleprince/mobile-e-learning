@@ -45,8 +45,8 @@
                                                 </div>
                                             </div>
                                             <div class="card-body text-black">
-                                                <h5 class="card-title"><b>Nbre User:</b>{{$}}</h5>
-                                                <p class="card-text">Some quick bulk of the card's content.</p>
+                                                <h5 class="card-title">Nbre User:<b>{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</b></h5>
+                                                <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($cours->phase) ? $cours->phase : 00) }} Vidéos(s)</b></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -70,8 +70,8 @@
                                                 </div>
                                             </div>
                                                 <div class="card-body text-black">
-                                                <h5 class="card-title">Secondary card title</h5>
-                                                <p class="card-text">Some quick bulk of the card's content.</p>
+                                                    <h5 class="card-title">Nbre User:<b>{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</b></h5>
+                                                    <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($cours->phase) ? $cours->phase : 00) }} Vidéos(s)</b></h5>
                                             </div>
                                         </div>
                                     </div>
