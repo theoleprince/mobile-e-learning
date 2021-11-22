@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Commentaire;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
@@ -17,20 +18,103 @@ class ForumController extends Controller
     {
         $keyword = $request->get('search');
         $perPage = 25;
-
+        $participants = 0;
+        $trie = $request->get('trie');
+        $keyword = $request->get('search');
 
         if (!empty($keyword)) {
-            $commentaire = Commentaire::select('*','users.id as idUser','commentaires.created_at as creat')
-                                        ->join('users', 'users.id','=','commentaires.user_id')
-                                        ->where('commentaire', 'LIKE', "%$keyword%")
-                                        ->get();
+            $commentaire = Commentaire::orderBy('id','desc')->get();
+            $user = User::all();
+            $itérateur = 0;
+            foreach ($commentaire as $item){
+                $itérateur++;
+                $utilisateur = $item->user_id;
+                foreach ($user as $items){
+                    $id = $items->id;
+                    if ($utilisateur == $id) {
+                        $item->name = $items->name;
+                        $item->email = $items->email;
+                        $item->prenom = $items->prenom;
+                        $participants++;
+                    }
+                }
+                $inconnu = $itérateur - $participants;
+            }
+
+            $commentaire = Commentaire::where('commentaire', 'LIKE', "%$keyword%")
+                                        ->orderBy('id','desc')->get();
+            $user = User::all();
+            $itérateur = 0;
+            foreach ($commentaire as $item){
+                $utilisateur = $item->user_id;
+                foreach ($user as $items){
+                    $id = $items->id;
+                    if ($utilisateur == $id) {
+                        $item->name = $items->name;
+                        $item->email = $items->email;
+                        $item->prenom = $items->prenom;
+                    }
+                }
+            }
         } else {
-            $commentaire = Commentaire::select('*','users.id as idUser','commentaires.created_at as creat')
-                                    ->join('users', 'users.id','=','commentaires.user_id')
-                                    ->latest()
-                                    ->get();
+            $commentaire = Commentaire::orderBy('id','desc')->get();
+            $user = User::all();
+            $itérateur = 0;
+            foreach ($commentaire as $item){
+                $itérateur++;
+                $utilisateur = $item->user_id;
+                foreach ($user as $items){
+                    $id = $items->id;
+                    if ($utilisateur == $id) {
+                        $item->name = $items->name;
+                        $item->email = $items->email;
+                        $item->prenom = $items->prenom;
+                        $participants++;
+                    }
+                }
+                $inconnu = $itérateur - $participants;
+            }
+
+            if (!empty($trie)) {
+                if ($trie == "participants") {
+                    $commentaire = Commentaire::where('phase_id','!=','0')->orderBy('id','desc')->get();
+                    $user = User::all();
+                    foreach ($commentaire as $item){
+                        $utilisateur = $item->user_id;
+                        foreach ($user as $items){
+                            $id = $items->id;
+                            if ($utilisateur == $id) {
+                                $item->name = $items->name;
+                                $item->email = $items->email;
+                                $item->prenom = $items->prenom;
+                            }
+                        }
+                    }
+                } elseif ($trie == "inconnu") {
+                    $commentaire = Commentaire::where('phase_id','=','0')->orderBy('id','desc')->get();
+                } else{
+                    $commentaire = Commentaire::orderBy('id','desc')->get();
+                    $user = User::all();
+                    $itérateur = 0;
+                    foreach ($commentaire as $item){
+                        $itérateur++;
+                        $utilisateur = $item->user_id;
+                        foreach ($user as $items){
+                            $id = $items->id;
+                            if ($utilisateur == $id) {
+                                $item->name = $items->name;
+                                $item->email = $items->email;
+                                $item->prenom = $items->prenom;
+                                $participants++;
+                            }
+                        }
+                        $inconnu = $itérateur - $participants;
+                    }
+                }
+
+            }
         }
-        return view('admin.reponse-c.forum', compact('commentaire'));
+        return view('admin.reponse-c.forum', compact('commentaire','participants','inconnu'));
     }
 
     /**
@@ -51,7 +135,12 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->phase_id = 0;
+        $requestData = $request->all();
+
+        Commentaire::create($requestData);
+
+        return redirect('admin/forum')->with('flash_message', 'Formation added!');
     }
 
     /**
@@ -96,6 +185,8 @@ class ForumController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Commentaire::destroy($id);
+
+        return redirect('admin/forum')->with('flash_message', 'Formation deleted!');
     }
 }
