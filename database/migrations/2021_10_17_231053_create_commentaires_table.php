@@ -16,10 +16,8 @@ class CreateCommentairesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->text('commentaire')->nullable();
-            $table->integer('phase_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('phase_id')->references('id')->on('phases')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('phase_id')->nullable();
+            $table->integer('user_id')->string();
             });
     }
 

@@ -17,8 +17,7 @@ class CreateReponseCsTable extends Migration
             $table->timestamps();
             $table->text('reponse')->nullable();
             $table->integer('commentaire_id')->unsigned();
-            $table->integer('created_id')->unsigned();
-            $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('created_id');
             $table->foreign('commentaire_id')->references('id')->on('commentaires')->onDelete('cascade')->onUpdate('cascade');
             });
     }
