@@ -32,6 +32,10 @@ class TypeCategoryController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+			'nom' => 'required',
+			'description' => 'required'
+		]);
         $requestData = $request->all();
 
         TypeCategory::create($requestData);

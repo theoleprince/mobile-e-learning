@@ -17,17 +17,14 @@ use App\Http\Controllers\StudentController;
 */
 
 
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::get('/login', function () {
+/* Route::get('/', function () {
     return view('auth.login');
-});
+}); */
+Route::get('/', 'App\Http\Controllers\ClientController@index');
 
 Route::group(['prefix' => 'inscriptionUser'], function () {
-    Route::post('/', 'App\Http\Controllers\ClientController@store');
-    Route::get('/create', 'App\Http\Controllers\ClientController@create');
+    Route::post('/', 'App\Http\Controllers\ClientController@store')->name('register');
+    Route::get('/create', 'App\Http\Controllers\ClientController@create')->name('login');
 });
 
 
@@ -42,6 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     /************Client***************/
 
+
+    Route::post('/forum', 'App\Http\Controllers\Admin\ForumController@store');
+    Route::get('/', 'App\Http\Controllers\Admin\ForumController@index');
 
     Route::group(['prefix' => '/user'], function () {
        /*  Route::get('/formation', function () {
@@ -62,11 +62,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/cours', 'App\Http\Controllers\HomeController@index');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::post('/commentaire', 'App\Http\Controllers\Admin\CommentaireController@store');
-        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
-        Route::get('/formation', 'App\Http\Controllers\ClientController@index');
 
 
-        Route::get('/question/{id}', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
+
+        Route::get('/question', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
         Route::get('/phase', function () {
             return view('admin.client.phase');
         });
@@ -88,6 +87,12 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/{id}', 'App\Http\Controllers\Admin\UserController@show')->middleware('has-permission:users-read');
             Route::patch('/{id}', 'App\Http\Controllers\Admin\UserController@update')->middleware('has-permission:users-update');
             Route::get('/', 'App\Http\Controllers\Admin\UserController@index')->middleware('has-permission:users-read');
+        });
+        Route::group(['prefix' => 'forum'], function () {
+            Route::post('/', 'App\Http\Controllers\Admin\ForumController@store');
+            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\ForumController@edit')->middleware('has-permission:users-create');
+            Route::delete('/{id}', 'App\Http\Controllers\Admin\ForumController@destroy')->middleware('has-permission:users-delete');
+            Route::get('/', 'App\Http\Controllers\Admin\ForumController@index');
         });
 
         Route::group(['prefix' => 'formateur'], function () {
@@ -190,6 +195,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'App\Http\Controllers\Admin\VideoController@index');
         });
 
+          Route::group(['prefix' => 'createur'], function () {
+            Route::post('/', 'App\Http\Controllers\VideoCreateurController@store');
+            Route::get('/create', 'App\Http\Controllers\VideoCreateurController@create');
+            Route::get('/{id}/edit', 'App\Http\Controllers\VideoCreateurController@edit');
+            Route::delete('/{id}', 'App\Http\Controllers\VideoCreateurController@destroy');
+            Route::get('/{id}', 'App\Http\Controllers\VideoCreateurController@show');
+            Route::patch('/{id}', 'App\Http\Controllers\VideoCreateurController@update');
+            Route::get('/', 'App\Http\Controllers\VideoCreateurController@index');
+        });
+
 
 
     });
@@ -210,4 +225,4 @@ Route::group(['middleware' => ['auth']], function () {
         //get type and category
         Route::get('type-category', 'App\Http\Controllers\ClientController@getTypeCategories');
         Route::get('video/{id}', 'App\Http\Controllers\ClientController@getVideos');
-        Route::get('video/Idp/{id}', 'App\Http\Controllers\ClientController@getAllPhaseIdp'); 
+        Route::get('video/Idp/{id}', 'App\Http\Controllers\ClientController@getAllPhaseIdp');

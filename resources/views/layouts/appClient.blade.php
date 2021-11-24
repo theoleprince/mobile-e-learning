@@ -75,7 +75,7 @@
                                 alt=""
                                 style="width:50px; height:50px; float:left; border-radius:50%; margin-right:25px; border: 2px purple solid">
                         </span>
-                        <span class="user-name">{{ Auth::user()->name }} {{ Auth::user()->prenom }}</span>
+                        <span class="user-name">{{ isset(Auth::user()->name) ? Auth::user()->name : '' }} {{ isset(Auth::user()->prenom) ? Auth::user()->prenom : '' }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                         <a class="dropdown-item" href="{{url('/admin/profil')}}"><i class="dw dw-user1"></i> Profile</a>

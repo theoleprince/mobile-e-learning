@@ -15,11 +15,10 @@ class CreateCommentairesTable extends Migration
         Schema::create('commentaires', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('id_commentaire')->nullable();
             $table->text('commentaire')->nullable();
-            $table->integer('phase_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('phase_id')->references('id')->on('phases')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('phase_id')->nullable();
+            $table->string('user_id')->nullable();
             });
     }
 

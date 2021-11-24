@@ -233,6 +233,14 @@
                     </ul>
                 </li>
                 <hr>
+                <li class="nav-item">
+                    <a href="{{url('admin/forum')}}" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>
+                            Forum
+                        </p>
+                    </a>
+                </li>
                 {{-- <li class="nav-item">
                     <a href="{{url('user/formation')}}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>

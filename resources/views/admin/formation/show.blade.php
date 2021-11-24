@@ -20,7 +20,10 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
+                        <div class="card-title mb-1 bg-secondary col-12 text-center">
+                            <h5>{{ $formation->description }}</h5>
+                        </div><br>
+                        <div class="row mt-2">
                             @forelse ($cours as $item)
                                 @if ($item->activated)
                                     <div class="col-3">
@@ -42,8 +45,8 @@
                                                 </div>
                                             </div>
                                             <div class="card-body text-black">
-                                                <h5 class="card-title">Secondary card title</h5>
-                                                <p class="card-text">Some quick bulk of the card's content.</p>
+                                                <h5 class="card-title">Nbre User:<b>{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</b></h5>
+                                                <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($cours->phase) ? $cours->phase : 00) }} Vidéos(s)</b></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -54,12 +57,21 @@
                                                 <h3 class="card-title">{{$item->nom}}</h3>
 
                                                 <div class="card-tools">
-                                                    <button type="button submit" class="btn btn-tool" title="Supprimer Cour" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fas fa-times"></i></button>
+                                                    <form method="POST" action="{{ url('/admin/cours/' . $item->id) }}"
+                                                        accept-charset="UTF-8" style="display:inline">
+                                                        {{ method_field('DELETE') }}
+                                                        {{ csrf_field() }}
+                                                        <button type="button submit" class="btn btn-tool"
+                                                            title="Supprimer Cour"
+                                                            onclick="return confirm(&quot;Confirm delete?&quot;)">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                                 <div class="card-body text-black">
-                                                <h5 class="card-title">Secondary card title</h5>
-                                                <p class="card-text">Some quick bulk of the card's content.</p>
+                                                    <h5 class="card-title">Nbre User:<b>{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</b></h5>
+                                                    <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($cours->phase) ? $cours->phase : 00) }} Vidéos(s)</b></h5>
                                             </div>
                                         </div>
                                     </div>
