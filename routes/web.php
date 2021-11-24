@@ -16,10 +16,6 @@ use App\Http\Controllers\StudentController;
 |
 */
 
-
-/* Route::get('/', function () {
-    return view('auth.login');
-}); */
 Route::get('/', 'App\Http\Controllers\ClientController@index');
 
 Route::group(['prefix' => 'inscriptionUser'], function () {

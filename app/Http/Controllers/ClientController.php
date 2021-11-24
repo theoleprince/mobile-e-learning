@@ -32,7 +32,7 @@ class ClientController extends Controller
 
         $types = TypeCategory::paginate(3);
         
-        return view('index', compact('formation','types', ));
+        return view('index', compact('formation','types'));
     }
 
     /**
