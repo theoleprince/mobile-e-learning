@@ -18,14 +18,14 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>#</th><th>Nom</th><th>Formation</th><th>Enregistré Par</th><th>Actions</th>
+                                            <th>#</th><th>Formation</th><th>Nom</th><th>Enregistré Par</th><th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($cours as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->nom }}</td><td>{{ $item->_formation }}</td><td><a href="mailto:{{$item->_email}}"><strong>{{$item->_email}}</strong></a></td>
+                                            <td>{{ $item->_formation }}</td><td>{{ $item->nom }}</td><td><a href="mailto:{{$item->_email}}"><strong>{{$item->_email}}</strong></a></td>
                                             <td>
                                                 <div class="dropdown">
                                                     <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">

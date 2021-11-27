@@ -128,8 +128,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['prefix' => 'phase'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\PhaseController@store')->middleware('has-permission:phases-create');
-            Route::get('/create', 'App\Http\Controllers\Admin\PhaseController@create');
-            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\PhaseController@edit');
+            Route::get('/create/{id}', 'App\Http\Controllers\Admin\PhaseController@create');
+            Route::get('/{id}/edit/{cours}', 'App\Http\Controllers\Admin\PhaseController@edit');
             Route::delete('/{id}', 'App\Http\Controllers\Admin\PhaseController@destroy')->middleware('has-permission:phases-delete');
             Route::get('/{id}', 'App\Http\Controllers\Admin\PhaseController@show')->middleware('has-permission:phases-read');
             Route::patch('/{id}', 'App\Http\Controllers\Admin\PhaseController@update')->middleware('has-permission:phases-update');

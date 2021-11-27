@@ -20,18 +20,17 @@ class FormationController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 25;
 
         if (!empty($keyword)) {
             $formation = Formation::where('nom', 'LIKE', "%$keyword%")
                 ->orWhere('description', 'LIKE', "%$keyword%")
                 ->orWhere('activated', 'LIKE', "%$keyword%")
                 ->orderBy('activated','desc')
-                ->latest()->paginate($perPage);
+                ->latest()->get();
         } else {
             $formation = Formation::latest()
                                     ->orderBy('activated','desc')
-                                    ->paginate($perPage);
+                                    ->get();
         }
         foreach ($formation as $item) {
             $item->cours = Cour::where('formation_id','=', $item->id)

@@ -31,7 +31,7 @@ class ClientController extends Controller
                                 ->paginate($perPage);
 
         $types = TypeCategory::paginate(3);
-        
+
         return view('index', compact('formation','types', ));
     }
 
@@ -83,8 +83,8 @@ class ClientController extends Controller
         $data = [
             'formation_id' => $formation_id,
             'user_id' => $user->id
-        ]; 
- 
+        ];
+
         $userFormation=UserFormat::create($data);
 
         return view('admin.client.inscriptionUser',compact('formation'));
@@ -163,6 +163,7 @@ class ClientController extends Controller
                         ->join('cours','cours.id','=','phases.cours_id')
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('cours_id','=', $id)
+                        ->where('phases.activated','=', 1)
                         ->latest()
                         ->paginate($perPage);
 
@@ -197,7 +198,7 @@ class ClientController extends Controller
     public function getAllPhaseIdp($id){
         /* $videos = Phase::select(
             'phases.*'
-            
+
         )
         ->join('cours','phases.cour_id','=','cours.id')
 
@@ -222,7 +223,7 @@ class ClientController extends Controller
 
         //dd($videos);
 
-        
+
 
         return view('client.video-phase', compact('videos'));
     }
@@ -248,13 +249,13 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         $requestData = $request->all();
-        
+
      if ($request->hasFile('video')) {
             $requestData['video'] = $request->file('video')
                 ->store('uploads', 'public');
         }
         $createur = Createur::findOrFail($id);
-        $createur->update($requestData);              
+        $createur->update($requestData);
 
         return view('client.creator',compact('videos','createur'));
     }

@@ -18,38 +18,39 @@
     <input class="form-control" name="temps" type="number" id="temps" value="{{ isset($phase->temps) ? $phase->temps : ''}}" >
     {!! $errors->first('temps', '<p class="help-block">:message</p>') !!}
 </div>
+
+
 <div class="form-group {{ $errors->has('activated') ? 'has-error' : ''}}">
     <label for="activated" class="control-label">{{ 'Activated' }}</label>
-    <div class="radio">
-    <label style='visibility:hidden;display:none'><input name="activated" type="radio" value="1" {{ (isset($phase) && 1 == $phase->activated) ? 'checked' : '' }}> Yes</label>
+    <div class="row col-3 ">
+        <div class="radio col-6">
+            <label><input name="activated" type="radio" value="1"
+                    {{ (isset($phase) && 1 == $phase->activated) ? 'checked' : '' }}> Yes</label>
+        </div>
+        <div class="radio col-6">
+            <label><input name="activated" type="radio" value="0" @if (isset($phase))
+                    {{ (0 == $phase->activated) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
+        </div>
+    </div>
+    <div>
+        {!! $errors->first('activated', '<p class="help-block">:message</p>') !!}
+    </div>
 </div>
-<div class="radio">
-    <label><input name="activated" type="radio" value="0" @if (isset($phase)) {{ (0 == $phase->activated) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
-</div>
-    {!! $errors->first('activated', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('finish') ? 'has-error' : ''}}">
+
+<div class="form-group {{ $errors->has('finish') ? 'has-error' : ''}}" hidden>
     <label for="finish" class="control-label">{{ 'Finish' }}</label>
     <div class="radio">
-    <label style='visibility:hidden;display:none'><input name="finish" type="radio" value="1" {{ (isset($phase) && 1 == $phase->finish) ? 'checked' : '' }}> Yes</label>
-</div>
-<div class="radio">
-    <label><input name="finish" type="radio" value="0" @if (isset($phase)) {{ (0 == $phase->finish) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
-</div>
+        <label style='visibility:hidden;display:none'><input name="finish" type="radio" value="1" {{ (isset($phase) && 1 == $phase->finish) ? 'checked' : '' }}> Yes</label>
+        <div class="radio">
+            <label><input name="finish" type="radio" value="0" @if (isset($phase)) {{ (0 == $phase->finish) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
+        </div>
+    </div>
     {!! $errors->first('finish', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('cours_id') ? 'has-error' : ''}}">
-    <label for="cours_id" class="control-label">{{ 'Cours' }}</label>
-    <select class="form-control" name="cours_id" id="cours_id" required>
-        <option value="" disabled selected>Selectionner un cours</option>
-        @foreach($cour as $item)
-        <option
 
-        @if(isset($cour->cours_id) && $cour->cours_id == $item->id)
-            selected
-        @endif value=" {{ $item->id }}">{{$item->nom}}</option>
-        @endforeach
-    </select>
+<div class="form-group {{ $errors->has('cours_id') ? 'has-error' : ''}}" hidden>
+    <label for="cours_id" class="control-label">{{ 'Cours' }}</label>
+    <input class="form-control" name="cours_id" type="text" id="cours_id" value="{{ $ident }}" >
     {!! $errors->first('cours_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('created_id') ? 'has-error' : ''}}" hidden>

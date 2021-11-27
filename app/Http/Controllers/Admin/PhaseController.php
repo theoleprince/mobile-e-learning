@@ -45,10 +45,11 @@ class PhaseController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($id)
     {
+        $ident = $id;
         $cour = Cour::all();
-        return view('admin.phase.create',compact('cour'));
+        return view('admin.phase.create',compact('cour','ident'));
     }
 
     /**
@@ -69,7 +70,7 @@ class PhaseController extends Controller
 
         Phase::create($requestData);
 
-        return redirect('admin/phase')->with('flash_message', 'Phase added!');
+        return redirect('admin/cours')->with('flash_message', 'Phase added!');
     }
 
     /**
@@ -97,13 +98,13 @@ class PhaseController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $cours)
     {
-
+        $ident = $cours;
         $cour = Cour::all();
         $phase = Phase::findOrFail($id);
 
-        return view('admin.phase.edit', compact('phase','cour'));
+        return view('admin.phase.edit', compact('phase','cour','ident'));
     }
 
     /**
@@ -126,7 +127,7 @@ class PhaseController extends Controller
         $phase = Phase::findOrFail($id);
         $phase->update($requestData);
 
-        return redirect('admin/phase')->with('flash_message', 'Phase updated!');
+        return redirect('admin/cours')->with('flash_message', 'Phase updated!');
     }
 
     /**

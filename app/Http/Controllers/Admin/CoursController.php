@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\Models\Cour;
 use App\Models\Formation;
+use App\Models\Phase;
 use Illuminate\Http\Request;
 
 class CoursController extends Controller
@@ -19,7 +20,6 @@ class CoursController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('search');
-        $perPage = 25;
 
         if (!empty($keyword)) {
             $cours = Cour::select('cours.*','formations.nom as _formation','users.email as _email','users.name as _name','users.prenom as _prenom')
@@ -32,12 +32,13 @@ class CoursController extends Controller
                 ->orWhere('finish', 'LIKE', "%$keyword%")
                 ->orWhere('formation_id', 'LIKE', "%$keyword%")
                 ->orWhere('created_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
+                ->latest()->get();
         } else {
             $cours = Cour::select('cours.*','formations.nom as _formation','users.email as _email','users.name as _name','users.prenom as _prenom')
             ->join('formations','formations.id','=','cours.formation_id')
             ->join('users','users.id','=','cours.created_id')
-            ->latest()->paginate($perPage);
+            ->orderBy('formation_id')
+            ->latest()->get();
         }
         return view('admin.cours.index', compact('cours'));
     }
@@ -84,8 +85,11 @@ class CoursController extends Controller
                     ->join('users','users.id','=','cours.created_id')
                     ->where('cours.id','=',$id)
                     ->first();
+        $phase = Phase::select('phases.*')
+                        ->where('phases.cours_id','=',$id)
+                        ->get();
 
-        return view('admin.cours.show', compact('cour'));
+        return view('admin.cours.show', compact('cour','phase'));
     }
 
     /**

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Edit Formation #{{ $formation->id }}</div>
+                    <div class="card-header">Mise A Jour D'une Formation #{{ $formation->id }}</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/formation') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />

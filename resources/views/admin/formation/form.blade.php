@@ -13,14 +13,16 @@
 @if(Auth::user()->hasRole(['administrator','superadministrator']))
 <div class="form-group {{ $errors->has('activated') ? 'has-error' : ''}}">
     <label for="activated" class="control-label">{{ 'Activated' }}</label>
-    <div class="radio">
-        <label><input name="activated" type="radio" value="1"
-                {{ (isset($formation) && 1 == $formation->activated) ? 'checked' : '' }}> Yes</label>
+    <div class="row col-3 ">
+        <div class="radio col-6">
+            <label><input name="activated" type="radio" value="1"
+                    {{ (isset($formation) && 1 == $formation->activated) ? 'checked' : '' }}> Yes</label>
+        </div>
+        <div class="radio col-6">
+            <label><input name="activated" type="radio" value="0" @if (isset($formation))
+                    {{ (0 == $formation->activated) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
+        </div>
     </div>
-</div>
-<div class="radio">
-    <label><input name="activated" type="radio" value="0" @if (isset($formation))
-            {{ (0 == $formation->activated) ? 'checked' : '' }} @else {{ 'checked' }} @endif> No</label>
     <div>
         {!! $errors->first('activated', '<p class="help-block">:message</p>') !!}
     </div>

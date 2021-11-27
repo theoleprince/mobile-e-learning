@@ -28,7 +28,7 @@
                                 @if ($item->activated)
                                     <div class="col-3">
                                         <div class="card border-info m-1">
-                                            <div class="card-header bg-success">
+                                            <div class="card-header bg-success" style="height: 60px">
                                                 <h3 class="card-title">{{$item->nom}}</h3>
 
                                                 <div class="card-tools">
@@ -53,7 +53,7 @@
                                 @else
                                     <div class="col-3">
                                         <div class="card border-info m-1">
-                                            <div class="card-header bg-warning">
+                                            <div class="card-header bg-warning" style="height: 60px">
                                                 <h3 class="card-title">{{$item->nom}}</h3>
 
                                                 <div class="card-tools">
