@@ -144,6 +144,16 @@
                                 </a>
                             @empty
                             @endforelse
+                                <div class="text-center">
+                                    <form method="POST" action="{{url('/user/cours/' . $ident )}}"
+                                        accept-charset="UTF-8" style="display:inline">
+                                        {{ csrf_field() }}
+                                        <button type="button submit" class="mx-5 btn btn-success"
+                                            title="Cours Terminé">
+                                            <i class="fas fa-graduation-cap"></i> J'ai terminé ce cours
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                     </div>
                 </div>

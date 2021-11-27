@@ -82,7 +82,10 @@ class FormationController extends Controller
         foreach ($cours as $item) {
             $item->phase = Phase::where('cours_id','=', $item->id)
                                 ->count();
+            $ph = $item->phase;
         }
+        // dd($cours);
+
         return view('admin.formation.show', compact('formation', 'cours'));
     }
 

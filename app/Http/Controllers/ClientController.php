@@ -11,6 +11,7 @@ use App\Models\Createur;
 use App\Models\Formation;
 use App\Models\UserFormat;
 use App\Models\Commentaire;
+use App\Models\Question;
 use App\Models\TypeCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -46,6 +47,14 @@ class ClientController extends Controller
         $ariane = ['user','Ajouter'];
         $roles = Role::all();
         return view('admin.client.inscriptionUser',compact('formation','ariane','roles'));
+    }
+
+
+    public function question($id)
+    {
+        $question = Question::where('cours_id','=',$id)
+            ->get();
+        return view('admin.client.question', compact('question'));
     }
 
     /**
@@ -158,7 +167,7 @@ class ClientController extends Controller
         $cours = Cour::whereId($id)->first();
         $cours->activated = 1;
         $cours->update();
-
+        $ident = $cours->id;
         $phase = Phase::select('phases.*','formations.nom as _formation','cours.nom as _cours   ')
                         ->join('cours','cours.id','=','phases.cours_id')
                         ->join('formations','formations.id','=','cours.formation_id')
@@ -167,7 +176,7 @@ class ClientController extends Controller
                         ->latest()
                         ->paginate($perPage);
 
-        return view('admin.client.phase', compact('phase'));
+        return view('admin.client.phase', compact('phase','ident'));
     }
 
     /**

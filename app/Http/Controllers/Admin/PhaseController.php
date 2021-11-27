@@ -127,7 +127,7 @@ class PhaseController extends Controller
         $phase = Phase::findOrFail($id);
         $phase->update($requestData);
 
-        return redirect('admin/cours')->with('flash_message', 'Phase updated!');
+        return redirect('admin/cours/')->with('flash_message', 'Phase updated!');
     }
 
     /**

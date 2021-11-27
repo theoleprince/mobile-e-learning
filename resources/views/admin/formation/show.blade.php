@@ -6,9 +6,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between;">
-                        <div class="col-md-9">
+                        <div class="col-md-2">
                             Formation {{ $formation->id }}
                         </div>
+                        <div class="col-md-7"><b><span style="color: blue;">{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</span> suivent ce Cours</b></div>
                         <div class="col-md-3" style="display: flex; justify-content: space-around;">
                             <a href="{{ url('/admin/formation') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                             <a href="{{ url('/admin/formation/' . $formation->id . '/edit') }}" title="Edit Formation"><button class="btn btn-primary btn-sm"><i class="fas fa-pen" aria-hidden="true"></i> Edit</button></a>
@@ -45,8 +46,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-body text-black">
-                                                <h5 class="card-title">Nbre User:<b>{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</b></h5>
-                                                <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($cours->phase) ? $cours->phase : 00) }} Vidéos(s)</b></h5>
+                                                <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($item->phase) ? $item->phase : 00) }} Vidéos(s)</b></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -70,8 +70,7 @@
                                                 </div>
                                             </div>
                                                 <div class="card-body text-black">
-                                                    <h5 class="card-title">Nbre User:<b>{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</b></h5>
-                                                    <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($cours->phase) ? $cours->phase : 00) }} Vidéos(s)</b></h5>
+                                                    <h5 class="card-title">Nbre Vidéos:<b>{{ (isset($item->phase) ? $item->phase : 00) }} Vidéos(s)</b></h5>
                                             </div>
                                         </div>
                                     </div>

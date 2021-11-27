@@ -63,10 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/cours', 'App\Http\Controllers\HomeController@index');
         Route::post('/cours/{id}', 'App\Http\Controllers\ClientController@finish');
         Route::post('/commentaire', 'App\Http\Controllers\Admin\CommentaireController@store');
-
-
-
-        Route::get('/question', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
+        Route::get('/question/{id}', 'App\Http\Controllers\ClientController@question');
         Route::get('/phase', function () {
             return view('admin.client.phase');
         });
