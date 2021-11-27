@@ -57,8 +57,17 @@
                                                         <br>
                                                         <hr>
                                                         <div class="row">
-                                                            <a href="{{ url('/admin/phase/' . $items->id . '/edit/' . $cour->id ) }}" title="Modifier Phase"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true">Mod</i></button></a>
-                                                            <button type="submit" class="mx-4 btn btn-danger btn-sm deleted_element" title="Supprimer Phase" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash" aria-hidden="true">Supp</i></button>
+                                                            <div class="col-6"><a href="{{ url('/admin/phase/' . $items->id . '/edit/' . $cour->id ) }}" title="Modifier Phase"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true">Mod</i></button></a>
+                                                            </div>
+                                                            <form method="POST" action="{{ url('admin/phase/' . $items->id) }}"
+                                                                accept-charset="UTF-8" style="display:inline">
+                                                                {{ method_field('DELETE') }}
+                                                                {{ csrf_field() }}
+                                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                                    title="Delete User"
+                                                                    onclick="return confirm(&quot;Confirm delete?&quot;)"><i
+                                                                        class="fa fa-trash" aria-hidden="true"></i> Supp</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,8 +85,17 @@
                                                         <br>
                                                         <hr>
                                                         <div class="row">
-                                                            <a href="{{ url('/admin/phase/' . $items->id . '/edit/' . $cour->id ) }}" title="Modifier Phase"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true">Mod</i></button></a>
-                                                            <button type="submit" class="mx-4 btn btn-danger btn-sm deleted_element" title="Supprimer Phase" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash" aria-hidden="true">Supp</i></button>
+                                                            <div class="col-6"><a href="{{ url('/admin/phase/' . $items->id . '/edit/' . $cour->id ) }}" title="Modifier Phase"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true">Mod</i></button></a>
+                                                            </div>
+                                                            <form method="POST" action="{{ url('admin/phase/' . $items->id) }}"
+                                                                accept-charset="UTF-8" style="display:inline">
+                                                                {{ method_field('DELETE') }}
+                                                                {{ csrf_field() }}
+                                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                                    title="Delete User"
+                                                                    onclick="return confirm(&quot;Confirm delete?&quot;)"><i
+                                                                        class="fa fa-trash" aria-hidden="true"></i> Supp</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>

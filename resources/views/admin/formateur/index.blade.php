@@ -44,7 +44,7 @@
                                         title="Modifier Utilisateur"><button
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"
                                                 aria-hidden="true"></i></button></a>
-                                    <form method="POST" action="{{ url('admin/formateur/$user->id') }}"
+                                    <form method="POST" action="{{ url('admin/formateur/'.$user->id) }}"
                                         accept-charset="UTF-8" style="display:inline">
                                         {{ method_field('DELETE') }}
                                         {{ csrf_field() }}
