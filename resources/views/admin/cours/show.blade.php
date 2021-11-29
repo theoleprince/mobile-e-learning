@@ -104,7 +104,7 @@
                                     @empty
                                         <div class="card-body">
                                             <h5 class="card-title">Oups ce cours ne dispose pas encore de vidéos</h5>
-                                            <a href="{{url('admin/phase/create')}}" class="btn btn-primary">Ajouter des Vidéos à ce cours</a>
+                                            <a href="{{url('admin/phase/create/' . $cour->id)}}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter des Vidéos à ce cours</a>
                                         </div>
                                     @endforelse
                                 </div>
