@@ -9,9 +9,10 @@
                         <div class="col-md-2">
                             Formation {{ $formation->id }}
                         </div>
-                        <div class="col-md-7"><b><span style="color: blue;">{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</span> suivent ce Cours</b></div>
-                        <div class="col-md-3" style="display: flex; justify-content: space-around;">
+                        <div class="col-md-6"><b><span style="color: blue;">{{ (isset($formation->users) ? $formation->users : 00) }} User(s)</span> suivent ce Cours</b></div>
+                        <div class="col-md-4" style="display: flex; justify-content: space-around;">
                             <a href="{{ url('/admin/formation') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                            <a href="{{ url('/admin/cours/create/' . $formation->id) }}" title="Back"><button class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Cours</button></a>
                             <a href="{{ url('/admin/formation/' . $formation->id . '/edit') }}" title="Edit Formation"><button class="btn btn-primary btn-sm"><i class="fas fa-pen" aria-hidden="true"></i> Edit</button></a>
                             <form method="POST" action="{{ url('admin/formation' . '/' . $formation->id) }}" accept-charset="UTF-8" style="display:inline">
                                 {{ method_field('DELETE') }}
@@ -80,6 +81,8 @@
                                     <div class="card-header bg-secondary">Aucun</div>
                                         <div class="card-body text-black">
                                             <p class="card-text">Oups Vous n'avez pas encore de cours pour cette formation</p>
+                                            <p class="text-center"><a href="{{ url('/admin/cours/create/' . $formation->id) }}" title="Back"><button class="btn btn-success btn-lg"><i class="fa fa-plus" aria-hidden="true"></i> Cours</button></a>
+                                            </p>
                                         </div>
                                 </div>
                             @endforelse

@@ -28,8 +28,6 @@ class CoursController extends Controller
                 ->where('nom', 'LIKE', "%$keyword%")
                 ->orWhere('temps', 'LIKE', "%$keyword%")
                 ->orWhere('numero', 'LIKE', "%$keyword%")
-                ->orWhere('activated', 'LIKE', "%$keyword%")
-                ->orWhere('finish', 'LIKE', "%$keyword%")
                 ->orWhere('formation_id', 'LIKE', "%$keyword%")
                 ->orWhere('created_id', 'LIKE', "%$keyword%")
                 ->latest()->get();
@@ -48,7 +46,13 @@ class CoursController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create($id)
+    {
+        $id = $id;
+        return view('admin.cours.create',compact('id'));
+    }
+
+    public function creat()
     {
         $formation = Formation::all();
         return view('admin.cours.create',compact('formation'));

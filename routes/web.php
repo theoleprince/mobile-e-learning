@@ -17,10 +17,10 @@ use App\Http\Controllers\StudentController;
 */
 
 
-Route::get('
-', function () {
-    return view('index');
-});
+// Route::get('
+// ', function () {
+//     return view('index');
+// });
 Route::get('/', 'App\Http\Controllers\ClientController@index');
 
 Route::group(['prefix' => 'inscriptionUser'], function () {
@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::post('/forum', 'App\Http\Controllers\Admin\ForumController@store');
-    Route::get('/', 'App\Http\Controllers\Admin\ForumController@index');
+    // Route::get('/', 'App\Http\Controllers\Admin\ForumController@index');
 
     Route::group(['prefix' => '/user'], function () {
        /*  Route::get('/formation', function () {
@@ -108,14 +108,15 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/create', 'App\Http\Controllers\Admin\FormationController@create');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\FormationController@edit');
             Route::delete('/{id}', 'App\Http\Controllers\Admin\FormationController@destroy')->middleware('has-permission:formations-delete');
-            Route::get('/{id}', 'App\Http\Controllers\Admin\FormationController@show')->middleware('has-permission:formations-read');
+            Route::get('/{id}', 'App\Http\Controllers\Admin\FormationController@show')->middleware('has-permission:formations-read')->named('formation');
             Route::patch('/{id}', 'App\Http\Controllers\Admin\FormationController@update')->middleware('has-permission:formations-update');
             Route::get('/', 'App\Http\Controllers\Admin\FormationController@index')->middleware('has-permission:formations-read');
         });
 
         Route::group(['prefix' => 'cours'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\CoursController@store')->middleware('has-permission:cours-create');
-            Route::get('/create', 'App\Http\Controllers\Admin\CoursController@create');
+            Route::get('/create/{id}', 'App\Http\Controllers\Admin\CoursController@create');
+            Route::get('/create', 'App\Http\Controllers\Admin\CoursController@creat');
             Route::get('/{id}/edit', 'App\Http\Controllers\Admin\CoursController@edit');
             Route::delete('/{id}', 'App\Http\Controllers\Admin\CoursController@destroy')->middleware('has-permission:cours-delete');
             Route::get('/{id}', 'App\Http\Controllers\Admin\CoursController@show')->middleware('has-permission:cours-read');

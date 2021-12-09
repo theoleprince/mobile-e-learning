@@ -44,7 +44,7 @@
                                         title="Modifier Utilisateur"><button
                                             class="btn btn-primary btn-sm"><i class="fa fa-edit"
                                                 aria-hidden="true"></i></button></a>
-                                    <form method="POST" action="{{ url('admin/formateur/'.$user->id) }}"
+                                    <form method="POST" action="{{ url('admin/formateur/'.$item->id) }}"
                                         accept-charset="UTF-8" style="display:inline">
                                         {{ method_field('DELETE') }}
                                         {{ csrf_field() }}
@@ -53,7 +53,7 @@
                                             onclick="return confirm(&quot;Confirm delete?&quot;)"><i
                                                 class="fa fa-trash" aria-hidden="true"></i></button>
                                     </form>
-                                    </div>
+                                    </div> 
                                 </div>
                                 </div>
                             </div>

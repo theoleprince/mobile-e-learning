@@ -11,9 +11,12 @@ use App\Models\Createur;
 use App\Models\Formation;
 use App\Models\UserFormat;
 use App\Models\Commentaire;
+use App\Models\CoursUsers;
 use App\Models\Question;
 use App\Models\TypeCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
@@ -23,7 +26,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $perPage = 4;
 
@@ -32,8 +35,106 @@ class ClientController extends Controller
                                 ->paginate($perPage);
 
         $types = TypeCategory::paginate(3);
+        $keyword = $request->get('search');
+        $perPage = 25;
+        $participants = 0;
+        $trie = $request->get('trie');
+        $keyword = $request->get('search');
 
-        return view('index', compact('formation','types', ));
+        if (!empty($keyword)) {
+            $commentaire = Commentaire::orderBy('id','desc')->get();
+            $user = User::all();
+            $itérateur = 0;
+            foreach ($commentaire as $item){
+                $itérateur++;
+                $utilisateur = $item->user_id;
+                foreach ($user as $items){
+                    $id = $items->id;
+                    if ($utilisateur == $id) {
+                        $item->name = $items->name;
+                        $item->email = $items->email;
+                        $item->prenom = $items->prenom;
+                        $participants++;
+                    }
+                }
+                $inconnu = $itérateur - $participants;
+            }
+
+            $commentaire = Commentaire::where('commentaire', 'LIKE', "%$keyword%")
+                                        ->orderBy('id','desc')->get();
+            $user = User::all();
+            $itérateur = 0;
+            foreach ($commentaire as $item){
+                $utilisateur = $item->user_id;
+                foreach ($user as $items){
+                    $id = $items->id;
+                    if ($utilisateur == $id) {
+                        $item->name = $items->name;
+                        $item->email = $items->email;
+                        $item->prenom = $items->prenom;
+                    }
+                }
+            }
+        } else {
+            $commentaire = Commentaire::orderBy('id','desc')->get();
+            $user = User::all();
+            $itérateur = 0;
+            foreach ($commentaire as $item){
+                $itérateur++;
+                $utilisateur = $item->user_id;
+                foreach ($user as $items){
+                    $id = $items->id;
+                    if ($utilisateur == $id) {
+                        $item->name = $items->name;
+                        $item->email = $items->email;
+                        $item->prenom = $items->prenom;
+                        $participants++;
+                    }
+                }
+                $inconnu = $itérateur - $participants;
+            }
+
+            if (!empty($trie)) {
+                if ($trie == "participants") {
+                    $commentaire = Commentaire::where('phase_id','!=','0')->orderBy('id','desc')->get();
+                    $user = User::all();
+                    foreach ($commentaire as $item){
+                        $utilisateur = $item->user_id;
+                        foreach ($user as $items){
+                            $id = $items->id;
+                            if ($utilisateur == $id) {
+                                $item->name = $items->name;
+                                $item->email = $items->email;
+                                $item->prenom = $items->prenom;
+                            }
+                        }
+                    }
+                } elseif ($trie == "inconnu") {
+                    $commentaire = Commentaire::where('phase_id','=','0')->orderBy('id','desc')->get();
+                } else{
+                    $commentaire = Commentaire::orderBy('id','desc')->get();
+                    $user = User::all();
+                    $itérateur = 0;
+                    foreach ($commentaire as $item){
+                        $itérateur++;
+                        $utilisateur = $item->user_id;
+                        foreach ($user as $items){
+                            $id = $items->id;
+                            if ($utilisateur == $id) {
+                                $item->name = $items->name;
+                                $item->email = $items->email;
+                                $item->prenom = $items->prenom;
+                                $participants++;
+                            }
+                        }
+                        $inconnu = $itérateur - $participants;
+                    }
+                }
+
+            }
+        }
+
+        return view('index', compact('formation','types','commentaire','participants','inconnu'));
     }
 
     /**
@@ -101,7 +202,7 @@ class ClientController extends Controller
 
     public function finish($id)
     {
-        $cours = Cour::whereId($id)->first();
+        $cours = CoursUsers::where('cours_id', '=', $id)->first();
         $cours->finish = 1;
         $cours->update();
 
@@ -128,27 +229,30 @@ class ClientController extends Controller
                         ->latest()
                         ->paginate($perPage);
 
-        $nonlus = Cour::select('cours.*','formations.nom as _formation')
+        $nonlus = CoursUsers::select('cours_users.*','formations.nom as _formation','cours.nom as _cours')
+                        ->join('cours','cours.id','=','cours_users.formation_id')
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('formation_id','=', $id)
-                        ->where('cours.activated','=', 0)
-                        ->where('cours.finish','=', 0)
+                        ->where('cours_users.activated','=', 0)
+                        ->where('cours_users.finish','=', 0)
                         ->latest()
                         ->paginate($perPage);
 
-        $encours = Cour::select('cours.*','formations.nom as _formation')
+        $encours = CoursUsers::select('cours_users.*','formations.nom as _formation','cours.nom as _cours')
+                        ->join('cours','cours.id','=','cours_users.formation_id')
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('formation_id','=', $id)
-                        ->where('cours.activated','=', 1)
-                        ->where('cours.finish','=', 0)
+                        ->where('cours_users.activated','=', 1)
+                        ->where('cours_users.finish','=', 0)
                         ->latest()
                         ->paginate($perPage);
 
-        $lus = Cour::select('cours.*','formations.nom as _formation')
+        $lus = CoursUsers::select('cours_users.*','formations.nom as _formation','cours.nom as _cours')
+                        ->join('cours','cours.id','=','cours_users.formation_id')
                         ->join('formations','formations.id','=','cours.formation_id')
                         ->where('formation_id','=', $id)
-                        ->where('cours.activated','=', 1)
-                        ->where('cours.finish','=', 1)
+                        ->where('cours_users.activated','=', 1)
+                        ->where('cours_users.finish','=', 1)
                         ->latest()
                         ->paginate($perPage);
         return view('admin.client.cours', compact('tous','nonlus','encours','lus'));
@@ -163,11 +267,14 @@ class ClientController extends Controller
     public function phase($id)
     {
         $perPage = 25;
-
-        $cours = Cour::whereId($id)->first();
-        $cours->activated = 1;
-        $cours->update();
-        $ident = $cours->id;
+        $cour = Cour::whereId($id)->first();
+        DB::table('cours_users')->insert([
+            'user_id' => Auth::user()->id,
+            'formation_id' => $cour->formation_id,
+            'cours_id' => $id,
+            'activated' => 1
+        ]);
+        $ident = $id;
         $phase = Phase::select('phases.*','formations.nom as _formation','cours.nom as _cours   ')
                         ->join('cours','cours.id','=','phases.cours_id')
                         ->join('formations','formations.id','=','cours.formation_id')

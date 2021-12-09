@@ -19,11 +19,11 @@ class CreateCoursTable extends Migration
             $table->integer('temps')->nullable();
             $table->integer('numero')->nullable();
             $table->boolean('activated')->nullable();
-            $table->boolean('finish')->nullable();
-            $table->integer('formation_id')->unsigned();
+            $table->integer('begin')->default(0);
             $table->integer('created_id')->unsigned();
+            $table->integer('formation_id')->unsigned();
+            $table->foreign('formation_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('created_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade')->onUpdate('cascade');
             });
     }
 
@@ -34,6 +34,6 @@ class CreateCoursTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cours');
+        Schema::dropIfExists('cours');
     }
 }
