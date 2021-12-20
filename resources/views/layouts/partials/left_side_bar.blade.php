@@ -84,14 +84,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        @if(Auth::user()->hasPermission('questions-create'))
+                        {{-- @if(Auth::user()->hasPermission('questions-create'))
                         <li class="nav-item">
                             <a href="{{url('admin/question/create')}}" class="nav-link">
                                 <i class="fas fa-plus nav-icon"></i>
                                 <p>Ajouter</p>
                             </a>
                         </li>
-                        @endif
+                        @endif --}}
                         <li class="nav-item">
                             <a href="{{url('admin/question')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>

@@ -136,12 +136,13 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['prefix' => 'question'], function () {
             Route::post('/', 'App\Http\Controllers\Admin\QuestionController@store')->middleware('has-permission:questions-create');
-            Route::get('/create', 'App\Http\Controllers\Admin\QuestionController@create');
-            Route::get('/{id}/edit', 'App\Http\Controllers\Admin\QuestionController@edit');
+            Route::get('/{id}/show/{user}', 'App\Http\Controllers\Admin\QuestionController@destroy');
+            Route::post('/{id}/show/{user}', 'App\Http\Controllers\Admin\QuestionController@update');
+            Route::get('/{id}/show', 'App\Http\Controllers\Admin\QuestionController@create');
             Route::delete('/{id}', 'App\Http\Controllers\Admin\QuestionController@destroy')->middleware('has-permission:questions-delete');
             Route::get('/{id}', 'App\Http\Controllers\Admin\QuestionController@show')->middleware('has-permission:questions-read');
             Route::patch('/{id}', 'App\Http\Controllers\Admin\QuestionController@update')->middleware('has-permission:questions-update');
-            Route::get('/', 'App\Http\Controllers\Admin\QuestionController@index')->middleware('has-permission:questions-read');
+            Route::get('/', 'App\Http\Controllers\Admin\QuestionController@indexadmin')->middleware('has-permission:questions-read');
         });
 
         Route::group(['prefix' => 'reponse-c'], function () {
