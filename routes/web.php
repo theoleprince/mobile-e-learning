@@ -22,6 +22,7 @@ use App\Http\Controllers\StudentController;
 //     return view('index');
 // });
 Route::get('/', 'App\Http\Controllers\ClientController@index');
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::group(['prefix' => 'inscriptionUser'], function () {
     Route::post('/', 'App\Http\Controllers\ClientController@store')->name('register');
